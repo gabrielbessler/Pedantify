@@ -10,7 +10,7 @@ function init(){
   maxBtn = document.getElementById('maxBtn');
   randBtn = document.getElementById('randBtn');
 
-  minBtn.style.color = "black";
+  minBtn.style.color = "#e88b2e";
 
   resetOptionsBtn = document.getElementById('resetOptionsBtn');
 
@@ -29,17 +29,17 @@ function addEventListeners(){
   });
 
   minBtn.addEventListener('click', function(){
-    selectMinButton(); 
+    selectMinButton();
   });
   maxBtn.addEventListener('click', function(){
-    maxBtn.style.color = "black";
+    maxBtn.style.color = "#e88b2e";
     minBtn.style.color = "white";
     randBtn.style.color = "white";
 
     currReplacement = "max";
   });
   randBtn.addEventListener('click', function(){
-    randBtn.style.color = "black";
+    randBtn.style.color = "#e88b2e";
     minBtn.style.color = "white";
     maxBtn.style.color = "white";
     currReplacement = "click";
@@ -52,7 +52,7 @@ function addEventListeners(){
 }
 function selectMinButton()
 {
-  minBtn.style.color = "black";
+  minBtn.style.color = "#e88b2e";
   maxBtn.style.color = "white";
   randBtn.style.color = "white";
   currReplacement = "min";
