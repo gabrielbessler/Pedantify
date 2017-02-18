@@ -63,6 +63,7 @@ textarea
   width: 30%;
   float: right;
 }
+
 aside
 {
   width: 35%;
@@ -73,6 +74,7 @@ aside
   padding-left: 1%;
   padding-right: 1%;
   height: 500px;
+  border-radius: 8px;
 }
 h4
 {
@@ -87,13 +89,29 @@ section
   left: 1%;
   text-align: center;
   height: 500px;
+  border-radius: 8px;
 }
 .replaceTypeBtn {
   position: relative;
   color: white;
-  margin-top: 2%;
-  margin-bottom: 2%;
   background-color: blue;
   border: none;
-  padding: 5%; 
+  padding: 3%;
+  float:right;
+}
+#replacementTypeText
+{
+  display: block;
+  padding-top: 50px;
+}
+#resetOptionsBtn
+{
+  background-color: red;
+  border: none;
+  color: white;
+  margin-top: 50px;
+  position: relative;
+  top: 250px;
+  left: 250px;
+  width: 25%;
 }
