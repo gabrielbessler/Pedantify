@@ -4,11 +4,9 @@
     <title>Pedantify</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="main.css">
+    <script type="text/javascript" src="main.js"></script>
   </head>
-  <body>
-
-
-
+  <body onload="init()">
     <header id="hdr">
       <h1> Pedantify </h1>
     </header>
@@ -24,10 +22,10 @@
     <section>
       <h4>Enter Your Text</h4>
       <form>
-        <textarea></textarea>
+        <textarea id="textArea1"></textarea>
         <br>
         <input type="submit" value="Submit">
-        <input type="submit" value="Reset">
+        <input type="button" value="Reset" id="resetBtn">
         <input type="file" size="40">
       </form>
     </section>
@@ -37,22 +35,18 @@
       <form>
         Percentage Replacement <input id="slider1" type="range" min="0" max="100" step="1" value="50" onchange="updateSlider(this.value)">
         <span id="percReplValue">100%</span>
+        <br>
+        <input class="replaceTypeBtn" type="button" value="Min" id="minBtn"></input>
+        <input class="replaceTypeBtn" type="button" value="Max" id="maxBtn"></input>
+        <input class="replaceTypeBtn" type="button" value="Random" id="randBtn"></input>
+        <br>
+        <input type="button" value="Reset Options" id="resesetOptionsBtn">
       </form>
-        Min Max Random
     </aside>
 
     <footer id="ftr">
       Copyright Gabe and Matthew 2017
     </footer>
     <br>
-
-    <script>
-      v = document.getElementById("percReplValue");
-      i = document.getElementById('slider1');
-      v.innerHTML = i.value + "%";
-      i.addEventListener("input", function(){
-        v.innerHTML = i.value + "%"
-      });
-    </script>
   </body>
 </html>

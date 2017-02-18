@@ -42,7 +42,7 @@ textarea
   margin-top: 15px;
   resize: none;
   width: 85%;
-  height: 350px;   
+  height: 350px;
 }
 #hdr
 {
@@ -87,4 +87,13 @@ section
   left: 1%;
   text-align: center;
   height: 500px;
+}
+.replaceTypeBtn {
+  position: relative;
+  color: white;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  background-color: blue;
+  border: none;
+  padding: 5%; 
 }
