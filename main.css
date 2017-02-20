@@ -114,9 +114,21 @@ section
   background-color: red;
   border: none;
   color: white;
-  margin-top: 50px;
   position: relative;
-  top: 250px;
-  left: 250px;
+  top: 275px;
+  left: 40%;
   width: 25%;
+  padding: 10px;
+  border-radius: 5px;
+}
+#chkPronouns
+{
+  float: right;
+  clear: both;
+  position: relative;
+}
+#excludePronounsText
+{
+  display: block;
+  padding-top: 30px; 
 }

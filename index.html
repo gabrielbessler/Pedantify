@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="main.css">
     <script type="text/javascript" src="main.js"></script>
+    <link rel="icon" href="favicon.ico">
   </head>
   <body onload="init()">
     <header id="hdr">
       <img src="logo.png" width="250">
-
     </header>
 
     <nav>
@@ -38,13 +38,17 @@
         <span id="percReplValue">100%</span>
         <br>
         <span id="replacementTypeText">
-        Replacement Type:
+        Replacement Type
         <span>
         <input class="replaceTypeBtn" type="button" value="Min" id="minBtn"></input>
         <input class="replaceTypeBtn" type="button" value="Max" id="maxBtn"></input>
         <input class="replaceTypeBtn" type="button" value="Random" id="randBtn"></input>
         <br>
         <input type="button" value="Reset Options" id="resetOptionsBtn">
+        <span id="excludePronounsText">
+          Exclude Pronouns
+        <span>
+        <input type="checkbox" id="chkPronouns">
       </form>
     </aside>
 

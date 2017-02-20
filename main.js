@@ -35,7 +35,6 @@ function addEventListeners(){
     maxBtn.style.color = "#e88b2e";
     minBtn.style.color = "white";
     randBtn.style.color = "white";
-
     currReplacement = "max";
   });
   randBtn.addEventListener('click', function(){
@@ -43,6 +42,24 @@ function addEventListeners(){
     minBtn.style.color = "white";
     maxBtn.style.color = "white";
     currReplacement = "click";
+  });
+  minBtn.addEventListener('mouseover', function(){
+    minBtn.style.background = "purple";
+  });
+  maxBtn.addEventListener('mouseover', function(){
+    maxBtn.style.background = "purple";
+  });
+  randBtn.addEventListener('mouseover', function(){
+    randBtn.style.background = "purple";
+  });
+  minBtn.addEventListener('mouseout', function(){
+    minBtn.style.background = "blue";
+  });
+  maxBtn.addEventListener('mouseout', function(){
+    maxBtn.style.background = "blue";
+  });
+  randBtn.addEventListener('mouseout', function(){
+    randBtn.style.background = "blue";
   });
   resetOptionsBtn.addEventListener('click', function(){
     selectMinButton();
