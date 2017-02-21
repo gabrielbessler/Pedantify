@@ -103,6 +103,7 @@ section
   border: none;
   padding: 3%;
   float:right;
+  -webkit-appearance: none;
 }
 #replacementTypeText
 {
@@ -120,6 +121,7 @@ section
   width: 25%;
   padding: 10px;
   border-radius: 5px;
+  -webkit-appearance: none;
 }
 #chkPronouns
 {
@@ -130,5 +132,9 @@ section
 #excludePronounsText
 {
   display: block;
-  padding-top: 30px; 
+  padding-top: 30px;
+}
+.pedantifySubmissionBtns
+{
+  -webkit-appearance: none; 
 }
