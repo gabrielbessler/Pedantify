@@ -104,6 +104,7 @@ section
   padding: 3%;
   float:right;
   -webkit-appearance: none;
+  cursor: pointer;
 }
 #replacementTypeText
 {
@@ -122,6 +123,7 @@ section
   padding: 10px;
   border-radius: 5px;
   -webkit-appearance: none;
+  cursor: pointer;
 }
 #chkPronouns
 {
@@ -136,5 +138,32 @@ section
 }
 .pedantifySubmissionBtns
 {
-  -webkit-appearance: none; 
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+#chooseFile
+{
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+label
+{
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 700;
+  color: white;
+  background-color: blue;
+  padding: .5%;
+}
+label:hover
+{
+  background-color: purple;
+}
+label:active
+{
+  color: orange;
 }

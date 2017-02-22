@@ -27,7 +27,10 @@
         <br>
         <input type="submit" value="Submit" class="pedantifySubmissionBtns">
         <input type="button" value="Reset" id="resetBtn" class="pedantifySubmissionBtns">
-        <input type="file" size="40" class="pedantifySubmissionBtns">
+        <input type="file" size="40" class="pedantifySubmissionBtns" id="chooseFile" accept=".txt">
+        <!-- We create this label because we cannot style the submit button, so we
+        hide it and style the label instead -->
+        <label for="chooseFile">Choose a file...</label>
       </form>
     </section>
 
