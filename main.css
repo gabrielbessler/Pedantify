@@ -106,6 +106,20 @@ section
   -webkit-appearance: none;
   cursor: pointer;
 }
+.replaceTypeBtn:hover
+{
+  background-color: purple;
+}
+.replaceTypeBtn:focus
+{
+  border: 2px solid orange;
+  position: relative;
+  top: -1.5px;
+}
+#textArea1:focus
+{
+  border: 2px solid blue;
+}
 #replacementTypeText
 {
   display: block;
