@@ -1,26 +1,26 @@
 currReplacement = "min";
 
 function init(){
-  v = document.getElementById('percReplValue');
-  i = document.getElementById('slider1');
-  text_area = document.getElementById('textArea1');
-  v.innerHTML = i.value + "%";
-
+  // Assigning variables to all elements we use
+  percentReplVal = document.getElementById('percReplValue');
+  percentReplSlider = document.getElementById('slider1');
   minBtn = document.getElementById('minBtn');
   maxBtn = document.getElementById('maxBtn');
   randBtn = document.getElementById('randBtn');
+  text_area = document.getElementById('textArea1');
+  resetOptionsBtn = document.getElementById('resetOptionsBtn');
+
+  // Setting the initial value of the progress bar
+  percentReplVal.innerHTML = percentReplSlider.value + "%";
 
   minBtn.style.color = "#e88b2e";
 
-  resetOptionsBtn = document.getElementById('resetOptionsBtn');
-
   addEventListeners();
-
 }
 
 function addEventListeners(){
-  i.addEventListener("input", function(){
-    v.innerHTML = i.value + "%";
+  percentReplSlider.addEventListener("input", function(){
+    percentReplVal.innerHTML = percentReplSlider.value + "%";
   });
 
   resetBtn = document.getElementById("resetBtn")
@@ -43,28 +43,10 @@ function addEventListeners(){
     maxBtn.style.color = "white";
     currReplacement = "click";
   });
-  minBtn.addEventListener('mouseover', function(){
-    minBtn.style.background = "purple";
-  });
-  maxBtn.addEventListener('mouseover', function(){
-    maxBtn.style.background = "purple";
-  });
-  randBtn.addEventListener('mouseover', function(){
-    randBtn.style.background = "purple";
-  });
-  minBtn.addEventListener('mouseout', function(){
-    minBtn.style.background = "blue";
-  });
-  maxBtn.addEventListener('mouseout', function(){
-    maxBtn.style.background = "blue";
-  });
-  randBtn.addEventListener('mouseout', function(){
-    randBtn.style.background = "blue";
-  });
   resetOptionsBtn.addEventListener('click', function(){
     selectMinButton();
-    i.value = 50;
-    v.innerHTML = i.value + "%";
+    percentReplSlider.value = 50;
+    percentReplVal.innerHTML = percentReplSlider.value + "%";
   });
 }
 function selectMinButton()
