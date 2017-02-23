@@ -39,19 +39,25 @@ a:active {
 }
 #textArea1 {
   display: block;
+  resize: none;
+  width: 85%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 15px;
-  resize: none;
-  width: 85%;
   height: 450px;
+  border: 2px solid transparent;
+}
+.textAreaDefault {
+  display: block;
+  width: 85%;
+  resize: none;
 }
 #textArea2 {
-  position: relative;
-  top: 60px;
   display:block;
   resize: none;
   width: 80%;
+  top: 60px;
+  position: relative;
   height: 120px;
   clear: both;
   margin-left: auto;
@@ -69,6 +75,7 @@ a:active {
   clear: both;
   position: relative;
   top: 10px;
+  padding: 10px;
 }
 #slider1 {
   width: 30%;
@@ -108,6 +115,7 @@ section {
   padding: 3%;
   -webkit-appearance: none;
   cursor: pointer;
+  border: 2px solid transparent;
 }
 #test {
   text-align: right;
@@ -117,8 +125,6 @@ section {
 }
 .replaceTypeBtn:focus {
   border: 2px solid orange;
-  position: relative;
-  top: -1.5px;
 }
 #textArea1:focus, #textArea2:focus{
   border: 2px solid blue;
@@ -160,17 +166,20 @@ section {
 	position: absolute;
 	z-index: -1;
 }
-label {
+label, #resetBtn, #submitBtn {
+  display: inline-block;
+  width: 150px; 
   cursor: pointer;
   font-size: 1em;
   font-weight: 700;
   color: white;
   background-color: blue;
   padding: .5%;
+  border: none;
 }
-label:hover {
+label:hover, #resetBtn:hover, #submitBtn:hover {
   background-color: purple;
 }
-label:active {
+label:active, #resetBtn:active, #submitBtn:active {
   color: orange;
 }
