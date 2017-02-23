@@ -39,19 +39,21 @@
       <form>
         Percentage Replacement <input id="slider1" type="range" min="0" max="100" step="1" value="50" onchange="updateSlider(this.value)">
         <span id="percReplValue"></span>
-        <br>
-        <span id="replacementTypeText">
-        Replacement Type
-        <span>
-        <input class="replaceTypeBtn" type="button" value="Min" id="minBtn"></input>
-        <input class="replaceTypeBtn" type="button" value="Max" id="maxBtn"></input>
-        <input class="replaceTypeBtn" type="button" value="Random" id="randBtn" ></input>
-        <br>
+        <span id="replacementTypeText">Replacement Type</span>
+        <div id="test">
+          <input class="replaceTypeBtn" type="button" value="Min" id="minBtn"></input>
+          <input class="replaceTypeBtn" type="button" value="Max" id="maxBtn"></input>
+          <input class="replaceTypeBtn" type="button" value="Random" id="randBtn" ></input>
+        </div>
         <input type="button" value="Reset Options" id="resetOptionsBtn">
         <span id="excludePronounsText">
           Exclude Pronouns
-        <span>
+        </span>
         <input type="checkbox" id="chkPronouns">
+        <div id="wordsToExcludeText">
+          Words to Exclude
+        </div>
+        <textarea id="textArea2"></textarea>
       </form>
     </aside>
 

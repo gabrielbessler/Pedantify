@@ -9,6 +9,7 @@ function init(){
   randBtn = document.getElementById('randBtn');
   text_area = document.getElementById('textArea1');
   resetOptionsBtn = document.getElementById('resetOptionsBtn');
+  excludeWord = document.getElementById('textArea2');
 
   // Setting the initial value of the progress bar
   percentReplVal.innerHTML = percentReplSlider.value + "%";
@@ -47,6 +48,7 @@ function addEventListeners(){
     selectMinButton();
     percentReplSlider.value = 50;
     percentReplVal.innerHTML = percentReplSlider.value + "%";
+    excludeWord.value = ""
   });
 }
 function selectMinButton()
