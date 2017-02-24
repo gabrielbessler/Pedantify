@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Pedantify</title>
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="header.css">
+
+    <!--#include file="header.html" -->
+
+    <h1>
+      For questions, concerns, complains: <br>
+        pedantify@pedantify.com
+    </h1>
+
+    <!--#include file="footer.html" -->
+
+  </head>
+  <body>
+
+  </body>
+</html>

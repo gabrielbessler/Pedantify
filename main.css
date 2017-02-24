@@ -2,21 +2,15 @@ body {
   font-family: "Helvetica";
   color: #4268f4;
   background-color: #e0e0e0;
+  font-size: 100%;
 }
-nav {
-  text-align: center;
-  background-color: #639df9;
-  border-radius: 8px;
-}
+
 ul {
   list-style: none;
   padding: 8px 0px;
   margin-bottom: 20px;
 }
-li {
-  display: inline;
-  padding: 50px;
-}
+
 a, a:visited {
   text-decoration: none;
   font-weight: bold;
@@ -35,24 +29,16 @@ a:active {
   top: 40px;
 }
 #textArea1 {
-  display: block;
-  resize: none;
-  width: 85%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 15px;
+  margin: 15px auto 0px auto;
   height: 450px;
-  border: 2px solid transparent;
+  box-sizing: border-box;
 }
-.textAreaDefault {
+textarea {
   display: block;
   width: 85%;
   resize: none;
 }
 #textArea2 {
-  display:block;
-  resize: none;
-  width: 80%;
   top: 60px;
   position: relative;
   height: 120px;
@@ -60,20 +46,7 @@ a:active {
   margin-left: auto;
   margin-right: auto;
 }
-#hdr {
-  background-color: #639df9;
-  text-align: center;
-  border-radius: 8px;
-}
-#ftr {
-  background-color: #639df9;
-  text-align: center;
-  border-radius: 8px;
-  clear: both;
-  position: relative;
-  top: 10px;
-  padding: 10px;
-}
+
 #slider1 {
   width: 30%;
   float: right;
@@ -90,10 +63,11 @@ aside {
   color: #5947e5;
   font-weight: bold;
 }
-h4 {
+h1 {
   text-align: center;
   color: #5947e5;
   font-weight: bold;
+  font-size: 2em;
 }
 section {
   width: 61%;
@@ -131,14 +105,14 @@ section {
   padding-top: 50px;
 }
 #resetOptionsBtn:focus {
-  background-color: black; 
+  background-color: black;
 }
 #resetOptionsBtn {
   background-color: red;
   border: none;
   color: white;
   position: relative;
-  top: 350px;
+  top: 300px;
   left: 40%;
   width: 25%;
   padding: 10px;

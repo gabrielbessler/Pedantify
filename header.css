@@ -1,0 +1,14 @@
+nav {
+  text-align: center;
+  background-color: #639df9;
+  border-radius: 8px;
+}
+li {
+  display: inline;
+  padding: 50px;
+}
+#hdr {
+  background-color: #639df9;
+  text-align: center;
+  border-radius: 8px;
+}
