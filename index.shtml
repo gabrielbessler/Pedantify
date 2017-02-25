@@ -16,6 +16,7 @@
 
     <section>
       <h1>Enter Your Text</h1>
+
       <form>
         <textarea id="textArea1"></textarea>
         <br>
@@ -26,6 +27,10 @@
         hide it and style the label instead -->
         <label for="chooseFile">Choose a file...</label>
       </form>
+      <div id="metaDisplay">
+        Number of Words: <span id="numWords"> 0 </span> <br>
+        Number of Words Replaced: <span id="numWordsReplaced"> 0 </span>
+      </div>
     </section>
 
     <aside>
@@ -33,17 +38,23 @@
       <form>
         Percentage Replacement <input id="slider1" type="range" min="0" max="100" step="1" value="50" onchange="updateSlider(this.value)">
         <span id="percReplValue"></span>
-        <span id="replacementTypeText">Replacement Type</span>
         <div id="test">
+          <span id="replacementTypeText">Replacement Type</span>
           <input class="replaceTypeBtn" type="button" value="Min" id="minBtn">
           <input class="replaceTypeBtn" type="button" value="Max" id="maxBtn">
-          <input class="replaceTypeBtn" type="button" value="Random" id="randBtn" >
+          <input class="replaceTypeBtn" type="button" value="Random" id="randBtn">
         </div>
         <input type="button" value="Reset Options" id="resetOptionsBtn">
-        <span id="excludePronounsText">
+        <div id="excludePronounsText">
           Exclude Pronouns
-        </span>
-        <input type="checkbox" id="chkPronouns">
+          <input type="checkbox" id="chkPronouns">
+        </div>
+
+        <div id="excludeConjunctions">
+          Exclude Conjunctions
+          <input type="checkbox" id="chkConjunctions">
+        </div>
+
         <div id="wordsToExcludeText">
           Words to Exclude
         </div>

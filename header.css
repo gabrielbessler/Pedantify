@@ -12,3 +12,19 @@ li {
   text-align: center;
   border-radius: 8px;
 }
+a, a:visited {
+  text-decoration: none;
+  font-weight: bold;
+  color: blue;
+}
+a:hover {
+  color: white;
+}
+a:active {
+  color: blue;
+}
+ul {
+  list-style: none;
+  padding: 8px 0px;
+  margin-bottom: 20px;
+}
