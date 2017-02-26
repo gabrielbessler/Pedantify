@@ -38,7 +38,7 @@
       <form>
         Percentage Replacement <input id="slider1" type="range" min="0" max="100" step="1" value="50" onchange="updateSlider(this.value)">
         <span id="percReplValue"></span>
-        <div id="test">
+        <div id="replaceBtns">
           <span id="replacementTypeText">Replacement Type</span>
           <input class="replaceTypeBtn" type="button" value="Min" id="minBtn">
           <input class="replaceTypeBtn" type="button" value="Max" id="maxBtn">
@@ -63,6 +63,5 @@
     </aside>
 
     <!--#include file="footer.html" -->
-    <br>
   </body>
 </html>

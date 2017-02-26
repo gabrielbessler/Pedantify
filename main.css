@@ -1,27 +1,26 @@
 body {
   font-family: "Helvetica";
   color: #5947e5;
-  background-color: blue;
   background-color: #e0e0e0;
   font-size: 100%;
 }
 #wordsToExcludeText {
   position: relative;
-  width: 100%;
   text-align: center;
+  width: 100%;
   top: 20px;
   font-size: 1.3em;
   clear: both;
-}
-#textArea1 {
-  margin: 15px auto 0px auto;
-  height: 450px;
-  box-sizing: border-box;
 }
 textarea {
   display: block;
   width: 85%;
   resize: none;
+}
+#textArea1 {
+  margin: 15px auto 0px auto;
+  height: 450px;
+  box-sizing: border-box;
 }
 #textArea2 {
   top: 30px;
@@ -55,7 +54,6 @@ section {
   width: 61%;
   float: left;
   background-color: #639df9;
-  position: relative;
   text-align: center;
   height: 700px;
   border-radius: 8px;
@@ -69,7 +67,7 @@ section {
   cursor: pointer;
   border: 2px solid transparent;
 }
-#test {
+#replaceBtns {
   margin-top: 25px;
   width: 100%;
   text-align: right;
@@ -150,5 +148,5 @@ label:active, #resetBtn:active, #submitBtn:active {
   font-weight: bold;
   font-size: 1.0em;
   padding-top: 20px;
-  
+
 }
