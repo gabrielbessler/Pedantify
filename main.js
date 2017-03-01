@@ -1,3 +1,12 @@
+myApp = angular.module('myApp', []);
+
+myApp.controller('MainController', function($scope) {
+  $scope.testmsg = function(text){
+    var s = text ? text.split(/\s+/) : 0; // it splits the text on space/tab/enter
+    return s ? s.length : '0';
+  }
+});
+
 currReplacement = "min";
 
 function init(){
