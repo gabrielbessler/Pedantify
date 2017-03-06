@@ -27,9 +27,9 @@
         <!-- We create this label because we cannot style the submit button, so we
         hide it and style the label instead -->
         <label for="chooseFile">Choose a file...</label>
+        <input type="button" value="Save Text..." class="pedantifySubmissionBtns" id="saveFile">
       </form>
       <div id="metaDisplay" >
-
         Number of Words: <span id="numWords">{{testmsg(inputText)}}</span> <br>
         Number of Words Replaced: <span id="numWordsReplaced"> 0 </span> <br>
         Mean Word Length (Before Replacement): 0 <br>
@@ -40,27 +40,52 @@
     <aside>
       <h1> Options </h1>
       <form>
-        Percentage Replacement <input id="slider1" type="range" min="0" max="100" step="1" value="50" onchange="updateSlider(this.value)">
+        <span class="toolTip">
+          Percentage Replacement
+          <span class="toolTipText">Choose the percentage of words that will be pedantified</span>
+        </span>
+
+        <input id="slider1" type="range" min="0" max="100" step="1" value="50" onchange="updateSlider(this.value)">
+
         <span id="percReplValue"></span>
         <div id="replaceBtns">
-          <span id="replacementTypeText">Replacement Type</span>
+          <span class="toolTip" id="replacementTypeText" >Replacement Type
+            <span class="toolTipText">Min - Replace with smallest possble word <br>
+                                      Max - Replace with largest possble word <br>
+                                      Random - Replace with random word <br>
+            </span>
+          </span>
           <input class="replaceTypeBtn" type="button" value="Min" id="minBtn">
           <input class="replaceTypeBtn" type="button" value="Max" id="maxBtn">
           <input class="replaceTypeBtn" type="button" value="Random" id="randBtn">
         </div>
         <input type="button" value="Reset Options" id="resetOptionsBtn">
-        <div id="excludePronounsText">
-          Exclude Pronouns
+
+
+        <div id="excludePronounsContainer">
+          <span class="toolTip">Exclude Pronouns
+             <span class="toolTipText">Sample Text</span>
+          </span>
           <input type="checkbox" id="chkPronouns">
         </div>
 
         <div id="excludeConjunctions">
-          Exclude Conjunctions
+          <span class="toolTip">Exclude Conjunctions
+            <span class="toolTipText">Sample Text</span>
+          </span>
           <input type="checkbox" id="chkConjunctions">
         </div>
 
-        <div id="wordsToExcludeText">
+        <div id="excludeHyphensContainer">
+          <span class="toolTip">Exclude Hyphenated Words
+            <span class="toolTipText">Ignore words that include hyphens</span>
+          </span>
+          <input type="checkbox" id="chkHyphens">
+        </div>
+
+        <div id="wordsToExcludeText" class="toolTip">
           Words to Exclude
+          <span class="toolTipText">Sample Text</span>
         </div>
         <textarea id="textArea2"></textarea>
       </form>

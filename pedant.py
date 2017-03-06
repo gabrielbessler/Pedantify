@@ -32,7 +32,7 @@ class Pedantify:
         representation += "Percantage of words replaced: " + str(self.percentage) + "\n"
         representation += "Word swapping method: " + str(self.swappingMethod) + "\n"
         return representation
-    
+
     def readText(self, filename):
         mainFile = open(filename)
         text = mainFile.read()
@@ -89,7 +89,7 @@ class Pedantify:
         for word in words_mainText:
             partialSum += len(word)
         self.meanLength = round(partialSum / len(words_mainText), 2)
-        
+
     def longestWord(self, inputList):
         length = len(inputList[0])
         currentWord = ""
@@ -185,6 +185,3 @@ class Pedantify:
             self.excludeWords()
             self.swapMethod()
             self.pedantify()
-
-
-            
