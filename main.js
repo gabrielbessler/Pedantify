@@ -1,10 +1,18 @@
 myApp = angular.module('myApp', []);
 
 myApp.controller('MainController', function($scope) {
+
   $scope.testmsg = function(text){
+
     var s = text ? text.split(/\s+/) : 0; // it splits the text on space/tab/enter
+
     return s ? s.length : '0';
   }
+  $scope.testmsg2 = function(text){
+    var s = text ? text.length : 0;
+    return s;
+  }
+
 });
 
 currReplacement = "min";
@@ -18,6 +26,7 @@ function init(){
   excludeWord = document.getElementById('textArea2');
   chkPronouns = document.getElementById('chkPronouns');
   chkHyphens = document.getElementById('chkHyphens');
+  chooseFile = document.getElementById('chooseFile');
   submitBtn = document.getElementById('submitBtn');
   text_area = document.getElementById('textArea1');
   randBtn = document.getElementById('randBtn');
@@ -32,15 +41,36 @@ function init(){
 
   addEventListeners();
 }
+function updateText(){
+  text_area.value = text;
+  var controllerElement = document.querySelector('section');
+  var controllerScope = angular.element(controllerElement).scope();
+  alert(controllerScope.inputText); 
+  controllerScope.$apply();
+}
 
 function addEventListeners(){
+  chooseFile.onchange = function(){
+    fileToLoad = chooseFile.files[0];
+    reader = new FileReader();
+    reader.onload = function(e){
+      text = reader.result;
+      updateText();
+    }
+    reader.readAsText(fileToLoad);
+  }
   percentReplSlider.addEventListener("input", function(){
     percentReplVal.innerHTML = percentReplSlider.value + "%";
   });
 
   resetBtn = document.getElementById("resetBtn")
   resetBtn.addEventListener("click", function(){
+    var controllerElement = document.querySelector('section');
+    var controllerScope = angular.element(controllerElement).scope();
     text_area.value = "";
+    controllerScope.inputText.text = "";
+    controllerScope.$apply();
+
   });
 
   minBtn.addEventListener('click', function(){
@@ -209,9 +239,15 @@ function pedantify(){
         newWord = 'random';
       }
       count += 1;
-      newText += newWord + " ";
+      if (parseInt(wordIndex) + 1 < words_mainText.length){
+        newWord += " ";
+      }
+      newText += newWord;
     } else {
-      newText += word + " ";
+      if (parseInt(wordIndex) + 1 < words_mainText.length){
+          word += " ";
+      }
+      newText += word;
     }
   }
   text_area.value = newText;
@@ -221,6 +257,16 @@ function pedantify(){
   if (outputFile == true){
 
   }
+  // TODO: understand this magic piece of code ....
+  // I wrote it but cmon I really shouldn't have to do this
+  // like it violates 10000 rules
+  // AND it uses jquery
+  // AND .scope()
+  // AAAAND querySelector...
+  var controllerElement = document.querySelector('section');
+  var controllerScope = angular.element(controllerElement).scope();
+  controllerScope.inputText.text = text_area.value;
+
 }
 
 /*
