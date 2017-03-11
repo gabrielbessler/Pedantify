@@ -16,27 +16,28 @@
 
     <!--#include file="header.html" -->
 
+    <div class = "container">
+
     <section ng-controller="MainController">
       <h1>Enter Your Text</h1>
 
       <form>
         <textarea id="textArea1" ng-model="inputText.text"></textarea>
         <br>
-        <input type="submit" value="Submit" class="pedantifySubmissionBtns" id="submitBtn">
-        <input type="button" value="Reset" id="resetBtn" class="pedantifySubmissionBtns">
-        <input type="file" size="40" class="pedantifySubmissionBtns" id="chooseFile" accept=".txt">
+        <input type="submit" value="Submit" id="submitBtn">
+        <input type="button" value="Reset" id="resetBtn">
+        <input type="file" size="40" id="chooseFile" accept=".txt">
         <!-- We create this label because we cannot style the submit button, so we
         hide it and style the label instead -->
         <label for="chooseFile">Choose a file...</label>
-        <input type="button" value="Save Text..." class="pedantifySubmissionBtns" id="saveFile">
+        <input type="button" value="Download Text..." id="saveFile">
       </form>
       <div id="metaDisplay">
-        Number of Words: <span id="numWords">{{testmsg(inputText.text)}}</span> <br>
-        Number of Characer: <span id="numChars">{{testmsg2(inputText.text)}}  </span> <br>
-        Number of Words Replaced: <span id="numWordsReplaced"> 0 </span> <br>
-        Mean Word Length (Before Replacement): 0 <br>
+        Number of Words: {{testmsg(inputText.text)}} <br>
+        Number of Character: {{testmsg2(inputText.text)}}  <br>
+        Number of Words Replaced: 0 <br>
+        Mean Word Length (Before Replacement): {{testmsg3(inputText.text)}} <br>
         Mean Word Length (After Replacement): 0
-
       </div>
     </section>
 
@@ -62,8 +63,6 @@
           <input class="replaceTypeBtn" type="button" value="Max" id="maxBtn">
           <input class="replaceTypeBtn" type="button" value="Random" id="randBtn">
         </div>
-        <input type="button" value="Reset Options" id="resetOptionsBtn">
-
 
         <div id="excludePronounsContainer">
           <span class="toolTip">Exclude Pronouns
@@ -91,9 +90,12 @@
           <span class="toolTipText">Sample Text</span>
         </div>
         <textarea id="textArea2"></textarea>
+        
       </form>
+      <input type="button" value="Reset Options" id="resetOptionsBtn">
     </aside>
 
+  </div>
     <!--#include file="footer.html" -->
   </body>
 </html>

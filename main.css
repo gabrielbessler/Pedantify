@@ -23,12 +23,11 @@ textarea {
   box-sizing: border-box;
 }
 #textArea2 {
-  top: 30px;
-  position: relative;
+  margin: 15px auto 0px auto;
   height: 120px;
-  clear: both;
-  margin-left: auto;
-  margin-right: auto;
+  box-sizing: border-box;
+  position: relative;
+  top: 30px;
 }
 #slider1 {
   width: 30%;
@@ -38,12 +37,14 @@ aside {
   width: 36%;
   float: right;
   background-color: #639df9;
-  position: relative;
   padding-left: 1%;
   padding-right: 1%;
-  height: 700px;
   border-radius: 8px;
+  margin-left: 1%;
   font-weight: bold;
+}
+.container {
+  display:flex;
 }
 h1 {
   text-align: center;
@@ -55,7 +56,10 @@ section {
   float: left;
   background-color: #639df9;
   text-align: center;
-  height: 700px;
+  /* TODO */
+  display:flex;
+  flex-direction: column;
+  padding-bottom: 30px;
   border-radius: 8px;
 }
 .replaceTypeBtn {
@@ -87,25 +91,8 @@ section {
 #resetOptionsBtn:focus {
   background-color: black;
 }
-#resetOptionsBtn {
-  background-color: red;
-  border: none;
-  color: white;
-  position: relative;
-  top: 310px;
-  left: 40%;
-  width: 25%;
-  padding: 10px;
-  border-radius: 5px;
-  -webkit-appearance: none;
-  cursor: pointer;
-}
 #chkPronouns, #chkConjunctions, #chkHyphens {
   float: right;
-}
-#excludePronounsContainer {
-  float:left;
-  width: 100%;
 }
 .toolTip {
   cursor: pointer;
@@ -115,28 +102,21 @@ section {
 }
 .toolTipText {
   visibility: hidden;
-
   width: 160px;
   background-color: black;
   color: #fff;
   text-align: center;
   padding: 5px 5px;
   border-radius: 6px;
-
   font-size: .8em;
-
-  /* Position the tooltip text - see examples below! */
+  /* Position the tooltip text */
   position: absolute;
   z-index: 1;
 }
-#excludeConjunctions, #excludeHyphensContainer {
+#excludeConjunctions, #excludeHyphensContainer, #excludePronounsContainer {
   float:left;
   width: 100%;
   margin-top: 15px;
-}
-.pedantifySubmissionBtns {
-  -webkit-appearance: none;
-  cursor: pointer;
 }
 #chooseFile {
   width: 0.1px;
@@ -145,6 +125,21 @@ section {
 	overflow: hidden;
 	position: absolute;
 	z-index: -1;
+}
+#resetOptionsBtn {
+  display: block;
+  width: 100px;
+  cursor: pointer;
+  color: white;
+  background-color: red;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  -webkit-appearance: none;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  top: 50px;
 }
 label, #resetBtn, #submitBtn, #saveFile {
   display: inline-block;
@@ -170,5 +165,4 @@ label:active, #resetBtn:active, #submitBtn:active, #saveFile:active {
   font-weight: bold;
   font-size: 1.0em;
   padding-top: 20px;
-
 }

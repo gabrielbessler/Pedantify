@@ -126,7 +126,7 @@ class Pedantify:
 
     def getIndex(self, string, character):
         count = 0
-        for char in string:
+        for count in len(string):
             if string[count] == character:
                 return count
             count += 1

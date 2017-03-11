@@ -2,17 +2,26 @@ myApp = angular.module('myApp', []);
 
 myApp.controller('MainController', function($scope) {
 
+  $scope.inputText = {text:""}
+
   $scope.testmsg = function(text){
 
     var s = text ? text.split(/\s+/) : 0; // it splits the text on space/tab/enter
-
     return s ? s.length : '0';
   }
   $scope.testmsg2 = function(text){
+    console.log(text);
     var s = text ? text.length : 0;
     return s;
   }
-
+  $scope.testmsg3 = function(text){
+    var s = text ? text.split(/\s+/) : 0;
+    numChars = 0;
+    for (wordIndex in s) {
+      numChars += s[wordIndex].length;
+    }
+    return s ? (numChars / s.length).toFixed(2) : '0';
+  }
 });
 
 currReplacement = "min";
@@ -41,21 +50,24 @@ function init(){
 
   addEventListeners();
 }
+
 function updateText(){
   text_area.value = text;
   var controllerElement = document.querySelector('section');
   var controllerScope = angular.element(controllerElement).scope();
-  alert(controllerScope.inputText); 
+  console.log(controllerScope.inputText.text);
+  controllerScope.inputText.text = text;
   controllerScope.$apply();
 }
 
 function addEventListeners(){
   chooseFile.onchange = function(){
-    fileToLoad = chooseFile.files[0];
+    fileToLoad = chooseFile.files[chooseFile.files.length - 1];
     reader = new FileReader();
     reader.onload = function(e){
       text = reader.result;
       updateText();
+      chooseFile.value = "";
     }
     reader.readAsText(fileToLoad);
   }
@@ -70,7 +82,6 @@ function addEventListeners(){
     text_area.value = "";
     controllerScope.inputText.text = "";
     controllerScope.$apply();
-
   });
 
   minBtn.addEventListener('click', function(){
@@ -224,6 +235,7 @@ function getIndex(string, character){
 }
 function pedantify(){
   words_mainText = text.split(" ");
+  console.log(words_mainText);
   newText = "";
   count = 0;
   for (wordIndex in words_mainText){
