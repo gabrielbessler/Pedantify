@@ -3,23 +3,19 @@
 }
 
 nav {
-  /*REMOVE */
   position: fixed;
   top: 70px;
   z-index: 1000;
 
   width: 100%;
   text-align: center;
-  /*background-color: #639df9; */
   background-color: white;
-  border-radius: 8px;
 }
 li {
   display: inline;
   padding: 50px;
 }
 #hdr {
-  /* remove */
   position: fixed;
   width: 100%;
   z-index: 1000;
@@ -27,20 +23,16 @@ li {
 
   background-color: white;
   text-align: center;
-  border-radius: 8px;
 }
 a, a:visited {
   text-decoration: none;
   font-weight: bold;
-  /* color: blue */
   color: #639df9;
 }
 a:hover {
-  /* color: white */
   color: purple;
 }
 a:active {
-  /* color: blue */
   color: #639df9;
 }
 ul {

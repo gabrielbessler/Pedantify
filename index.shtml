@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
     <title>Pedantify</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <meta charset="utf-8">
@@ -27,17 +26,17 @@
         <input type="submit" value="Submit" id="submitBtn">
         <input type="button" value="Reset" id="resetBtn">
         <input type="file" size="40" id="chooseFile" accept=".txt">
-        <!-- We create this label because we cannot style the submit button, so we
+        <!-- We cannot style the submit button, so we
         hide it and style the label instead -->
         <label for="chooseFile">Choose a file...</label>
         <input type="button" value="Download Text..." id="saveFile">
       </form>
       <div id="metaDisplay">
-        Number of Words: {{testmsg(inputText.text)}} <br>
+        Number of Words: <span id="numWords">{{testmsg(inputText.text)}}</span> <br>
         Number of Character: {{testmsg2(inputText.text)}}  <br>
-        Number of Words Replaced: 0 <br>
-        Mean Word Length (Before Replacement): {{testmsg3(inputText.text)}} <br>
-        Mean Word Length (After Replacement): 0
+        Number of Words Replaced: {{wordsReplaced}}<br>
+        Mean Word Length (Before Replacement): <span id="test1">{{testmsg3(inputText.text)}}</span> <br>
+        Mean Word Length (After Replacement): <span id="test2">{{testmsg4(inputText.text)}}</span>
       </div>
     </section>
 
@@ -66,14 +65,14 @@
 
         <div id="excludePronounsContainer">
           <span class="toolTip">Exclude Pronouns
-             <span class="toolTipText">Sample Text</span>
+             <span class="toolTipText">Prevent pronouns from being pedantified</span>
           </span>
           <input type="checkbox" id="chkPronouns">
         </div>
 
         <div id="excludeConjunctions">
           <span class="toolTip">Exclude Conjunctions
-            <span class="toolTipText">Sample Text</span>
+            <span class="toolTipText">Prevent conjunctions from being pedantified</span>
           </span>
           <input type="checkbox" id="chkConjunctions">
         </div>
@@ -87,10 +86,10 @@
 
         <div id="wordsToExcludeText" class="toolTip">
           Words to Exclude
-          <span class="toolTipText">Sample Text</span>
+          <span class="toolTipText">Enter a space separated list of words to be excluded from pedantification</span>
         </div>
         <textarea id="textArea2"></textarea>
-        
+
       </form>
       <input type="button" value="Reset Options" id="resetOptionsBtn">
     </aside>

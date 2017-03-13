@@ -3,6 +3,9 @@ myApp = angular.module('myApp', []);
 myApp.controller('MainController', function($scope) {
 
   $scope.inputText = {text:""}
+  $scope.textPedantified = false;
+  $scope.oldMeanLength = 0;
+  $scope.wordsReplaced = 0; 
 
   $scope.testmsg = function(text){
 
@@ -10,17 +13,32 @@ myApp.controller('MainController', function($scope) {
     return s ? s.length : '0';
   }
   $scope.testmsg2 = function(text){
-    console.log(text);
     var s = text ? text.length : 0;
     return s;
   }
   $scope.testmsg3 = function(text){
-    var s = text ? text.split(/\s+/) : 0;
-    numChars = 0;
-    for (wordIndex in s) {
-      numChars += s[wordIndex].length;
+    if ($scope.textPedantified == false) {
+      var s = text ? text.split(/\s+/) : 0;
+      numChars = 0;
+      for (wordIndex in s) {
+        numChars += s[wordIndex].length;
+      }
+      return s ? (numChars / s.length).toFixed(2) : '0';
+    } else {
+      return $scope.oldMeanLength;
     }
-    return s ? (numChars / s.length).toFixed(2) : '0';
+  }
+  $scope.testmsg4 = function(text){
+    if ($scope.textPedantified == false) {
+      return '0';
+    } else {
+      var s = text ? text.split(/\s+/) : 0;
+      numChars = 0;
+      for (wordIndex in s) {
+        numChars += s[wordIndex].length;
+      }
+      return s ? (numChars / s.length).toFixed(2) : '0';
+    }
   }
 });
 
@@ -113,8 +131,7 @@ function addEventListeners(){
   });
 }
 
-function selectMinButton()
-{
+function selectMinButton(){
   minBtn.style.color = "#e88b2e";
   maxBtn.style.color = "white";
   randBtn.style.color = "white";
@@ -123,12 +140,11 @@ function selectMinButton()
 
 ///////// Pedantify code here
 
-
 outputFile = false;
 hyphenatedWords = false;
 
 name = "testname"
-text = "ASD asd sasd";
+text = "";
 meanLength = 0;
 textLength = 0;
 wordsReplaced = 0;
@@ -221,10 +237,12 @@ function percentageCheck(){
     return false;
   }
 }
+
 function updateAll() {
   self.averageLength();
   self.textWordLength();
 }
+
 function getIndex(string, character){
   count = 0;
   for (charIndex in string){
@@ -233,6 +251,7 @@ function getIndex(string, character){
     }
   }
 }
+
 function pedantify(){
   words_mainText = text.split(" ");
   console.log(words_mainText);
@@ -267,20 +286,19 @@ function pedantify(){
   text = newText;
   updateAll();
   if (outputFile == true){
-
   }
-  // TODO: understand this magic piece of code ....
-  // I wrote it but cmon I really shouldn't have to do this
-  // like it violates 10000 rules
-  // AND it uses jquery
-  // AND .scope()
-  // AAAAND querySelector...
+  // TODO: Fix these shenanigans
   var controllerElement = document.querySelector('section');
   var controllerScope = angular.element(controllerElement).scope();
+  if (controllerScope.textPedantified == true){
+    controllerScope.oldMeanLength = document.getElementById('test2').innerHTML;
+  } else {
+    controllerScope.oldMeanLength = document.getElementById('test1').innerHTML;
+    controllerScope.textPedantified = true;
+  }
   controllerScope.inputText.text = text_area.value;
-
+  controllerScope.wordsReplaced = wordsReplaced;
 }
-
 /*
         if word.lower() in self.pronouns:
             newText += ( word + " " )
