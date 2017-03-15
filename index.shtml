@@ -29,7 +29,9 @@
         <!-- We cannot style the submit button, so we
         hide it and style the label instead -->
         <label for="chooseFile">Choose a file...</label>
-        <input type="button" value="Download Text..." id="saveFile">
+        <a href="" id="saveFileLink" download="text.txt" >
+          <input type="button" value="Download Text..." id="saveFile">
+        </a>
       </form>
       <div id="metaDisplay">
         Number of Words: <span id="numWords">{{testmsg(inputText.text)}}</span> <br>
@@ -48,7 +50,7 @@
           <span class="toolTipText">Choose the percentage of words that will be pedantified</span>
         </span>
 
-        <input id="slider1" type="range" min="0" max="100" step="1" value="50" onchange="updateSlider(this.value)">
+        <input id="slider1" type="range" min="0" max="100" step="1" value="50">
 
         <span id="percReplValue"></span>
         <div id="replaceBtns">

@@ -5,7 +5,7 @@ myApp.controller('MainController', function($scope) {
   $scope.inputText = {text:""}
   $scope.textPedantified = false;
   $scope.oldMeanLength = 0;
-  $scope.wordsReplaced = 0; 
+  $scope.wordsReplaced = 0;
 
   $scope.testmsg = function(text){
 
@@ -56,10 +56,10 @@ function init(){
   chooseFile = document.getElementById('chooseFile');
   submitBtn = document.getElementById('submitBtn');
   text_area = document.getElementById('textArea1');
+  saveBtn = document.getElementById('saveFileLink');
   randBtn = document.getElementById('randBtn');
   minBtn = document.getElementById('minBtn');
   maxBtn = document.getElementById('maxBtn');
-
 
   // Setting the initial value of the progress bar
   percentReplVal.innerHTML = percentReplSlider.value + "%";
@@ -70,10 +70,10 @@ function init(){
 }
 
 function updateText(){
+
   text_area.value = text;
   var controllerElement = document.querySelector('section');
   var controllerScope = angular.element(controllerElement).scope();
-  console.log(controllerScope.inputText.text);
   controllerScope.inputText.text = text;
   controllerScope.$apply();
 }
@@ -138,12 +138,7 @@ function selectMinButton(){
   currReplacement = "min";
 }
 
-///////// Pedantify code here
-
-outputFile = false;
 hyphenatedWords = false;
-
-name = "testname"
 text = "";
 meanLength = 0;
 textLength = 0;
@@ -166,17 +161,6 @@ function main() {
   excludeWords();
   swapMethod();
   pedantify();
-}
-
-function getResults(){
-      representation = "File name: " + name + "\n";
-      representation += "Mean word length: " + meanLength + "\n";
-      representation += "Number of words in text: " + textLength + "\n";
-      representation += "Number of words replaced: " + wordsReplaced + "\n";
-      //representation += "Number of excluded words: " + str( len(pronouns) + len(properNouns) + len(articles) + len(excludedWords)) + "\n";
-      representation += "Percentage of words replaced: " + percent + "\n";
-      representation += "Word swapping method: " + swappingMethod + "\n";
-      return representation
 }
 
 function textWordLength(){
@@ -253,10 +237,41 @@ function getIndex(string, character){
 }
 
 function pedantify(){
-  words_mainText = text.split(" ");
-  console.log(words_mainText);
+  text = text.split("");
+
+  currWord = false;
+  wordList = [];
+  whiteSpaceList = [];
+  beginsWithWhitespace = false;
+  if (text[0] == " "){
+    whiteSpaceList[0] = "";
+    beginsWithWhitespace = true;
+  }
+  for (charIndex in text){
+    char = text[charIndex];
+    if (char == " " || char == "\n" || char == "\t" || char == "\r"){
+      if (currWord == false) {
+        whiteSpaceList[whiteSpaceList.length-1] += char;
+      } else {
+        whiteSpaceList.push(char)
+        currWord = false;
+      }
+    } else {
+        if (currWord == true){
+          wordList[wordList.length-1] += char;
+        } else {
+
+          wordList.push(char);
+          currWord = true;
+        }
+    }
+  }
+  words_mainText = wordList;
   newText = "";
   count = 0;
+  if (beginsWithWhitespace == true){
+    newText += whiteSpaceList[0];
+  }
   for (wordIndex in words_mainText){
     word = words_mainText[wordIndex];
     if (percentageCheck() == true) {
@@ -271,12 +286,21 @@ function pedantify(){
       }
       count += 1;
       if (parseInt(wordIndex) + 1 < words_mainText.length){
-        newWord += " ";
+        if (beginsWithWhitespace == true){
+          newWord += whiteSpaceList[parseInt(wordIndex)+1];
+        } else {
+          newWord += whiteSpaceList[wordIndex];
+        }
+
       }
       newText += newWord;
     } else {
       if (parseInt(wordIndex) + 1 < words_mainText.length){
-          word += " ";
+        if (beginsWithWhitespace == true){
+          word += whiteSpaceList[parseInt(wordIndex)+1];
+        } else {
+          word += whiteSpaceList[wordIndex];
+        }
       }
       newText += word;
     }
@@ -285,8 +309,7 @@ function pedantify(){
   wordsReplaced = count;
   text = newText;
   updateAll();
-  if (outputFile == true){
-  }
+
   // TODO: Fix these shenanigans
   var controllerElement = document.querySelector('section');
   var controllerScope = angular.element(controllerElement).scope();
