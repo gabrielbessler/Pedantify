@@ -7,16 +7,15 @@ myApp.controller('MainController', function($scope) {
   $scope.oldMeanLength = 0;
   $scope.wordsReplaced = 0;
 
-  $scope.testmsg = function(text){
-
+  $scope.numWords = function(text){
     var s = text ? text.split(/\s+/) : 0; // it splits the text on space/tab/enter
     return s ? s.length : '0';
   }
-  $scope.testmsg2 = function(text){
+  $scope.numChars = function(text){
     var s = text ? text.length : 0;
     return s;
   }
-  $scope.testmsg3 = function(text){
+  $scope.meanWordLenBefore = function(text){
     if ($scope.textPedantified == false) {
       var s = text ? text.split(/\s+/) : 0;
       numChars = 0;
@@ -28,7 +27,7 @@ myApp.controller('MainController', function($scope) {
       return $scope.oldMeanLength;
     }
   }
-  $scope.testmsg4 = function(text){
+  $scope.meanWordLenAfter = function(text){
     if ($scope.textPedantified == false) {
       return '0';
     } else {
@@ -63,14 +62,11 @@ function init(){
 
   // Setting the initial value of the progress bar
   percentReplVal.innerHTML = percentReplSlider.value + "%";
-
   minBtn.style.color = "#e88b2e";
-
   addEventListeners();
 }
 
 function updateText(){
-
   text_area.value = text;
   var controllerElement = document.querySelector('section');
   var controllerScope = angular.element(controllerElement).scope();
@@ -103,39 +99,33 @@ function addEventListeners(){
   });
 
   minBtn.addEventListener('click', function(){
-    selectMinButton();
+    currReplacement = "min";
+    minBtn.style.color = "#e88b2e";
+    maxBtn.style.color = "white";
+    randBtn.style.color = "white";
   });
   maxBtn.addEventListener('click', function(){
+    currReplacement = "max";
     maxBtn.style.color = "#e88b2e";
     minBtn.style.color = "white";
     randBtn.style.color = "white";
-    currReplacement = "max";
   });
   randBtn.addEventListener('click', function(){
+    currReplacement = "random";
     randBtn.style.color = "#e88b2e";
     minBtn.style.color = "white";
     maxBtn.style.color = "white";
-    currReplacement = "random";
   });
   resetOptionsBtn.addEventListener('click', function(){
     selectMinButton();
     percentReplSlider.value = 50;
     percentReplVal.innerHTML = percentReplSlider.value + "%";
     excludeWord.value = "";
-    chkConjunctions.checked = false;
-    chkPronouns.checked = false;
-    chkHyphens.checked = false;
+    chkConjunctions.checked = false, chkPronouns.checked = false, chkHyphens.checked = false;
   });
   submitBtn.addEventListener('click', function(){
     main();
   });
-}
-
-function selectMinButton(){
-  minBtn.style.color = "#e88b2e";
-  maxBtn.style.color = "white";
-  randBtn.style.color = "white";
-  currReplacement = "min";
 }
 
 hyphenatedWords = false;
@@ -152,20 +142,19 @@ swappingMethod = "random";
 function main() {
   text = text_area.value;
   updateAll();
-  percentageSwap();
+  percent = percentReplSlider.value;
   excludeWords();
-  swapMethod();
+  method = currReplacement;
   pedantify();
 }
 
 function excludeWords(){
-  //excludedWords = excludeWord.value.split(" ");
   excludedWords = [];
   currWord = false;
   for (charIndex in excludeWord.value){
     char = excludeWord.value[charIndex];
     if (char == " " || char == "\n" || char == "\t" || char == "\r"){
-      currWord = false; 
+      currWord = false;
     } else {
         if (currWord == true){
           excludedWords[excludedWords.length-1] += char;
@@ -175,15 +164,6 @@ function excludeWords(){
         }
     }
   }
-  console.log(excludedWords);
-}
-
-function swapMethod(){
-  method = currReplacement;
-}
-
-function percentageSwap(){
-  percent = percentReplSlider.value;
 }
 
 function averageLength(){
@@ -280,7 +260,17 @@ function pedantify(){
   }
   for (wordIndex in words_mainText){
     word = words_mainText[wordIndex];
-    if (percentageCheck() == true) {
+
+    if (isElementInList(word.toLowerCase(),properNouns) || isElementInList(word.toLowerCase(),pronouns) || isElementInList(word.toLowerCase(),excludedWords)){
+      if (parseInt(wordIndex) + 1 < words_mainText.length){
+        if (beginsWithWhitespace == true){
+          word += whiteSpaceList[parseInt(wordIndex)+1];
+        } else {
+          word += whiteSpaceList[wordIndex];
+        }
+      }
+      newText += word;
+    } else if (percentageCheck() == true) {
       if (method == "min") {
         newWord = 'sampleText';
       }
@@ -315,17 +305,25 @@ function pedantify(){
   text = newText;
   updateAll();
 
-  // TODO: Fix these shenanigans
+  // TODO: Fix this
   var controllerElement = document.querySelector('section');
   var controllerScope = angular.element(controllerElement).scope();
   if (controllerScope.textPedantified == true){
-    controllerScope.oldMeanLength = document.getElementById('test2').innerHTML;
+    controllerScope.oldMeanLength = document.getElementById('meanWordLen2').innerHTML;
   } else {
-    controllerScope.oldMeanLength = document.getElementById('test1').innerHTML;
+    controllerScope.oldMeanLength = document.getElementById('meanWordLen1').innerHTML;
     controllerScope.textPedantified = true;
   }
   controllerScope.inputText.text = text_area.value;
   controllerScope.wordsReplaced = wordsReplaced;
+}
+function isElementInList(e, list){
+  for (index in list){
+    if(list[index] == e){
+      return true;
+    }
+  }
+  return false;
 }
 /*
         if word.lower() in self.pronouns:

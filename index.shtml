@@ -23,22 +23,21 @@
       <form>
         <textarea id="textArea1" ng-model="inputText.text"></textarea>
         <br>
-        <input type="submit" value="Submit" id="submitBtn">
-        <input type="button" value="Reset" id="resetBtn">
+        <input type="submit" value="Submit" id="submitBtn" class="optionsButton">
+        <input type="button" value="Reset" id="resetBtn" class="optionsButton">
         <input type="file" size="40" id="chooseFile" accept=".txt">
-        <!-- We cannot style the submit button, so we
-        hide it and style the label instead -->
-        <label for="chooseFile">Choose a file...</label>
-        <a href="" id="saveFileLink" download="text.txt" >
-          <input type="button" value="Download Text..." id="saveFile">
+        <!-- We cannot style the submit button, so we hide it and style the label instead -->
+        <label for="chooseFile" class="optionsButton">Choose a file...</label>
+        <a href="" id="saveFileLink" download="text.txt">
+          <input type="button" value="Download Text..." id="saveFile" class="optionsButton">
         </a>
       </form>
       <div id="metaDisplay">
-        Number of Words: <span id="numWords">{{testmsg(inputText.text)}}</span> <br>
-        Number of Character: {{testmsg2(inputText.text)}}  <br>
+        Number of Words: <span id="numWords">{{numWords(inputText.text)}}</span> <br>
+        Number of Character: {{numChars(inputText.text)}}  <br>
         Number of Words Replaced: {{wordsReplaced}}<br>
-        Mean Word Length (Before Replacement): <span id="test1">{{testmsg3(inputText.text)}}</span> <br>
-        Mean Word Length (After Replacement): <span id="test2">{{testmsg4(inputText.text)}}</span>
+        Mean Word Length (Before Replacement): <span id="meanWordLen1">{{meanWordLenBefore(inputText.text)}}</span> <br>
+        Mean Word Length (After Replacement): <span id="meanWordLen2">{{meanWordLenAfter(inputText.text)}}</span>
       </div>
     </section>
 
@@ -65,21 +64,21 @@
           <input class="replaceTypeBtn" type="button" value="Random" id="randBtn">
         </div>
 
-        <div id="excludePronounsContainer">
+        <div class="excludeContainer">
           <span class="toolTip">Exclude Pronouns
              <span class="toolTipText">Prevent pronouns from being pedantified</span>
           </span>
           <input type="checkbox" id="chkPronouns">
         </div>
 
-        <div id="excludeConjunctions">
+        <div class="excludeContainer">
           <span class="toolTip">Exclude Conjunctions
             <span class="toolTipText">Prevent conjunctions from being pedantified</span>
           </span>
           <input type="checkbox" id="chkConjunctions">
         </div>
 
-        <div id="excludeHyphensContainer">
+        <div class="excludeContainer">
           <span class="toolTip">Exclude Hyphenated Words
             <span class="toolTipText">Ignore words that include hyphens</span>
           </span>

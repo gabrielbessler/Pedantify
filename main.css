@@ -109,11 +109,10 @@ section {
   padding: 5px 5px;
   border-radius: 6px;
   font-size: .8em;
-  /* Position the tooltip text */
   position: absolute;
   z-index: 1;
 }
-#excludeConjunctions, #excludeHyphensContainer, #excludePronounsContainer {
+.excludeContainer {
   float:left;
   width: 100%;
   margin-top: 15px;
@@ -141,7 +140,7 @@ section {
   position: relative;
   top: 50px;
 }
-label, #resetBtn, #submitBtn, #saveFile {
+.optionsButton {
   display: inline-block;
   width: 150px;
   cursor: pointer;
@@ -151,11 +150,12 @@ label, #resetBtn, #submitBtn, #saveFile {
   background-color: blue;
   padding: .5%;
   border: none;
+  -webkit-appearance: none;
 }
-label:hover, #resetBtn:hover, #submitBtn:hover, #saveFile:hover {
+.optionsButton:hover{
   background-color: purple;
 }
-label:active, #resetBtn:active, #submitBtn:active, #saveFile:active {
+.optionsButton:active{
   color: orange;
 }
 #metaDisplay {
