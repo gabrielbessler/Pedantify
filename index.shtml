@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="header.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="main.js"></script>
-    <link rel="icon" href="test2.ico">
+    <link rel="icon" href="Main.ico">
   </head>
   <body onload="init()" ng-app="myApp">
 

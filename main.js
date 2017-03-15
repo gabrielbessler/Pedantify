@@ -127,7 +127,7 @@ function addEventListeners(){
     chkHyphens.checked = false;
   });
   submitBtn.addEventListener('click', function(){
-    startPedantify();
+    main();
   });
 }
 
@@ -141,7 +141,6 @@ function selectMinButton(){
 hyphenatedWords = false;
 text = "";
 meanLength = 0;
-textLength = 0;
 wordsReplaced = 0;
 pronouns = [];
 properNouns = [];
@@ -149,10 +148,6 @@ articles = ["a", "and", "this", "that", "like", "no", "yes", "the", "okay", "is"
 excludedWords = [];
 percent = 0;
 swappingMethod = "random";
-
-function startPedantify() {
-  main();
-}
 
 function main() {
   text = text_area.value;
@@ -163,12 +158,24 @@ function main() {
   pedantify();
 }
 
-function textWordLength(){
-  textLength = text.split(" ").length;
-}
-
 function excludeWords(){
-  excludedWords = excludeWord.value.split(" ");
+  //excludedWords = excludeWord.value.split(" ");
+  excludedWords = [];
+  currWord = false;
+  for (charIndex in excludeWord.value){
+    char = excludeWord.value[charIndex];
+    if (char == " " || char == "\n" || char == "\t" || char == "\r"){
+      currWord = false; 
+    } else {
+        if (currWord == true){
+          excludedWords[excludedWords.length-1] += char;
+        } else {
+          excludedWords.push(char);
+          currWord = true;
+        }
+    }
+  }
+  console.log(excludedWords);
 }
 
 function swapMethod(){
@@ -224,7 +231,6 @@ function percentageCheck(){
 
 function updateAll() {
   self.averageLength();
-  self.textWordLength();
 }
 
 function getIndex(string, character){
@@ -291,7 +297,6 @@ function pedantify(){
         } else {
           newWord += whiteSpaceList[wordIndex];
         }
-
       }
       newText += newWord;
     } else {
