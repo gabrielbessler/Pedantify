@@ -1,5 +1,8 @@
 # Pedantify
 
+Link to list of most common words: https://github.com/first20hours/google-10000-english/edit/master/20k.txt
+(credit: @first20hours)
+
 Pedantify.com is a web interface for modifying text. Specifically, it is possible to enter a body of text, and the website will use a thesaurus to replace words with more complicated (or simpler) synonyms. 
 
 The goal of Pendantify.com is to modify text while preserving meaning. 
@@ -24,3 +27,5 @@ Additional Features:
 2. Count for number of characters 
 3. Number of words replaced
 4. Mean word length counter (before and after pedantification)
+
+
