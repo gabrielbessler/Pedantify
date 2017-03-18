@@ -1,5 +1,6 @@
 myApp = angular.module('myApp', []);
 
+//AngularJS for updating the metadata text at the bottom of the textArea
 myApp.controller('MainController', function($scope) {
 
   $scope.inputText = {text:""}
@@ -8,7 +9,8 @@ myApp.controller('MainController', function($scope) {
   $scope.wordsReplaced = 0;
 
   $scope.numWords = function(text){
-    var s = text ? text.split(/\s+/) : 0; // it splits the text on space/tab/enter
+    //splits the text on space/tab/enter
+    var s = text ? text.split(/\s+/) : 0;
     return s ? s.length : '0';
   }
   $scope.numChars = function(text){
@@ -43,6 +45,7 @@ myApp.controller('MainController', function($scope) {
 
 currReplacement = "min";
 
+//Initializes all variables/objects/eventlisteners when the webpage loads
 function init(){
   // Assigning variables to all elements we use
   percentReplSlider = document.getElementById('slider1');
@@ -66,6 +69,7 @@ function init(){
   addEventListeners();
 }
 
+//Fixes the angularJS text display when a text file is loaded
 function updateText(){
   text_area.value = text;
   var controllerElement = document.querySelector('section');
@@ -74,6 +78,7 @@ function updateText(){
   controllerScope.$apply();
 }
 
+//Adds all of the event listeners to the webpage
 function addEventListeners(){
   chooseFile.onchange = function(){
     fileToLoad = chooseFile.files[chooseFile.files.length - 1];
@@ -88,7 +93,6 @@ function addEventListeners(){
   percentReplSlider.addEventListener("input", function(){
     percentReplVal.innerHTML = percentReplSlider.value + "%";
   });
-
   resetBtn = document.getElementById("resetBtn")
   resetBtn.addEventListener("click", function(){
     var controllerElement = document.querySelector('section');
@@ -97,7 +101,6 @@ function addEventListeners(){
     controllerScope.inputText.text = "";
     controllerScope.$apply();
   });
-
   minBtn.addEventListener('click', function(){
     currReplacement = "min";
     minBtn.style.color = "#e88b2e";
@@ -124,33 +127,44 @@ function addEventListeners(){
     chkConjunctions.checked = false, chkPronouns.checked = false, chkHyphens.checked = false;
   });
   submitBtn.addEventListener('click', function(){
-    main();
+    pedantifyInit();
   });
 }
 
-hyphenatedWords = false;
-text = "";
-meanLength = 0;
-wordsReplaced = 0;
-pronouns = [];
-properNouns = [];
-articles = ["a", "and", "this", "that", "like", "no", "yes", "the", "okay", "is", "in", "at", "why", "not", "be", "for"];
-excludedWords = [];
-percent = 0;
-swappingMethod = "random";
+//Variables necessary for pedantification
+var text = "";
+var pronouns = [];
+var properNouns = [];
+var articles = ["a", "and", "this", "that", "like", "no", "yes", "the", "okay", "is", "in", "at", "why", "not", "be", "for"];
+var excludedWords = [];
+var percent = 0;
+var ignoreConjunctions = false;
+var ignorePronouns = false;
+var ignoreHyphens = false;
 
-function main() {
+//Handles calling the function necessary for pedantification
+function pedantifyInit() {
   text = text_area.value;
-  updateAll();
   percent = percentReplSlider.value;
-  excludeWords();
   method = currReplacement;
+  excludeWords();
+  getExcludes();
   pedantify();
 }
 
+//Uses the checkboxes in 'options' to see if pronouns, conjunctions, and hyphenated words will excluded
+function getExcludes(){
+    ignoreConjunctions = chkConjunctions.checked;
+    ignorePronouns = chkPronouns.checked;
+    ignoreHyphens = chkHyphens.checked;
+}
+
+//Uses the textArea in 'options' to get a list of words to ignore in pedantification
 function excludeWords(){
   excludedWords = [];
   currWord = false;
+  //TODO: make this a function
+  //Parses through text and ignores whitespace
   for (charIndex in excludeWord.value){
     char = excludeWord.value[charIndex];
     if (char == " " || char == "\n" || char == "\t" || char == "\r"){
@@ -164,15 +178,6 @@ function excludeWords(){
         }
     }
   }
-}
-
-function averageLength(){
-  partialSum = 0;
-  words_mainText = text.split(" ");
-  for (wordIndex in words_mainText) {
-    partialSum += words_mainText[wordIndex].length;
-  }
-  meanLength = (partialSum / words_mainText.length).toFixed(2);
 }
 
 function longestWord(inputList){
@@ -207,10 +212,6 @@ function percentageCheck(){
   } else {
     return false;
   }
-}
-
-function updateAll() {
-  self.averageLength();
 }
 
 function getIndex(string, character){
@@ -301,9 +302,7 @@ function pedantify(){
     }
   }
   text_area.value = newText;
-  wordsReplaced = count;
   text = newText;
-  updateAll();
 
   // TODO: Fix this
   var controllerElement = document.querySelector('section');
@@ -315,7 +314,7 @@ function pedantify(){
     controllerScope.textPedantified = true;
   }
   controllerScope.inputText.text = text_area.value;
-  controllerScope.wordsReplaced = wordsReplaced;
+  controllerScope.wordsReplaced = count;
 }
 function isElementInList(e, list){
   for (index in list){

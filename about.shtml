@@ -1,21 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
     <title>Pedantify</title>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="header.css">
-    <link rel="stylesheet" href="contact.css">
     <link rel="icon" href="Main.ico">
-  </head>
+  <head>
   <body>
     <!--#include file="header.html" -->
-    <div id="contactUsDiv">
-    <h1>
-      For questions, concerns, or complaints, send us a message at: <br>
-        pedantify@pedantify.com
-    </h1>
-    </div>
+
     <!--#include file="footer.html" -->
   </body>
 </html>

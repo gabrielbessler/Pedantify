@@ -1,12 +1,8 @@
-#headerPlaceHolder{
-  margin-top: 150px;
-}
-
+#headerPlaceHolder{margin-top: 130px;}
 nav {
   position: fixed;
   top: 70px;
   z-index: 1000;
-
   width: 100%;
   text-align: center;
   background-color: white;
@@ -37,6 +33,6 @@ a:active {
 }
 ul {
   list-style: none;
-  padding: 8px 0px;
-  margin-bottom: 20px;
+  padding: 6px 0px;
+  margin-bottom: 10px;
 }

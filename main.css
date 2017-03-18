@@ -1,6 +1,6 @@
 body {
-  font-family: "Helvetica";
-  color: #5947e5;
+  font-family: serif;
+  color:black;
   background-color: #e0e0e0;
   font-size: 100%;
 }
@@ -36,16 +36,15 @@ textarea {
 aside {
   width: 36%;
   float: right;
-  background-color: #639df9;
+  /* #639df9; */
+  background-color: #B2871D;
   padding-left: 1%;
   padding-right: 1%;
   border-radius: 8px;
   margin-left: 1%;
   font-weight: bold;
 }
-.container {
-  display:flex;
-}
+.container {display:flex;}
 h1 {
   text-align: center;
   font-weight: bold;
@@ -54,9 +53,8 @@ h1 {
 section {
   width: 61%;
   float: left;
-  background-color: #639df9;
+  background-color: #5C8BFF;
   text-align: center;
-  /* TODO */
   display:flex;
   flex-direction: column;
   padding-bottom: 30px;

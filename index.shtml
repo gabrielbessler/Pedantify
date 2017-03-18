@@ -28,9 +28,11 @@
         <input type="file" size="40" id="chooseFile" accept=".txt">
         <!-- We cannot style the submit button, so we hide it and style the label instead -->
         <label for="chooseFile" class="optionsButton">Choose a file...</label>
+        <!-- TODO
         <a href="" id="saveFileLink" download="text.txt">
           <input type="button" value="Download Text..." id="saveFile" class="optionsButton">
         </a>
+      -->
       </form>
       <div id="metaDisplay">
         Number of Words: <span id="numWords">{{numWords(inputText.text)}}</span> <br>
