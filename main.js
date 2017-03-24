@@ -21,8 +21,8 @@ myApp.controller('MainController', function($scope) {
     if ($scope.textPedantified == false) {
       var s = text ? text.split(/\s+/) : 0;
       numChars = 0;
-      for (wordIndex in s) {
-        numChars += s[wordIndex].length;
+      for (wordIndex1 in s) {
+        numChars += s[wordIndex1].length;
       }
       return s ? (numChars / s.length).toFixed(2) : '0';
     } else {
@@ -35,8 +35,8 @@ myApp.controller('MainController', function($scope) {
     } else {
       var s = text ? text.split(/\s+/) : 0;
       numChars = 0;
-      for (wordIndex in s) {
-        numChars += s[wordIndex].length;
+      for (wordIndex2 in s) {
+        numChars += s[wordIndex2].length;
       }
       return s ? (numChars / s.length).toFixed(2) : '0';
     }
@@ -67,7 +67,18 @@ function init(){
   percentReplVal.innerHTML = percentReplSlider.value + "%";
   minBtn.style.color = "#e88b2e";
   addEventListeners();
+
+  // Loading the dictionary using jQuery
+  $.ajax({
+    url:'http://www.pedantify.com/dict_test.js  ',
+    success: function (data){
+      starterDict = eval(data);
+      console.log(starterDict);
+      //console.log(starterDict['youth']);
+    }
+  });
 }
+
 
 //Fixes the angularJS text display when a text file is loaded
 function updateText(){
@@ -134,8 +145,7 @@ function addEventListeners(){
 //Variables necessary for pedantification
 var text = "";
 var pronouns = [];
-var properNouns = [];
-var articles = ["a", "and", "this", "that", "like", "no", "yes", "the", "okay", "is", "in", "at", "why", "not", "be", "for"];
+var conjunctions = ["a", "and", "this", "that", "like", "no", "yes", "the", "okay", "is", "in", "at", "why", "not", "be", "for"];
 var excludedWords = [];
 var percent = 0;
 var ignoreConjunctions = false;
@@ -180,32 +190,26 @@ function excludeWords(){
   }
 }
 
-function longestWord(inputList){
+//Gets the shortest or longest word in an array
+function getLongShorttWord(inputList, type="long"){
   wordlength = inputList[0].length;
   currentWord = "";
-
-  for (wordIndex in inputList){
-    if(inputList[wordIndex].length > wordlength){
-    length = inputList[wordIndex].length;
-      currentWord = inputList[wordIndex];
+  if (type == "short"){
+    currentWord = inputList[0];
+  }
+  for (wordIndex3 in inputList){
+    if(inputList[wordIndex3].length > wordlength && type=="long"){
+      length = inputList[wordIndex3].length;
+      currentWord = inputList[wordIndex3];
+    } else if(inputList[wordIndex3].length < wordlength && type=="short"){
+      length = inputList[wordIndex3].length;
+      currentWord = inputList[wordIndex3];
     }
   }
   return currentWord
 }
 
-function shortestWord(inputList){
-  wordlength = inputList[0].length;
-  currentWord = "";
-
-  for (wordIndex in inputList){
-    if(inputList[wordIndex].length < wordlength){
-    length = inputList[wordIndex].length;
-      currentWord = inputList[wordIndex];
-    }
-  }
-  return currentWord
-}
-
+//Generates a random number and checks if it's bigger than the threshold for pedantifying a word
 function percentageCheck(){
   if (Math.round(Math.random() * 100) < percent) {
     return true;
@@ -214,26 +218,32 @@ function percentageCheck(){
   }
 }
 
-function getIndex(string, character){
-  count = 0;
-  for (charIndex in string){
-    if (string[charIndex] == character){
-      return charIndex;
+//Returns true if the given element is found in the list
+function isElementInList(e, list){
+  for (index in list){
+    if(list[index] == e){
+      return true;
     }
   }
+  return false;
 }
 
+//Handles the actual pedantification of the text
 function pedantify(){
   text = text.split("");
 
-  currWord = false;
   wordList = [];
   whiteSpaceList = [];
+
+  //Figures out if the text begins with a whitespace or a word
   beginsWithWhitespace = false;
   if (text[0] == " "){
     whiteSpaceList[0] = "";
     beginsWithWhitespace = true;
   }
+
+  //Parses through the given text and splits into wordList and whiteSpaceList
+  currWord = false;
   for (charIndex in text){
     char = text[charIndex];
     if (char == " " || char == "\n" || char == "\t" || char == "\r"){
@@ -253,52 +263,55 @@ function pedantify(){
         }
     }
   }
-  words_mainText = wordList;
+
   newText = "";
-  count = 0;
+  wordReplacedCount = 0;
   if (beginsWithWhitespace == true){
     newText += whiteSpaceList[0];
   }
-  for (wordIndex in words_mainText){
-    word = words_mainText[wordIndex];
-
-    if (isElementInList(word.toLowerCase(),properNouns) || isElementInList(word.toLowerCase(),pronouns) || isElementInList(word.toLowerCase(),excludedWords)){
-      if (parseInt(wordIndex) + 1 < words_mainText.length){
+  for (wordIndex in wordList){
+    word = wordList[wordIndex];
+    //Adds the correct whitespace to the word
+    function getWord(){
+      //We only care about whitespace if the word is not at the end of the text
+      if (parseInt(wordIndex) + 1 < wordList.length){
         if (beginsWithWhitespace == true){
           word += whiteSpaceList[parseInt(wordIndex)+1];
         } else {
           word += whiteSpaceList[wordIndex];
-        }
+       }
       }
       newText += word;
+    }
+    //First, we check if it is one of the words we shouldn't pedantify
+      if(ignoreConjunctions == true && isElementInList(word.toLowerCase(),conjunctions)){
+      getWord();
+    } else if(ignorePronouns == true && isElementInList(word.toLowerCase(),pronouns)){
+      getWord();
+    } else if (ignoreHyphens == true && isHyphenated(word.toLowerCase())){
+      getWord();
+    } else if (isElementInList(word.toLowerCase(),excludedWords)){
+      getWord();
     } else if (percentageCheck() == true) {
-      if (method == "min") {
-        newWord = 'sampleText';
-      }
-      if (method == "max") {
-        newWord = 'max';
-      }
-      if (method == "random") {
-        newWord = 'random';
-      }
-      count += 1;
-      if (parseInt(wordIndex) + 1 < words_mainText.length){
-        if (beginsWithWhitespace == true){
-          newWord += whiteSpaceList[parseInt(wordIndex)+1];
-        } else {
-          newWord += whiteSpaceList[wordIndex];
+      words = starterDict[word];
+      if (words == undefined) {
+        //If the word is not in dictionary, treat it like non-ped. word
+        getWord();
+      } else if (words.length == 0){
+        getWord();
+      } else {
+        if (method == "min") {
+          word = getLongShorttWord(words, 'short');
+        } else if (method == "max") {
+          word = getLongShorttWord(words, 'long');
+        } else if (method == "random") {
+          word = words[Math.floor(Math.random()*words.length)];
         }
+        wordReplacedCount += 1;
+        getWord();
       }
-      newText += newWord;
     } else {
-      if (parseInt(wordIndex) + 1 < words_mainText.length){
-        if (beginsWithWhitespace == true){
-          word += whiteSpaceList[parseInt(wordIndex)+1];
-        } else {
-          word += whiteSpaceList[wordIndex];
-        }
-      }
-      newText += word;
+      getWord();
     }
   }
   text_area.value = newText;
@@ -314,43 +327,5 @@ function pedantify(){
     controllerScope.textPedantified = true;
   }
   controllerScope.inputText.text = text_area.value;
-  controllerScope.wordsReplaced = count;
+  controllerScope.wordsReplaced = wordReplacedCount;
 }
-function isElementInList(e, list){
-  for (index in list){
-    if(list[index] == e){
-      return true;
-    }
-  }
-  return false;
-}
-/*
-        if word.lower() in self.pronouns:
-            newText += ( word + " " )
-        elif word.lower() in self.properNouns:
-            newText += ( word + " " )
-        elif word.lower() in self.articles:
-            newText += ( word + " " )
-        elif word.lower() in self.excludedWords:
-            newText += ( word + " " )
-
-            try:
-                wordList = dictionary.synonym( word )
-                self.shortestWord(wordList)
-                self.longestWord(wordList)
-                random.choice(wordList)
-
-                if word[0] == word[0].upper():
-                    newText += ( newWord[0].upper() + newWord[1:] + " " )
-                elif word[-1] in '.,;?!:':
-                    string = '.,;?!:'
-                    indexNumber = self.getIndex(string, word[-1])
-                    newText += ( newWord + string[indexNumber] + " " )
-                #elif " ' "  in word:
-                #   newText += ( word + " " )
-                elif word.lower() == word:
-                    newText += ( newWord + " " )
-
-            except:
-                newText += ( word + " " )
-*/
