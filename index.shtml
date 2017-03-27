@@ -25,6 +25,7 @@
         <br>
         <input type="submit" value="Submit" id="submitBtn" class="optionsButton">
         <input type="button" value="Reset" id="resetBtn" class="optionsButton">
+        <input type="button" value="<-" id="originalTextBtn" class="optionsButton"> 
         <input type="file" size="40" id="chooseFile" accept=".txt">
         <!-- We cannot style the submit button, so we hide it and style the label instead -->
         <label for="chooseFile" class="optionsButton">Choose a file...</label>
