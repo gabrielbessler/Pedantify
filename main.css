@@ -3,10 +3,6 @@ body {
   color:black;
   background-color: #e0e0e0;
   font-size: 100%;
-  
-  /*
-  margin: 0;	
-  */
 }
 #wordsToExcludeText {
   position: relative;
@@ -15,6 +11,21 @@ body {
   top: 20px;
   font-size: 1.3em;
   clear: both;
+}
+article {
+  width: 100%;
+  background-color: #639df9;
+  border-radius: 8px;
+  height: 100%;
+  position: relative;
+  float: left;
+  padding-bottom: 20px;
+}
+article h1 {
+   color: #5947e5;
+}
+article p {
+  margin: 10px;
 }
 textarea {
   display: block;
@@ -40,7 +51,7 @@ textarea {
 aside {
   width: 36%;
   float: right;
-  background-color: #8d968d; 
+  background-color: #8d968d;
   padding-left: 1%;
   padding-right: 1%;
   border-radius: 8px;

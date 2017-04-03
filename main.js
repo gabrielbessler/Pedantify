@@ -48,17 +48,19 @@ currReplacement = "min";
 //Initializes all variables/objects/eventlisteners when the webpage loads
 function init(){
   // Assigning variables to all elements we use
-  percentReplSlider = document.getElementById('slider1');
   resetOptionsBtn = document.getElementById('resetOptionsBtn');
-  chkConjunctions = document.getElementById('chkConjunctions')
+  chkConjunctions = document.getElementById('chkConjunctions');
+  undoPedantify= document.getElementById('originalTextBtn');
   percentReplVal = document.getElementById('percReplValue');
-  excludeWord = document.getElementById('textArea2');
+  percentReplSlider = document.getElementById('slider1');
   chkPronouns = document.getElementById('chkPronouns');
+  excludeWord = document.getElementById('textArea2');
   chkHyphens = document.getElementById('chkHyphens');
   chooseFile = document.getElementById('chooseFile');
+  saveBtn = document.getElementById('saveFileLink');
   submitBtn = document.getElementById('submitBtn');
   text_area = document.getElementById('textArea1');
-  saveBtn = document.getElementById('saveFileLink');
+  resetBtn = document.getElementById("resetBtn");
   randBtn = document.getElementById('randBtn');
   minBtn = document.getElementById('minBtn');
   maxBtn = document.getElementById('maxBtn');
@@ -73,15 +75,12 @@ function init(){
     url:'http://www.pedantify.com/dict_test.js  ',
     success: function (data){
       starterDict = eval(data);
-      console.log(starterDict);
-      //console.log(starterDict['youth']);
     }
   });
 }
 
-
 //Fixes the angularJS text display when a text file is loaded
-function updateText(){
+  function updateText(){
   text_area.value = text;
   var controllerElement = document.querySelector('section');
   var controllerScope = angular.element(controllerElement).scope();
@@ -104,13 +103,20 @@ function addEventListeners(){
   percentReplSlider.addEventListener("input", function(){
     percentReplVal.innerHTML = percentReplSlider.value + "%";
   });
-  resetBtn = document.getElementById("resetBtn")
   resetBtn.addEventListener("click", function(){
     var controllerElement = document.querySelector('section');
     var controllerScope = angular.element(controllerElement).scope();
     text_area.value = "";
     controllerScope.inputText.text = "";
     controllerScope.$apply();
+  });
+  undoPedantify.addEventListener('click', function(){
+    var controllerElement = document.querySelector('section');
+    var controllerScope = angular.element(controllerElement).scope();
+    text_area.value = old_text;
+    controllerScope.inputText.text = old_text;
+    controllerScope.$apply();
+    text = old_text;
   });
   minBtn.addEventListener('click', function(){
     currReplacement = "min";
@@ -132,7 +138,7 @@ function addEventListeners(){
   });
   resetOptionsBtn.addEventListener('click', function(){
     minBtn.style.color = "#e88b2e";
-    currReplacement = "min"; 
+    currReplacement = "min";
     percentReplSlider.value = 50;
     percentReplVal.innerHTML = percentReplSlider.value + "%";
     excludeWord.value = "";
@@ -145,8 +151,10 @@ function addEventListeners(){
 
 //Variables necessary for pedantification
 var text = "";
+var old_text = "";
 var pronouns = [];
 var conjunctions = ["a", "and", "this", "that", "like", "no", "yes", "the", "okay", "is", "in", "at", "why", "not", "be", "for"];
+var punctuationList = [".","!",",","?",":",";"];
 var excludedWords = [];
 var percent = 0;
 var ignoreConjunctions = false;
@@ -160,6 +168,7 @@ function pedantifyInit() {
   method = currReplacement;
   excludeWords();
   getExcludes();
+  old_text = text;
   pedantify();
 }
 
@@ -294,13 +303,36 @@ function pedantify(){
     } else if (isElementInList(word.toLowerCase(),excludedWords)){
       getWord();
     } else if (percentageCheck() == true) {
-      words = starterDict[word];
+      //First, we check for punctuation (assuming if there is punctuation it will be the last character)
+      var punctuationFound = false;
+      var lastChar = word.slice(-1);
+      if (isElementInList(lastChar, punctuationList) == true){
+        //if there punctuation, we remove it
+        console.log(word);
+        word = word.substr(0,word.length-1); 
+        //word = word.substr(0, word.lengh-1);
+        punctuationFound = true;
+      }
+      //We make the word lower-case so we can check for synonyms
+      words = starterDict[word.toLowerCase()];
       if (words == undefined) {
         //If the word is not in dictionary, treat it like non-ped. word
         getWord();
       } else if (words.length == 0){
+        //If the word is not in dictionary, but there are no synonyms, treat it like non-ped. word
         getWord();
       } else {
+        //We want to set capitalization based on previous capitalization.
+        var capsType = "null";
+        if (word == word.toUpperCase()){
+          //Check for all caps
+          capsType = "all_upper";
+        } else if (word == (word[0].toUpperCase() + word.slice(1,word.length))) {
+          //check if the first letter is capitalized - note that this could have issues with proper nouns
+          //However, the amount of words capitalized because they are @ the beginning of a sentence is greater
+          //Than the number of words that are capitalized b/c proper noun AND have synonyms
+          capsType = "capitalized";
+        }
         if (method == "min") {
           word = getLongShorttWord(words, 'short');
         } else if (method == "max") {
@@ -309,6 +341,14 @@ function pedantify(){
           word = words[Math.floor(Math.random()*words.length)];
         }
         wordReplacedCount += 1;
+        if (capsType == "all_upper") {
+          word = word.toUpperCase();
+        } else if (capsType == "capitalized") {
+          word = word[0].toUpperCase() + word.slice(1,word.length);
+        }
+        if (punctuationFound == true){
+          word += lastChar;
+        }
         getWord();
       }
     } else {
