@@ -131,7 +131,8 @@ function addEventListeners(){
     maxBtn.style.color = "white";
   });
   resetOptionsBtn.addEventListener('click', function(){
-    selectMinButton();
+    minBtn.style.color = "#e88b2e";
+    currReplacement = "min"; 
     percentReplSlider.value = 50;
     percentReplVal.innerHTML = percentReplSlider.value + "%";
     excludeWord.value = "";

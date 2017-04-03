@@ -3,6 +3,10 @@ body {
   color:black;
   background-color: #e0e0e0;
   font-size: 100%;
+  
+  /*
+  margin: 0;	
+  */
 }
 #wordsToExcludeText {
   position: relative;
@@ -36,8 +40,7 @@ textarea {
 aside {
   width: 36%;
   float: right;
-  /* #639df9; */
-  background-color: #B2871D;
+  background-color: #8d968d; 
   padding-left: 1%;
   padding-right: 1%;
   border-radius: 8px;
