@@ -77,6 +77,10 @@ function init(){
       starterDict = eval(data);
     }
   });
+
+  if (localStorage['mainText'] != undefined){
+    text_area.value = localStorage['mainText'];
+  }
 }
 
 //Fixes the angularJS text display when a text file is loaded
@@ -90,6 +94,9 @@ function init(){
 
 //Adds all of the event listeners to the webpage
 function addEventListeners(){
+  window.onbeforeunload = function(){
+    localStorage['mainText'] = text_area.value;
+  }
   chooseFile.onchange = function(){
     fileToLoad = chooseFile.files[chooseFile.files.length - 1];
     reader = new FileReader();
@@ -309,7 +316,7 @@ function pedantify(){
       if (isElementInList(lastChar, punctuationList) == true){
         //if there punctuation, we remove it
         console.log(word);
-        word = word.substr(0,word.length-1); 
+        word = word.substr(0,word.length-1);
         //word = word.substr(0, word.lengh-1);
         punctuationFound = true;
       }
