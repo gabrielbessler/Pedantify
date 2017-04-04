@@ -1,23 +1,27 @@
-myApp = angular.module('myApp', []);
-
 //AngularJS for updating the metadata text at the bottom of the textArea
-myApp.controller('MainController', function($scope) {
+myApp = angular.module('myApp', []);
+myApp.controller('MainController', function( $scope ) {
 
   $scope.inputText = {text:""}
   $scope.textPedantified = false;
   $scope.oldMeanLength = 0;
   $scope.wordsReplaced = 0;
 
-  $scope.numWords = function(text){
+  // Counts and displays the current number of words in the text
+  $scope.numWords = function(text) {
     //splits the text on space/tab/enter
     var s = text ? text.split(/\s+/) : 0;
     return s ? s.length : '0';
   }
-  $scope.numChars = function(text){
+
+  // Counts and displays the number of characters in the text
+  $scope.numChars = function(text) {
     var s = text ? text.length : 0;
     return s;
   }
-  $scope.meanWordLenBefore = function(text){
+
+  // Displays the mean number of characters in each word before pedantification
+  $scope.meanWordLenBefore = function(text) {
     if ($scope.textPedantified == false) {
       var s = text ? text.split(/\s+/) : 0;
       numChars = 0;
@@ -29,7 +33,9 @@ myApp.controller('MainController', function($scope) {
       return $scope.oldMeanLength;
     }
   }
-  $scope.meanWordLenAfter = function(text){
+
+  // Displays the mean number of characters in each word after pedantification
+  $scope.meanWordLenAfter = function( text ) {
     if ($scope.textPedantified == false) {
       return '0';
     } else {
@@ -43,11 +49,11 @@ myApp.controller('MainController', function($scope) {
   }
 });
 
-currReplacement = "min";
-
 //Initializes all variables/objects/eventlisteners when the webpage loads
-function init(){
-  // Assigning variables to all elements we use
+function init() {
+  currReplacement = "min";
+
+  // Assigning variables to all elements used
   resetOptionsBtn = document.getElementById('resetOptionsBtn');
   chkConjunctions = document.getElementById('chkConjunctions');
   undoPedantify= document.getElementById('originalTextBtn');
@@ -65,12 +71,7 @@ function init(){
   minBtn = document.getElementById('minBtn');
   maxBtn = document.getElementById('maxBtn');
 
-  // Setting the initial value of the progress bar
-  percentReplVal.innerHTML = percentReplSlider.value + "%";
-  minBtn.style.color = "#e88b2e";
-  addEventListeners();
-
-  // Loading the dictionary using jQuery
+  // Loading the dictionary using AJAX (through jQuery)
   $.ajax({
     url:'http://www.pedantify.com/dict_test.js  ',
     success: function (data){
@@ -78,13 +79,26 @@ function init(){
     }
   });
 
+  // Checking for cached data (in localStorage)
   if (localStorage['mainText'] != undefined){
     text_area.value = localStorage['mainText'];
+    //Convert strings to boolean
+    percentReplSlider.value = ( localStorage['percentReplacement'] == 'true' );
+    chkPronouns.checked = ( localStorage['excludePronouns'] == 'true');
+    chkHyphens.checked = ( localStorage['excludeHyphenated'] == 'true' );
+    chkConjunctions.checked = ( localStorage['excludeConjunctions'] == 'true' );
+    percentReplSlider.value = localStorage['percentReplacement'];
   }
+
+  // Setting the initial value of the progress bar
+  percentReplVal.innerHTML = percentReplSlider.value + "%";
+  minBtn.style.color = "#e88b2e";
+  addEventListeners();
+
 }
 
 //Fixes the angularJS text display when a text file is loaded
-  function updateText(){
+function updateText() {
   text_area.value = text;
   var controllerElement = document.querySelector('section');
   var controllerScope = angular.element(controllerElement).scope();
@@ -93,31 +107,43 @@ function init(){
 }
 
 //Adds all of the event listeners to the webpage
-function addEventListeners(){
-  window.onbeforeunload = function(){
+function addEventListeners() {
+  // If window is closing, store text/options in the cache
+  window.onbeforeunload = function() {
     localStorage['mainText'] = text_area.value;
+    localStorage['percentReplacement'] = percentReplSlider.value;
+    localStorage['excludePronouns'] = chkPronouns.checked;
+    localStorage['excludeHyphenated'] = chkHyphens.checked;
+    localStorage['excludeConjunctions'] = chkConjunctions.checked;
   }
-  chooseFile.onchange = function(){
+
+  // If the user selects a file, load its context into the main textArea
+  chooseFile.onchange = function() {
     fileToLoad = chooseFile.files[chooseFile.files.length - 1];
     reader = new FileReader();
-    reader.onload = function(e){
+    reader.onload = function(e) {
       text = reader.result;
       updateText();
       chooseFile.value = "";
     }
     reader.readAsText(fileToLoad);
   }
-  percentReplSlider.addEventListener("input", function(){
+
+  // Update the "percentage replacement" slider text
+  percentReplSlider.addEventListener("input", function() {
     percentReplVal.innerHTML = percentReplSlider.value + "%";
   });
-  resetBtn.addEventListener("click", function(){
+
+  //Add click listeners to all of the buttons below the main textArea
+  resetBtn.addEventListener("click", function() {
     var controllerElement = document.querySelector('section');
     var controllerScope = angular.element(controllerElement).scope();
     text_area.value = "";
     controllerScope.inputText.text = "";
     controllerScope.$apply();
   });
-  undoPedantify.addEventListener('click', function(){
+
+  undoPedantify.addEventListener('click', function() {
     var controllerElement = document.querySelector('section');
     var controllerScope = angular.element(controllerElement).scope();
     text_area.value = old_text;
@@ -125,25 +151,29 @@ function addEventListeners(){
     controllerScope.$apply();
     text = old_text;
   });
-  minBtn.addEventListener('click', function(){
+
+  minBtn.addEventListener('click', function() {
     currReplacement = "min";
     minBtn.style.color = "#e88b2e";
     maxBtn.style.color = "white";
     randBtn.style.color = "white";
   });
-  maxBtn.addEventListener('click', function(){
+
+  maxBtn.addEventListener('click', function() {
     currReplacement = "max";
     maxBtn.style.color = "#e88b2e";
     minBtn.style.color = "white";
     randBtn.style.color = "white";
   });
-  randBtn.addEventListener('click', function(){
+
+  randBtn.addEventListener('click', function() {
     currReplacement = "random";
     randBtn.style.color = "#e88b2e";
     minBtn.style.color = "white";
     maxBtn.style.color = "white";
   });
-  resetOptionsBtn.addEventListener('click', function(){
+
+  resetOptionsBtn.addEventListener('click', function() {
     minBtn.style.color = "#e88b2e";
     currReplacement = "min";
     percentReplSlider.value = 50;
@@ -151,22 +181,23 @@ function addEventListeners(){
     excludeWord.value = "";
     chkConjunctions.checked = false, chkPronouns.checked = false, chkHyphens.checked = false;
   });
-  submitBtn.addEventListener('click', function(){
+
+  submitBtn.addEventListener('click', function() {
     pedantifyInit();
   });
 }
 
 //Variables necessary for pedantification
-var text = "";
-var old_text = "";
-var pronouns = [];
 var conjunctions = ["a", "and", "this", "that", "like", "no", "yes", "the", "okay", "is", "in", "at", "why", "not", "be", "for"];
 var punctuationList = [".","!",",","?",":",";"];
-var excludedWords = [];
-var percent = 0;
 var ignoreConjunctions = false;
 var ignorePronouns = false;
 var ignoreHyphens = false;
+var excludedWords = [];
+var pronouns = [];
+var old_text = "";
+var percent = 0;
+var text = "";
 
 //Handles calling the function necessary for pedantification
 function pedantifyInit() {
@@ -180,14 +211,14 @@ function pedantifyInit() {
 }
 
 //Uses the checkboxes in 'options' to see if pronouns, conjunctions, and hyphenated words will excluded
-function getExcludes(){
+function getExcludes() {
     ignoreConjunctions = chkConjunctions.checked;
     ignorePronouns = chkPronouns.checked;
     ignoreHyphens = chkHyphens.checked;
 }
 
 //Uses the textArea in 'options' to get a list of words to ignore in pedantification
-function excludeWords(){
+function excludeWords() {
   excludedWords = [];
   currWord = false;
   //TODO: make this a function
@@ -208,13 +239,13 @@ function excludeWords(){
 }
 
 //Gets the shortest or longest word in an array
-function getLongShorttWord(inputList, type="long"){
+function getLongShorttWord(inputList, type="long") {
   wordlength = inputList[0].length;
   currentWord = "";
   if (type == "short"){
     currentWord = inputList[0];
   }
-  for (wordIndex3 in inputList){
+  for (wordIndex3 in inputList) {
     if(inputList[wordIndex3].length > wordlength && type=="long"){
       length = inputList[wordIndex3].length;
       currentWord = inputList[wordIndex3];
@@ -227,7 +258,7 @@ function getLongShorttWord(inputList, type="long"){
 }
 
 //Generates a random number and checks if it's bigger than the threshold for pedantifying a word
-function percentageCheck(){
+function percentageCheck() {
   if (Math.round(Math.random() * 100) < percent) {
     return true;
   } else {
@@ -236,7 +267,7 @@ function percentageCheck(){
 }
 
 //Returns true if the given element is found in the list
-function isElementInList(e, list){
+function isElementInList(e, list) {
   for (index in list){
     if(list[index] == e){
       return true;
@@ -246,7 +277,7 @@ function isElementInList(e, list){
 }
 
 //Handles the actual pedantification of the text
-function pedantify(){
+function pedantify() {
   text = text.split("");
 
   wordList = [];
@@ -261,9 +292,9 @@ function pedantify(){
 
   //Parses through the given text and splits into wordList and whiteSpaceList
   currWord = false;
-  for (charIndex in text){
+  for ( charIndex in text ) {
     char = text[charIndex];
-    if (char == " " || char == "\n" || char == "\t" || char == "\r"){
+    if ( char == " " || char == "\n" || char == "\t" || char == "\r" ){
       if (currWord == false) {
         whiteSpaceList[whiteSpaceList.length-1] += char;
       } else {
@@ -271,7 +302,7 @@ function pedantify(){
         currWord = false;
       }
     } else {
-        if (currWord == true){
+        if ( currWord == true ) {
           wordList[wordList.length-1] += char;
         } else {
 
@@ -283,13 +314,13 @@ function pedantify(){
 
   newText = "";
   wordReplacedCount = 0;
-  if (beginsWithWhitespace == true){
+  if ( beginsWithWhitespace == true ) {
     newText += whiteSpaceList[0];
   }
-  for (wordIndex in wordList){
+  for ( wordIndex in wordList ) {
     word = wordList[wordIndex];
     //Adds the correct whitespace to the word
-    function getWord(){
+    function getWord() {
       //We only care about whitespace if the word is not at the end of the text
       if (parseInt(wordIndex) + 1 < wordList.length){
         if (beginsWithWhitespace == true){
@@ -301,59 +332,58 @@ function pedantify(){
       newText += word;
     }
     //First, we check if it is one of the words we shouldn't pedantify
-      if(ignoreConjunctions == true && isElementInList(word.toLowerCase(),conjunctions)){
+      if( ignoreConjunctions == true && isElementInList(word.toLowerCase(),conjunctions) ) {
       getWord();
-    } else if(ignorePronouns == true && isElementInList(word.toLowerCase(),pronouns)){
+    } else if( ignorePronouns == true && isElementInList(word.toLowerCase(),pronouns) ) {
       getWord();
-    } else if (ignoreHyphens == true && isHyphenated(word.toLowerCase())){
+    } else if ( ignoreHyphens == true && isHyphenated(word.toLowerCase()) ) {
       getWord();
-    } else if (isElementInList(word.toLowerCase(),excludedWords)){
+    } else if ( isElementInList(word.toLowerCase(),excludedWords) ) {
       getWord();
-    } else if (percentageCheck() == true) {
+    } else if ( percentageCheck() == true ) {
       //First, we check for punctuation (assuming if there is punctuation it will be the last character)
       var punctuationFound = false;
       var lastChar = word.slice(-1);
-      if (isElementInList(lastChar, punctuationList) == true){
+      if ( isElementInList(lastChar, punctuationList) == true ) {
         //if there punctuation, we remove it
-        console.log(word);
         word = word.substr(0,word.length-1);
         //word = word.substr(0, word.lengh-1);
         punctuationFound = true;
       }
       //We make the word lower-case so we can check for synonyms
       words = starterDict[word.toLowerCase()];
-      if (words == undefined) {
+      if ( words == undefined ) {
         //If the word is not in dictionary, treat it like non-ped. word
         getWord();
-      } else if (words.length == 0){
+      } else if ( words.length == 0 ) {
         //If the word is not in dictionary, but there are no synonyms, treat it like non-ped. word
         getWord();
       } else {
         //We want to set capitalization based on previous capitalization.
         var capsType = "null";
-        if (word == word.toUpperCase()){
+        if ( word == word.toUpperCase() ) {
           //Check for all caps
           capsType = "all_upper";
-        } else if (word == (word[0].toUpperCase() + word.slice(1,word.length))) {
+        } else if ( word == (word[0].toUpperCase() + word.slice(1,word.length)) ) {
           //check if the first letter is capitalized - note that this could have issues with proper nouns
           //However, the amount of words capitalized because they are @ the beginning of a sentence is greater
           //Than the number of words that are capitalized b/c proper noun AND have synonyms
           capsType = "capitalized";
         }
-        if (method == "min") {
+        if ( method == "min" ) {
           word = getLongShorttWord(words, 'short');
-        } else if (method == "max") {
+        } else if ( method == "max" ) {
           word = getLongShorttWord(words, 'long');
-        } else if (method == "random") {
+        } else if ( method == "random" ) {
           word = words[Math.floor(Math.random()*words.length)];
         }
         wordReplacedCount += 1;
-        if (capsType == "all_upper") {
+        if ( capsType == "all_upper" ) {
           word = word.toUpperCase();
-        } else if (capsType == "capitalized") {
+        } else if ( capsType == "capitalized" ) {
           word = word[0].toUpperCase() + word.slice(1,word.length);
         }
-        if (punctuationFound == true){
+        if ( punctuationFound == true ){
           word += lastChar;
         }
         getWord();
@@ -368,7 +398,7 @@ function pedantify(){
   // TODO: Fix this
   var controllerElement = document.querySelector('section');
   var controllerScope = angular.element(controllerElement).scope();
-  if (controllerScope.textPedantified == true){
+  if ( controllerScope.textPedantified == true ) {
     controllerScope.oldMeanLength = document.getElementById('meanWordLen2').innerHTML;
   } else {
     controllerScope.oldMeanLength = document.getElementById('meanWordLen1').innerHTML;
