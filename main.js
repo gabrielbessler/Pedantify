@@ -80,19 +80,30 @@ function init() {
   });
 
   // Checking for cached data (in localStorage)
+  // TODO: check for localStorage support before attempting to load the data
   if (localStorage['mainText'] != undefined){
     text_area.value = localStorage['mainText'];
+    excludeWord.value = localStorage['excText'];
     //Convert strings to boolean
     percentReplSlider.value = ( localStorage['percentReplacement'] == 'true' );
     chkPronouns.checked = ( localStorage['excludePronouns'] == 'true');
     chkHyphens.checked = ( localStorage['excludeHyphenated'] == 'true' );
     chkConjunctions.checked = ( localStorage['excludeConjunctions'] == 'true' );
     percentReplSlider.value = localStorage['percentReplacement'];
+    currReplacement = localStorage['currReplacement'];
   }
 
   // Setting the initial value of the progress bar
   percentReplVal.innerHTML = percentReplSlider.value + "%";
-  minBtn.style.color = "#e88b2e";
+
+  if ( currReplacement == "min" ) {
+    minBtn.style.color = "#e88b2e";
+  } else if ( currReplacement == "max" ) {
+    maxBtn.style.color = "#e88b2e";
+  } else if ( currReplacement == "random" ) {
+    randBtn.style.color = "#e88b2e";
+  }
+
   addEventListeners();
 
 }
@@ -111,10 +122,12 @@ function addEventListeners() {
   // If window is closing, store text/options in the cache
   window.onbeforeunload = function() {
     localStorage['mainText'] = text_area.value;
+    localStorage['excText'] = excludeWord.value;
     localStorage['percentReplacement'] = percentReplSlider.value;
     localStorage['excludePronouns'] = chkPronouns.checked;
     localStorage['excludeHyphenated'] = chkHyphens.checked;
     localStorage['excludeConjunctions'] = chkConjunctions.checked;
+    localStorage['currReplacement'] = currReplacement;
   }
 
   // If the user selects a file, load its context into the main textArea
