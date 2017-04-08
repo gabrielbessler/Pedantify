@@ -56,10 +56,13 @@ function init() {
   // Assigning variables to all elements used
   resetOptionsBtn = document.getElementById('resetOptionsBtn');
   chkConjunctions = document.getElementById('chkConjunctions');
-  undoPedantify= document.getElementById('originalTextBtn');
+  redoPedantify = document.getElementById('forwardTextBtn');
   percentReplVal = document.getElementById('percReplValue');
   percentReplSlider = document.getElementById('slider1');
+  undoPedantify = document.getElementById('backTextBtn');
+  chkMultiWord = document.getElementById('chkMultiWord');
   chkPronouns = document.getElementById('chkPronouns');
+  chkNoRepeat = document.getElementById('chkNoRepeat');
   excludeWord = document.getElementById('textArea2');
   chkHyphens = document.getElementById('chkHyphens');
   chooseFile = document.getElementById('chooseFile');
@@ -70,6 +73,7 @@ function init() {
   randBtn = document.getElementById('randBtn');
   minBtn = document.getElementById('minBtn');
   maxBtn = document.getElementById('maxBtn');
+
 
   // Loading the dictionary using AJAX (through jQuery)
   $.ajax({
@@ -165,6 +169,16 @@ function addEventListeners() {
     text = old_text;
   });
 
+  redoPedantify.addEventListener('click', function() {
+    var controllerElement = document.querySelector('section');
+    var controllerScope = angular.element(controllerElement).scope();
+    text_area.value = old_text;
+    controllerScope.inputText.text = old_text;
+    controllerScope.$apply();
+    text = old_text;
+  });
+
+
   minBtn.addEventListener('click', function() {
     currReplacement = "min";
     minBtn.style.color = "#e88b2e";
@@ -188,6 +202,11 @@ function addEventListeners() {
 
   resetOptionsBtn.addEventListener('click', function() {
     minBtn.style.color = "#e88b2e";
+    if ( currReplacement == "max" ) {
+      randBtn.style.color = white;
+    } else if ( currReplacement == "random" ) {
+      randBtn.style.color = white;
+    }
     currReplacement = "min";
     percentReplSlider.value = 50;
     percentReplVal.innerHTML = percentReplSlider.value + "%";
@@ -206,11 +225,14 @@ var punctuationList = [".","!",",","?",":",";"];
 var ignoreConjunctions = false;
 var ignorePronouns = false;
 var ignoreHyphens = false;
+var noMultiWords = false;
+var noRep = false;
 var excludedWords = [];
 var pronouns = [];
 var old_text = "";
 var percent = 0;
 var text = "";
+var usedWords = [];
 
 //Handles calling the function necessary for pedantification
 function pedantifyInit() {
@@ -228,6 +250,8 @@ function getExcludes() {
     ignoreConjunctions = chkConjunctions.checked;
     ignorePronouns = chkPronouns.checked;
     ignoreHyphens = chkHyphens.checked;
+    noMultiWords = chkMultiWord.checked;
+    noRep = chkNoRepeat.checked;
 }
 
 //Uses the textArea in 'options' to get a list of words to ignore in pedantification
@@ -260,10 +284,18 @@ function getLongShorttWord(inputList, type="long") {
   }
   for (wordIndex3 in inputList) {
     if(inputList[wordIndex3].length > wordlength && type=="long"){
-      length = inputList[wordIndex3].length;
+      if (noMultiWords == true) {
+        //TODO
+        console.log("todo");
+      }
+      wordlength = inputList[wordIndex3].length;
       currentWord = inputList[wordIndex3];
     } else if(inputList[wordIndex3].length < wordlength && type=="short"){
-      length = inputList[wordIndex3].length;
+      if ( noMultiWords == true ) {
+        //TODO
+        console.log("todo");
+      }
+      wordlength = inputList[wordIndex3].length;
       currentWord = inputList[wordIndex3];
     }
   }
@@ -384,11 +416,15 @@ function pedantify() {
           capsType = "capitalized";
         }
         if ( method == "min" ) {
+          console.log(words);
           word = getLongShorttWord(words, 'short');
         } else if ( method == "max" ) {
           word = getLongShorttWord(words, 'long');
         } else if ( method == "random" ) {
           word = words[Math.floor(Math.random()*words.length)];
+        }
+        if ( noRep == true ) {
+          usedWords.push(word); 
         }
         wordReplacedCount += 1;
         if ( capsType == "all_upper" ) {

@@ -25,7 +25,8 @@
         <br>
         <input type="submit" value="Submit" id="submitBtn" class="optionsButton">
         <input type="button" value="Reset" id="resetBtn" class="optionsButton">
-        <input type="button" value="<-" id="originalTextBtn" class="optionsButton"> 
+        <input type="button" value=" " id="backTextBtn" class="optionsButton">
+        <input type="button" value=" " id="forwardTextBtn" class="optionsButton">
         <input type="file" size="40" id="chooseFile" accept=".txt">
         <!-- We cannot style the submit button, so we hide it and style the label instead -->
         <label for="chooseFile" class="optionsButton">Choose a file...</label>
@@ -86,6 +87,20 @@
             <span class="toolTipText">Ignore words that include hyphens</span>
           </span>
           <input type="checkbox" id="chkHyphens">
+        </div>
+
+        <div class="excludeContainer">
+          <span class="toolTip">One-Word Synonyms Only
+            <span class="toolTipText">Exclude synomyms that are more than one word</span>
+          </span>
+          <input type="checkbox" id="chkMultiWord">
+        </div>
+
+        <div class="excludeContainer">
+          <span class="toolTip">No Synonym Repetition
+            <span class="toolTipText">Never use the same word twice in the text</span>
+          </span>
+          <input type="checkbox" id="chkNoRepeat">
         </div>
 
         <div id="wordsToExcludeText" class="toolTip">

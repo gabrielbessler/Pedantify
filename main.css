@@ -12,6 +12,14 @@ body {
   font-size: 1.3em;
   clear: both;
 }
+#backTextBtn {
+  background: url('backwardArrow.png') no-repeat center;
+  background-size: auto 100%;
+}
+#forwardTextBtn {
+  background: url('forwardArrow.png') no-repeat center;
+  background-size: auto 100%;
+}
 article {
   width: 100%;
   background-color: #639df9;
@@ -103,7 +111,7 @@ section {
 #resetOptionsBtn:focus {
   background-color: black;
 }
-#chkPronouns, #chkConjunctions, #chkHyphens {
+#chkPronouns, #chkConjunctions, #chkHyphens, #chkMultiWord, #chkNoRepeat {
   float: right;
 }
 .toolTip {
@@ -139,7 +147,6 @@ section {
 }
 #resetOptionsBtn {
   display: block;
-  width: 100px;
   cursor: pointer;
   color: white;
   background-color: blue;
@@ -152,7 +159,7 @@ section {
   position: relative;
   top: 50px;
 }
-.optionsButton {
+.optionsButton, #backTextBtn, #forwardTextBtn {
   display: inline-block;
   width: 150px;
   cursor: pointer;
@@ -164,10 +171,10 @@ section {
   border: none;
   -webkit-appearance: none;
 }
-.optionsButton:hover{
+.optionsButton:hover, #backTextBtn:hover, #forwardTextBtn:hover {
   background-color: purple;
 }
-.optionsButton:active{
+.optionsButton:active, #backTextBtn:active, #forwardTextBtn:active {
   color: orange;
 }
 #metaDisplay {
