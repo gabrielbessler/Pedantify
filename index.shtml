@@ -69,35 +69,35 @@
         </div>
 
         <div class="excludeContainer">
-          <span class="toolTip">Exclude Pronouns
+          <span class="toolTip" id="excludePronounsText">Exclude Pronouns
              <span class="toolTipText">Prevent pronouns from being pedantified</span>
           </span>
           <input type="checkbox" id="chkPronouns">
         </div>
 
         <div class="excludeContainer">
-          <span class="toolTip">Exclude Conjunctions
+          <span class="toolTip" id="excludeConjuctionsText">Exclude Conjunctions
             <span class="toolTipText">Prevent conjunctions from being pedantified</span>
           </span>
           <input type="checkbox" id="chkConjunctions">
         </div>
 
         <div class="excludeContainer">
-          <span class="toolTip">Exclude Hyphenated Words
+          <span class="toolTip"  id="ignoreHyphenatedWordsText">Exclude Hyphenated Words
             <span class="toolTipText">Ignore words that include hyphens</span>
           </span>
           <input type="checkbox" id="chkHyphens">
         </div>
 
         <div class="excludeContainer">
-          <span class="toolTip">One-Word Synonyms Only
+          <span class="toolTip" id="oneWordSynonymsText">One-Word Synonyms Only
             <span class="toolTipText">Exclude synomyms that are more than one word</span>
           </span>
           <input type="checkbox" id="chkMultiWord">
         </div>
 
         <div class="excludeContainer">
-          <span class="toolTip">No Synonym Repetition
+          <span class="toolTip" id="noSynRepText">No Synonym Repetition
             <span class="toolTipText">Never use the same word twice in the text</span>
           </span>
           <input type="checkbox" id="chkNoRepeat">

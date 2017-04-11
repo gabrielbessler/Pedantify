@@ -74,6 +74,11 @@ function init() {
   minBtn = document.getElementById('minBtn');
   maxBtn = document.getElementById('maxBtn');
 
+  excludePronounsText = document.getElementById('excludePronounsText');
+  excludeConjuctionsText = document.getElementById('excludeConjuctionsText');
+  ignoreHyphenatedWordsText = document.getElementById('ignoreHyphenatedWordsText');
+  oneWordSynonymsText = document.getElementById('oneWordSynonymsText');
+  noSynRepText = document.getElementById('noSynRepText');
 
   // Loading the dictionary using AJAX (through jQuery)
   $.ajax({
@@ -112,7 +117,7 @@ function init() {
 
 }
 
-//Fixes the angularJS text display when a text file is loaded
+// Fixes the angularJS text display when a text file is loaded
 function updateText() {
   text_area.value = text;
   var controllerElement = document.querySelector('section');
@@ -121,8 +126,24 @@ function updateText() {
   controllerScope.$apply();
 }
 
-//Adds all of the event listeners to the webpage
+// Adds all of the event listeners to the webpage
 function addEventListeners() {
+  // Clicking on the text by check boxes will check the boxes
+  excludePronounsText.addEventListener( 'click', function() {
+    chkPronouns.checked = !chkPronouns.checked;
+  });
+  excludeConjuctionsText.addEventListener( 'click', function() {
+    chkConjunctions.checked = !chkConjunctions.checked;
+  });
+  ignoreHyphenatedWordsText.addEventListener( 'click', function() {
+    chkHyphens.checked = !chkHyphens.checked;
+  });
+  oneWordSynonymsText.addEventListener( 'click', function() {
+    chkMultiWord.checked = !chkMultiWord.checked;
+  });
+  noSynRepText.addEventListener( 'click', function() {
+    chkNoRepeat.checked = !chkNoRepeat.checked;
+  });
   // If window is closing, store text/options in the cache
   window.onbeforeunload = function() {
     localStorage['mainText'] = text_area.value;
@@ -424,7 +445,7 @@ function pedantify() {
           word = words[Math.floor(Math.random()*words.length)];
         }
         if ( noRep == true ) {
-          usedWords.push(word); 
+          usedWords.push(word);
         }
         wordReplacedCount += 1;
         if ( capsType == "all_upper" ) {
