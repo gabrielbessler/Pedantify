@@ -54,6 +54,7 @@ function init() {
   currReplacement = "min";
 
   // Assigning variables to all elements used
+  replacementClickableText = document.getElementById('replacementClickableText');
   resetOptionsBtn = document.getElementById('resetOptionsBtn');
   chkConjunctions = document.getElementById('chkConjunctions');
   redoPedantify = document.getElementById('forwardTextBtn');
@@ -129,6 +130,26 @@ function updateText() {
 // Adds all of the event listeners to the webpage
 function addEventListeners() {
   // Clicking on the text by check boxes will check the boxes
+  replacementClickableText.addEventListener('click', function() {
+    if ( currReplacement == "min" ) {
+      currReplacement = "max";
+      maxBtn.style.color = "#e88b2e";
+      minBtn.style.color = "white";
+      randBtn.style.color = "white";
+    }
+    else if ( currReplacement == "max" ) {
+      currReplacement = "random";
+      randBtn.style.color = "#e88b2e";
+      minBtn.style.color = "white";
+      maxBtn.style.color = "white";
+    }
+    else if ( currReplacement == "random" ) {
+      currReplacement = "min";
+      minBtn.style.color = "#e88b2e";
+      maxBtn.style.color = "white";
+      randBtn.style.color = "white";
+    }
+  });
   excludePronounsText.addEventListener( 'click', function() {
     chkPronouns.checked = !chkPronouns.checked;
   });

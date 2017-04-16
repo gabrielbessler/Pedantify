@@ -57,7 +57,11 @@
 
         <span id="percReplValue"></span>
         <div id="replaceBtns">
-          <span class="toolTip" id="replacementTypeText" >Replacement Type
+          <span class="toolTip" id="replacementTypeText" >
+            <span id="replacementClickableText">
+              Replacement Type
+            </span>
+
             <span class="toolTipText">Min - Replace with smallest possble word <br>
                                       Max - Replace with largest possble word <br>
                                       Random - Replace with random word <br>
