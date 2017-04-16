@@ -257,16 +257,17 @@ function addEventListeners() {
 
   resetOptionsBtn.addEventListener('click', function() {
     minBtn.style.color = "#e88b2e";
-    if ( currReplacement == "max" ) {
-      randBtn.style.color = white;
-    } else if ( currReplacement == "random" ) {
-      randBtn.style.color = white;
-    }
+    randBtn.style.color = "white";
+    randBtn.style.color = "white";
     currReplacement = "min";
     percentReplSlider.value = 50;
     percentReplVal.innerHTML = percentReplSlider.value + "%";
     excludeWord.value = "";
-    chkConjunctions.checked = false, chkPronouns.checked = false, chkHyphens.checked = false;
+    chkConjunctions.checked = false;
+    chkPronouns.checked = false;
+    chkHyphens.checked = false;
+    chkMultiWord.checked = false;
+    chkNoRepeat.checked = false;
   });
 
   submitBtn.addEventListener('click', function() {
