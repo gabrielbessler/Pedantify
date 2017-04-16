@@ -437,7 +437,6 @@ function pedantify() {
           capsType = "capitalized";
         }
         if ( method == "min" ) {
-          console.log(words);
           word = getLongShorttWord(words, 'short');
         } else if ( method == "max" ) {
           word = getLongShorttWord(words, 'long');

@@ -57,6 +57,7 @@ textarea {
   float: right;
 }
 aside {
+  overflow: hidden;
   width: 36%;
   float: right;
   background-color: #8d968d;
