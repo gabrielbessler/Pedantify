@@ -64,6 +64,7 @@ function init() {
   chkMultiWord = document.getElementById('chkMultiWord');
   chkPronouns = document.getElementById('chkPronouns');
   chkNoRepeat = document.getElementById('chkNoRepeat');
+  percRepText = document.getElementById('percRepText');
   excludeWord = document.getElementById('textArea2');
   chkHyphens = document.getElementById('chkHyphens');
   chooseFile = document.getElementById('chooseFile');
@@ -149,6 +150,18 @@ function addEventListeners() {
       maxBtn.style.color = "white";
       randBtn.style.color = "white";
     }
+  });
+  percRepText.addEventListener('click', function() {
+    if ( parseInt(percentReplSlider.value) == 100 ) {
+      percentReplSlider.value = "0";
+    }
+    else if ( parseInt(percentReplSlider.value) > 90 ) {
+      percentReplSlider.value = "100";
+    }
+    else {
+      percentReplSlider.value = String(parseInt(percentReplSlider.value) + 10);
+    }
+    percentReplVal.innerHTML = percentReplSlider.value + "%";
   });
   excludePronounsText.addEventListener( 'click', function() {
     chkPronouns.checked = !chkPronouns.checked;

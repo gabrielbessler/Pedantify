@@ -49,7 +49,9 @@
       <h1> Options </h1>
       <form>
         <span class="toolTip">
+          <span id="percRepText">
           Percentage Replacement
+          </span>
           <span class="toolTipText">Choose the percentage of words that will be pedantified</span>
         </span>
 
@@ -76,35 +78,36 @@
           <span class="toolTip" id="excludePronounsText">Exclude Pronouns
              <span class="toolTipText">Prevent pronouns from being pedantified</span>
           </span>
-          <input type="checkbox" id="chkPronouns">
+          <input type="checkbox" id="chkPronouns" class="chkBox">
         </div>
 
         <div class="excludeContainer">
           <span class="toolTip" id="excludeConjuctionsText">Exclude Conjunctions
             <span class="toolTipText">Prevent conjunctions from being pedantified</span>
           </span>
-          <input type="checkbox" id="chkConjunctions">
+          <input type="checkbox" id="chkConjunctions" class="chkBox">
         </div>
 
         <div class="excludeContainer">
           <span class="toolTip"  id="ignoreHyphenatedWordsText">Exclude Hyphenated Words
             <span class="toolTipText">Ignore words that include hyphens</span>
           </span>
-          <input type="checkbox" id="chkHyphens">
+          <input type="checkbox" id="chkHyphens" class="chkBox">
         </div>
 
         <div class="excludeContainer">
           <span class="toolTip" id="oneWordSynonymsText">One-Word Synonyms Only
             <span class="toolTipText">Exclude synomyms that are more than one word</span>
           </span>
-          <input type="checkbox" id="chkMultiWord">
+          <input type="checkbox" id="chkMultiWord" class="chkBox">
         </div>
 
         <div class="excludeContainer">
+          <!--TODO: see if using LABEL is actually an easier way to do this -->
           <span class="toolTip" id="noSynRepText">No Synonym Repetition
             <span class="toolTipText">Never use the same word twice in the text</span>
           </span>
-          <input type="checkbox" id="chkNoRepeat">
+          <input type="checkbox" id="chkNoRepeat" class="chkBox">
         </div>
 
         <div id="wordsToExcludeText" class="toolTip">

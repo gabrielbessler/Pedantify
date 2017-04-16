@@ -112,8 +112,9 @@ section {
 #resetOptionsBtn:focus {
   background-color: black;
 }
-#chkPronouns, #chkConjunctions, #chkHyphens, #chkMultiWord, #chkNoRepeat {
+.chkBox {
   float: right;
+  cursor: pointer;
 }
 .toolTip {
   cursor: pointer;
