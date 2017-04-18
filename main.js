@@ -1,11 +1,12 @@
 //AngularJS for updating the metadata text at the bottom of the textArea
 myApp = angular.module('myApp', []);
+
 myApp.controller('MainController', function( $scope ) {
 
   $scope.inputText = {text:""}
-  $scope.textPedantified = false;
-  $scope.oldMeanLength = 0;
-  $scope.wordsReplaced = 0;
+  $scope.textPedantified = false; // Stores if any text has been pedantified in the current session
+  $scope.oldMeanLength = 0; // Mean word length before pedantification
+  $scope.wordsReplaced = 0; // Number of words changed when the text was pedantified
 
   // Counts and displays the current number of words in the text
   $scope.numWords = function(text) {
@@ -25,10 +26,10 @@ myApp.controller('MainController', function( $scope ) {
     if ($scope.textPedantified == false) {
       var s = text ? text.split(/\s+/) : 0;
       numChars = 0;
-      for (wordIndex1 in s) {
+      for ( var wordIndex1 in s) {
         numChars += s[wordIndex1].length;
       }
-      return s ? (numChars / s.length).toFixed(2) : '0';
+      return s ? ( numChars / s.length ).toFixed(2) : '0';
     } else {
       return $scope.oldMeanLength;
     }
@@ -41,7 +42,7 @@ myApp.controller('MainController', function( $scope ) {
     } else {
       var s = text ? text.split(/\s+/) : 0;
       numChars = 0;
-      for (wordIndex2 in s) {
+      for ( var wordIndex2 in s) {
         numChars += s[wordIndex2].length;
       }
       return s ? (numChars / s.length).toFixed(2) : '0';
@@ -54,11 +55,16 @@ function init() {
   currReplacement = "min";
 
   // Assigning variables to all elements used
+  ignoreHyphenatedWordsText = document.getElementById('ignoreHyphenatedWordsText');
   replacementClickableText = document.getElementById('replacementClickableText');
+  excludeConjuctionsText = document.getElementById('excludeConjuctionsText');
+  excludePronounsText = document.getElementById('excludePronounsText');
+  oneWordSynonymsText = document.getElementById('oneWordSynonymsText');
   resetOptionsBtn = document.getElementById('resetOptionsBtn');
   chkConjunctions = document.getElementById('chkConjunctions');
   redoPedantify = document.getElementById('forwardTextBtn');
   percentReplVal = document.getElementById('percReplValue');
+  noSynRepText = document.getElementById('noSynRepText');
   percentReplSlider = document.getElementById('slider1');
   undoPedantify = document.getElementById('backTextBtn');
   chkMultiWord = document.getElementById('chkMultiWord');
@@ -76,37 +82,18 @@ function init() {
   minBtn = document.getElementById('minBtn');
   maxBtn = document.getElementById('maxBtn');
 
-  excludePronounsText = document.getElementById('excludePronounsText');
-  excludeConjuctionsText = document.getElementById('excludeConjuctionsText');
-  ignoreHyphenatedWordsText = document.getElementById('ignoreHyphenatedWordsText');
-  oneWordSynonymsText = document.getElementById('oneWordSynonymsText');
-  noSynRepText = document.getElementById('noSynRepText');
-
-  // Loading the dictionary using AJAX (through jQuery)
-  $.ajax({
-    url:'http://www.pedantify.com/dict_test.js  ',
-    success: function (data){
-      starterDict = eval(data);
-    }
-  });
+  getDictionary();
 
   // Checking for cached data (in localStorage)
   // TODO: check for localStorage support before attempting to load the data
   if (localStorage['mainText'] != undefined){
-    text_area.value = localStorage['mainText'];
-    excludeWord.value = localStorage['excText'];
-    //Convert strings to boolean
-    percentReplSlider.value = ( localStorage['percentReplacement'] == 'true' );
-    chkPronouns.checked = ( localStorage['excludePronouns'] == 'true');
-    chkHyphens.checked = ( localStorage['excludeHyphenated'] == 'true' );
-    chkConjunctions.checked = ( localStorage['excludeConjunctions'] == 'true' );
-    percentReplSlider.value = localStorage['percentReplacement'];
-    currReplacement = localStorage['currReplacement'];
+    loadLocalStorage();
   }
 
   // Setting the initial value of the progress bar
   percentReplVal.innerHTML = percentReplSlider.value + "%";
 
+  // Sets the style for the currently selected replacement type (min, max, or random)
   if ( currReplacement == "min" ) {
     minBtn.style.color = "#e88b2e";
   } else if ( currReplacement == "max" ) {
@@ -117,6 +104,40 @@ function init() {
 
   addEventListeners();
 
+}
+
+// Save current website data to localStorage
+function saveLocalStorage() {
+  localStorage['mainText'] = text_area.value;
+  localStorage['excText'] = excludeWord.value;
+  localStorage['percentReplacement'] = percentReplSlider.value;
+  localStorage['excludePronouns'] = chkPronouns.checked;
+  localStorage['excludeHyphenated'] = chkHyphens.checked;
+  localStorage['excludeConjunctions'] = chkConjunctions.checked;
+  localStorage['currReplacement'] = currReplacement;
+}
+
+//Load locally stored data for the website
+function loadLocalStorage() {
+  text_area.value = localStorage['mainText'];
+  excludeWord.value = localStorage['excText'];
+  //Convert strings to boolean
+  percentReplSlider.value = ( localStorage['percentReplacement'] == 'true' );
+  chkPronouns.checked = ( localStorage['excludePronouns'] == 'true');
+  chkHyphens.checked = ( localStorage['excludeHyphenated'] == 'true' );
+  chkConjunctions.checked = ( localStorage['excludeConjunctions'] == 'true' );
+  percentReplSlider.value = localStorage['percentReplacement'];
+  currReplacement = localStorage['currReplacement'];
+}
+
+// Loading the dictionary from the server using AJAX (through jQuery)
+function getDictionary() {
+  $.ajax({
+    url:'http://www.pedantify.com/dict_test.js  ',
+    success: function (data){
+      starterDict = eval(data);
+    }
+  });
 }
 
 // Fixes the angularJS text display when a text file is loaded
@@ -130,27 +151,21 @@ function updateText() {
 
 // Adds all of the event listeners to the webpage
 function addEventListeners() {
+
   // Clicking on the text by check boxes will check the boxes
   replacementClickableText.addEventListener('click', function() {
     if ( currReplacement == "min" ) {
-      currReplacement = "max";
-      maxBtn.style.color = "#e88b2e";
-      minBtn.style.color = "white";
-      randBtn.style.color = "white";
+      changeReplacementType('max');
     }
     else if ( currReplacement == "max" ) {
-      currReplacement = "random";
-      randBtn.style.color = "#e88b2e";
-      minBtn.style.color = "white";
-      maxBtn.style.color = "white";
+      changeReplacementType('random');
     }
     else if ( currReplacement == "random" ) {
-      currReplacement = "min";
-      minBtn.style.color = "#e88b2e";
-      maxBtn.style.color = "white";
-      randBtn.style.color = "white";
+      changeReplacementType('min');
     }
   });
+
+  // Clicking on the text by the percentage replacement will add 10 to the slider.
   percRepText.addEventListener('click', function() {
     if ( parseInt(percentReplSlider.value) == 100 ) {
       percentReplSlider.value = "0";
@@ -163,30 +178,31 @@ function addEventListeners() {
     }
     percentReplVal.innerHTML = percentReplSlider.value + "%";
   });
+
+  // Allow users to click on the text by checkboxes in order to change textbox values
   excludePronounsText.addEventListener( 'click', function() {
     chkPronouns.checked = !chkPronouns.checked;
   });
+
   excludeConjuctionsText.addEventListener( 'click', function() {
     chkConjunctions.checked = !chkConjunctions.checked;
   });
+
   ignoreHyphenatedWordsText.addEventListener( 'click', function() {
     chkHyphens.checked = !chkHyphens.checked;
   });
+
   oneWordSynonymsText.addEventListener( 'click', function() {
     chkMultiWord.checked = !chkMultiWord.checked;
   });
+
   noSynRepText.addEventListener( 'click', function() {
     chkNoRepeat.checked = !chkNoRepeat.checked;
   });
+
   // If window is closing, store text/options in the cache
   window.onbeforeunload = function() {
-    localStorage['mainText'] = text_area.value;
-    localStorage['excText'] = excludeWord.value;
-    localStorage['percentReplacement'] = percentReplSlider.value;
-    localStorage['excludePronouns'] = chkPronouns.checked;
-    localStorage['excludeHyphenated'] = chkHyphens.checked;
-    localStorage['excludeConjunctions'] = chkConjunctions.checked;
-    localStorage['currReplacement'] = currReplacement;
+    saveLocalStorage();
   }
 
   // If the user selects a file, load its context into the main textArea
@@ -233,33 +249,21 @@ function addEventListeners() {
     text = old_text;
   });
 
-
   minBtn.addEventListener('click', function() {
-    currReplacement = "min";
-    minBtn.style.color = "#e88b2e";
-    maxBtn.style.color = "white";
-    randBtn.style.color = "white";
+    changeReplacementType('min');
   });
 
   maxBtn.addEventListener('click', function() {
-    currReplacement = "max";
-    maxBtn.style.color = "#e88b2e";
-    minBtn.style.color = "white";
-    randBtn.style.color = "white";
+    changeReplacementType('max');
   });
 
   randBtn.addEventListener('click', function() {
-    currReplacement = "random";
-    randBtn.style.color = "#e88b2e";
-    minBtn.style.color = "white";
-    maxBtn.style.color = "white";
+    changeReplacementType('random');
   });
 
+  // Reset options to their default values
   resetOptionsBtn.addEventListener('click', function() {
-    minBtn.style.color = "#e88b2e";
-    randBtn.style.color = "white";
-    randBtn.style.color = "white";
-    currReplacement = "min";
+    changeReplacementType('min');
     percentReplSlider.value = 50;
     percentReplVal.innerHTML = percentReplSlider.value + "%";
     excludeWord.value = "";
@@ -273,6 +277,24 @@ function addEventListeners() {
   submitBtn.addEventListener('click', function() {
     pedantifyInit();
   });
+}
+
+// Change the type of replacement for pedantification (min, max, random)
+function changeReplacementType(newReplacement) {
+  currReplacement = current_replacement;
+  if ( currReplacement == "max" ) {
+    maxBtn.style.color = "#e88b2e";
+    minBtn.style.color = "white";
+    randBtn.style.color = "white";
+  } else if ( currReplacement == "min" ) {
+    minBtn.style.color = "#e88b2e";
+    maxBtn.style.color = "white";
+    randBtn.style.color = "white";
+  } else if ( currReplacement == "random" ) {
+    randBtn.style.color = "#e88b2e";
+    minBtn.style.color = "white";
+    maxBtn.style.color = "white";
+  }
 }
 
 //Variables necessary for pedantification
@@ -316,7 +338,7 @@ function excludeWords() {
   currWord = false;
   //TODO: make this a function
   //Parses through text and ignores whitespace
-  for (charIndex in excludeWord.value){
+  for ( var charIndex in excludeWord.value ){
     char = excludeWord.value[charIndex];
     if (char == " " || char == "\n" || char == "\t" || char == "\r"){
       currWord = false;
@@ -333,14 +355,16 @@ function excludeWords() {
 
 //Gets the shortest or longest word in an array
 function getLongShorttWord(inputList, type="long") {
+  // We initialize the current replacement word wordlength to be the first word in the synonym list
   wordlength = inputList[0].length;
   currentWord = "";
   if (type == "short"){
     currentWord = inputList[0];
   }
-  for (wordIndex3 in inputList) {
-    if(inputList[wordIndex3].length > wordlength && type=="long"){
-      if (noMultiWords == true) {
+  //First, we iterate through all of the words in the given synonym list
+  for ( var wordIndex3 in inputList ) {
+    if( inputList[wordIndex3].length > wordlength && type=="long" ){
+      if ( noMultiWords == true ) {
         //TODO
         console.log("todo");
       }
@@ -367,10 +391,16 @@ function percentageCheck() {
   }
 }
 
+//Checks if a word contains a hyphen
+//TODO
+function isHyphenated(s) {
+  return false
+}
+
 //Returns true if the given element is found in the list
 function isElementInList(e, list) {
-  for (index in list){
-    if(list[index] == e){
+  for ( var index in list ){
+    if ( list[index] == e ) {
       return true;
     }
   }
@@ -393,10 +423,10 @@ function pedantify() {
 
   //Parses through the given text and splits into wordList and whiteSpaceList
   currWord = false;
-  for ( charIndex in text ) {
+  for ( var charIndex in text ) {
     char = text[charIndex];
     if ( char == " " || char == "\n" || char == "\t" || char == "\r" ){
-      if (currWord == false) {
+      if ( currWord == false ) {
         whiteSpaceList[whiteSpaceList.length-1] += char;
       } else {
         whiteSpaceList.push(char)

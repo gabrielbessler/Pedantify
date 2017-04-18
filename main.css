@@ -42,8 +42,9 @@ textarea {
 }
 #textArea1 {
   margin: 15px auto 0px auto;
-  height: 450px;
+  height: 350px;
   box-sizing: border-box;
+  resize: vertical;
 }
 #textArea2 {
   margin: 15px auto 0px auto;
