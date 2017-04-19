@@ -281,7 +281,7 @@ function addEventListeners() {
 
 // Change the type of replacement for pedantification (min, max, random)
 function changeReplacementType(newReplacement) {
-  currReplacement = current_replacement;
+  currReplacement = newReplacement;
   if ( currReplacement == "max" ) {
     maxBtn.style.color = "#e88b2e";
     minBtn.style.color = "white";
@@ -392,9 +392,13 @@ function percentageCheck() {
 }
 
 //Checks if a word contains a hyphen
-//TODO
 function isHyphenated(s) {
-  return false
+  // if s does not contain a '-', idexOf() will return -1 
+  if (s.toLowerCase().indexOf('-') >= 0) {
+    return false
+  } else {
+    return true
+  }
 }
 
 //Returns true if the given element is found in the list
