@@ -3,9 +3,9 @@
   <head>
     <title>Pedantify</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="footer.css">
-    <link rel="stylesheet" href="header.css">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/main.css">
     <link rel="icon" href="Main.ico">
   <head>
   <body>
@@ -13,7 +13,7 @@
 
     <article>
       <h1>Main Idea</h1>
-      <p>The core idea behind the pedantification is to change the wording of texts without changing there core meaning.
+      <p>The core idea behind the pedantification is to change the wording of texts without changing their core meaning.
     This can mean making texts more simple or more complicated, but can also mean changing words for random synonyms.
     In order to pedantify texts, the website parses through the input word by word, looks for synonyms in a
     thesaurus, and picks out one of the synonyms based on the user options.

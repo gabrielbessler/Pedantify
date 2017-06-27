@@ -1,0 +1,206 @@
+body {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color:black;
+  background-color: #e0e0e0;
+  font-size: 100%;
+  width: 100%; 
+}
+#wordsToExcludeText {
+  text-align: center;
+  width: 100%;
+  top: 20px;
+  font-size: 1.3em;
+  clear: both;
+  color: #820000;
+  padding-top: 20px; 
+}
+#backTextBtn {
+  background: url('/img/backwardArrow.png') no-repeat center;
+  background-size: auto 100%;
+}
+#forwardTextBtn {
+  background: url('/img/forwardArrow.png') no-repeat center;
+  background-size: auto 100%;
+}
+article {
+  width: 100%;
+  background-color: #639df9;
+  border-radius: 8px;
+  height: 100%;
+  position: relative;
+  float: left;
+  padding-bottom: 20px;
+}
+article h1 {
+   color: 820000;
+}
+article p {
+  margin: 10px;
+}
+textarea {
+  display: block;
+  width: 85%;
+  resize: none;
+}
+#textArea1 {
+  margin: 15px auto 0px auto;
+  height: 350px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+#textArea2 {
+  margin: 15px auto 0px auto;
+  height: 120px;
+  box-sizing: border-box;
+  top: 20px;
+  resize: vertical;
+}
+#slider1 {
+  width: 30%;
+  float: right;
+}
+aside {
+  overflow: hidden;
+  width: 36%;
+  float: right;
+  background-color: #ffd1ee;
+  padding-left: 1%;
+  padding-right: 1%;
+  border-radius: 8px;
+  margin-left: 1%;
+  display: flex; 
+  flex-direction: column;
+}
+h1 {
+  text-align: center;
+  font-weight: 300;
+  font-size: 2em;
+  color: #820000;
+  margin-bottom: 10px; 
+}
+section {
+  width: 61%;
+  float: left;
+  background-color: #9ee5c6;
+  text-align: center;
+  display:flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+  border-radius: 8px;
+}
+.replaceTypeBtn {
+  color: white;
+  background-color: #820000;
+  border: none;
+  padding: 3%;
+  -webkit-appearance: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+#replaceBtns {
+  margin-top: 25px;
+  width: 100%;
+  text-align: right;
+}
+.replaceTypeBtn:hover {
+  background-color: purple;
+}
+.replaceTypeBtn:focus, a:focus {
+  border: 2px solid orange;
+}
+#textArea1:focus, #textArea2:focus{
+  border: 2px solid blue;
+}
+#replacementTypeText {
+  float: left;
+}
+#resetOptionsBtn:focus {
+  background-color: black;
+}
+.chkBox {
+  float: right;
+  cursor: pointer;
+}
+.toolTip {
+  cursor: pointer;
+  font-size: 1.1em; 
+}
+.toolTip:hover .toolTipText{
+  visibility: visible;
+}
+.toolTipText {
+  visibility: hidden;
+  width: 160px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 5px;
+  border-radius: 6px;
+  font-size: .8em;
+  position: absolute;
+  z-index: 1;
+}
+.excludeContainer {
+  float:left;
+  width: 100%;
+  margin-top: 15px;
+}
+#chooseFile {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+#resetOptionsBtn {
+  display: block;
+  cursor: pointer;
+  color: white;
+  background-color: #820000;
+  padding: 10px;
+  border: none;
+  -webkit-appearance: none;
+  margin-left: auto;
+  margin-right: auto; 
+  margin-top: 10px; 
+  margin-bottom: 20px; 
+  top: 50px;
+}
+.container { 
+  display: flex;
+}
+@media (max-width: 800px) { 
+  .container { 
+    flex-direction: column; 
+  }
+  section, aside { 
+    width: 100%; 
+  }
+}
+.optionsButton, #backTextBtn, #forwardTextBtn {
+  display: inline-block;
+  width: 150px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 700;
+  color: white;
+  background-color: #00562b;
+  padding: .5%;
+  border: none;
+  -webkit-appearance: none;
+}
+.optionsButton:hover, #backTextBtn:hover, #forwardTextBtn:hover {
+  background-color: purple;
+}
+.optionsButton:active, #backTextBtn:active, #forwardTextBtn:active {
+  color: orange;
+}
+#metaDisplay {
+  width: calc(100% - 20px);
+  text-align: left;
+  padding-left: 20px;
+  font-weight: bold;
+  font-size: 1.0em;
+  padding-top: 20px;
+}

@@ -3,10 +3,12 @@
   <head>
     <title>Pedantify</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="footer.css">
-    <link rel="stylesheet" href="header.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
     <link rel="icon" href="Main.ico">
+    <meta name="description" value="Make your texts infinitely more complicated.">
   </head>
   <body onload="init()" ng-app="myApp">
 
@@ -15,10 +17,10 @@
     <div class = "container">
 
     <section ng-controller="MainController">
-      <h1>Enter Your Text</h1>
+      <h1>ENTER YOUR TEXT</h1>
 
       <form>
-        <textarea id="textArea1" ng-model="inputText.text"></textarea>
+        <textarea id="textArea1" ng-model="Text.text"></textarea>
         <br>
         <input type="submit" value="Submit" id="submitBtn" class="optionsButton">
         <input type="button" value="Reset" id="resetBtn" class="optionsButton">
@@ -43,7 +45,7 @@
     </section>
 
     <aside>
-      <h1> Options </h1>
+      <h1> OPTIONS </h1>
       <form>
         <span class="toolTip">
           <span id="percRepText">
@@ -107,20 +109,22 @@
           <input type="checkbox" id="chkNoRepeat" class="chkBox">
         </div>
 
+        
+
         <div id="wordsToExcludeText" class="toolTip">
-          Words to Exclude
+          WORDS TO EXCLUDE
           <span class="toolTipText">Enter a space separated list of words to be excluded from pedantification</span>
         </div>
         <textarea id="textArea2"></textarea>
-
+        <input type="button" value="Reset Options" id="resetOptionsBtn">
       </form>
-      <input type="button" value="Reset Options" id="resetOptionsBtn">
+      
     </aside>
 
   </div>
     <!--#include file="footer.html" -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script type="text/javascript" src="main.js"></script>
+  <script type="text/javascript" src="/js/main.js"></script>
   </body>
 </html>

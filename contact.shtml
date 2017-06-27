@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Pedantify</title>
-    <link rel="stylesheet" href="footer.css">
-    <link rel="stylesheet" href="header.css">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/main.css">
     <link rel="icon" href="Main.ico">
   </head>
   <body>
