@@ -102,7 +102,7 @@ section {
   width: 100%;
   text-align: right;
 }
-.replaceTypeBtn:hover {
+.replaceTypeBtn:hover, #resetOptionsBtn:hover {
   background-color: purple;
 }
 .replaceTypeBtn:focus, li > a:focus {
