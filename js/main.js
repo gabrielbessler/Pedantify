@@ -82,6 +82,8 @@ function init() {
   minBtn = document.getElementById('minBtn');
   maxBtn = document.getElementById('maxBtn');
 
+  
+
   getDictionary();
 
   // Checking for cached data (in localStorage)

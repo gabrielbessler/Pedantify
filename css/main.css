@@ -1,9 +1,9 @@
 body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  color:black;
   background-color: #e0e0e0;
   font-size: 100%;
   width: 100%; 
+  margin: 0px; 
 }
 #wordsToExcludeText {
   text-align: center;
@@ -16,15 +16,15 @@ body {
 }
 #backTextBtn {
   background: url('/img/backwardArrow.png') no-repeat center;
-  background-size: auto 100%;
+  background-size: auto 80%;
 }
 #forwardTextBtn {
   background: url('/img/forwardArrow.png') no-repeat center;
-  background-size: auto 100%;
+  background-size: auto 80%;
 }
 article {
   width: 100%;
-  background-color: #639df9;
+  background-color: #ffd1ee;
   border-radius: 8px;
   height: 100%;
   position: relative;
@@ -105,7 +105,7 @@ section {
 .replaceTypeBtn:hover {
   background-color: purple;
 }
-.replaceTypeBtn:focus, a:focus {
+.replaceTypeBtn:focus, li > a:focus {
   border: 2px solid orange;
 }
 #textArea1:focus, #textArea2:focus{

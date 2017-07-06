@@ -1,16 +1,34 @@
 <div id="headerPlaceHolder"></div>
 
 <header id="hdr">
+  <!-- LOGO --> 
   <a href="index.shtml">
     <img src="/img/logo.png" width="250" alt="Pedantify Logo">
   </a>
+  <!-- NAVIGATION BAR --> 
+  <!-- TODO: update this (can do without lists) --> 
+  <nav>
+    <ul>
+      <li><a href="index.shtml">Home</a></li>
+      <li><a href="about.shtml">About Pedantify</a></li>
+      <li><a href="contact.shtml">Contact Us</a></li>
+      <li><a href="https://github.com/gabrielbessler">Follow Us</a></li>
+    </ul>
+  </nav>
 </header>
 
-<nav>
-  <ul>
-    <li><a href="index.shtml">Home</a></li>
-    <li><a href="about.shtml">About Pedantify</a></li>
-    <li><a href="contact.shtml">Contact Us</a></li>
-    <li><a href="https://github.com/gabrielbessler">Follow Us</a></li>
-  </ul>
-</nav>
+<!-- We use this to resize the header when the window size changes --> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script> 
+  resizeHeader();
+
+  $(window).resize(
+    function() { 
+      resizeHeader(); 
+    }
+  )
+
+  function resizeHeader() { 
+  $("#hdr").width($('body').width()); 
+}
+</script> 

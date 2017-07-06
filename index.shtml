@@ -11,9 +11,7 @@
     <meta name="description" value="Make your texts infinitely more complicated.">
   </head>
   <body onload="init()" ng-app="myApp">
-
     <!--#include file="header.html" -->
-
     <div class = "container">
 
     <section ng-controller="MainController">
@@ -108,8 +106,6 @@
           </span>
           <input type="checkbox" id="chkNoRepeat" class="chkBox">
         </div>
-
-        
 
         <div id="wordsToExcludeText" class="toolTip">
           WORDS TO EXCLUDE
