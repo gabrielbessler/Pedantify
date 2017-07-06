@@ -4,7 +4,20 @@ li {
   padding-right: 50px; 
   padding-top: 0px; 
 }
-@media (max-width: 800px) { 
+@media (max-width: 500px) { 
+  #navbardown {
+    visibility: visible; 
+    display:inline; 
+  }
+  #navbardown:hover { 
+    background-color: blue; 
+  }
+  nav > ul {
+    visibility: hidden; 
+    display: none; 
+  }
+}
+@media (max-width: 800px) and (min-width: 500px) { 
   #hdr > a { 
     text-align: left;
     padding-left: 25px;  
@@ -14,6 +27,8 @@ li {
     float: right; 
     width: calc(100% - 260px); 
     height: 74px; 
+    font-size: .9em; 
+    display: inline; 
   }
   #headerPlaceHolder{
     margin-top: 70px;
@@ -33,6 +48,11 @@ li {
     margin: 0px; 
     padding-top: 27px;
   }
+  #navbardown > img{ 
+    visibility: hidden; 
+    width: 0px; 
+    height: 0px;
+  }
 }
 @media (min-width: 800px) { 
   #hdr { 
@@ -47,6 +67,12 @@ li {
     padding: 6px 0px; 
     margin-bottom: 4px; 
   }
+  #navbardown { 
+    visibility: hidden; 
+    width: 0px; 
+    height: 0px; 
+  }
+
 }
 #hdr {
   position: fixed;
