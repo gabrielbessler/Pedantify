@@ -201,6 +201,8 @@ section {
   text-align: left;
   padding-left: 20px;
   font-weight: bold;
-  font-size: 1.0em;
+  font-size: 1.03em;
   padding-top: 20px;
+  line-height: 140%; 
+  color: #333333; 
 }
