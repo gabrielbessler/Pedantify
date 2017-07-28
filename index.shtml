@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">  
   <head>
     <title>Pedantify</title>
     <meta charset="utf-8">
@@ -10,11 +10,12 @@
     <link rel="icon" href="Main.ico">
     <meta name="description" value="Make your texts infinitely more complicated.">
   </head>
+  
   <body onload="init()" ng-app="myApp">
     <!--#include file="header.html" -->
     <div class = "container">
 
-    <section ng-controller="MainController">
+    <section ng-controller="  ">
       <h1>ENTER YOUR TEXT</h1>
 
       <form>
@@ -118,9 +119,13 @@
     </aside>
 
   </div>
-    <!--#include file="footer.html" -->
+
+  <!--#include file="footer.html" -->
+  
+  <!-- JS and JS Libraries --> 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script type="text/javascript" src="/js/main.js"></script>
-  </body>
+  
+</body>
 </html>

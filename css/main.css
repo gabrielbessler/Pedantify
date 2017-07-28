@@ -175,7 +175,15 @@ section {
     flex-direction: column; 
   }
   section, aside { 
-    width: 100%; 
+    width: 95%; 
+    margin: 0px; 
+    padding: 0px;
+    padding-left: 2.5%; 
+    padding-right: 2.5%;  
+    border-radius: 0px; 
+  }
+  section { 
+    padding-bottom: 15px; 
   }
 }
 .optionsButton, #backTextBtn, #forwardTextBtn {
