@@ -105,7 +105,7 @@ section {
 .replaceTypeBtn:hover, #resetOptionsBtn:hover {
   background-color: purple;
 }
-.replaceTypeBtn:focus, li > a:focus {
+.replaceTypeBtn:focus, li > a:focus, #resetOptionsBtn:focus {
   border: 2px solid orange;
 }
 #textArea1:focus, #textArea2:focus{
@@ -113,9 +113,6 @@ section {
 }
 #replacementTypeText {
   float: left;
-}
-#resetOptionsBtn:focus {
-  background-color: black;
 }
 .chkBox {
   float: right;
@@ -158,14 +155,15 @@ section {
   cursor: pointer;
   color: white;
   background-color: #820000;
-  padding: 10px;
+  padding: 12px;
   border: none;
   -webkit-appearance: none;
   margin-left: auto;
   margin-right: auto; 
-  margin-top: 10px; 
+  margin-top: 30px; 
   margin-bottom: 20px; 
   top: 50px;
+  border: 2px solid transparent;
 }
 .container { 
   display: flex;
@@ -185,6 +183,9 @@ section {
   section { 
     padding-bottom: 15px; 
   }
+  .optionsButton { 
+    margin-bottom: 5px;
+  }
 }
 .optionsButton, #backTextBtn, #forwardTextBtn {
   display: inline-block;
@@ -196,7 +197,7 @@ section {
   background-color: #00562b;
   padding: .5%;
   border: none;
-  -webkit-appearance: none;
+  -webkit-appearance: none; 
 }
 .optionsButton:hover, #backTextBtn:hover, #forwardTextBtn:hover {
   background-color: purple;
