@@ -24,9 +24,9 @@
         <input type="button" value="Reset" id="resetBtn" class="optionsButton">
         <input type="button" value=" " id="backTextBtn" class="optionsButton">
         <input type="button" value=" " id="forwardTextBtn" class="optionsButton">
-        <input type="file" size="40" id="chooseFile" accept=".txt">
+        <input type="file" size="40" id="chooseFile" accept=".txt" tabindex="-1">
         <!-- We cannot style the submit button, so we hide it and style the label instead -->
-        <label for="chooseFile" class="optionsButton" id="test">Choose a file...</label>
+        <label for="chooseFile" class="optionsButton" id="test" tabindex="0">Choose a file...</label>
         <!-- TODO
         <a href="" id="saveFileLink" download="text.txt">
           <input type="button" value="Download Text..." id="saveFile" class="optionsButton">
