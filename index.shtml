@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">  
+<html lang="en">
   <head>
     <title>Pedantify</title>
     <meta charset="utf-8">
@@ -10,12 +10,11 @@
     <link rel="icon" href="Main.ico">
     <meta name="description" value="Make your texts infinitely more complicated.">
   </head>
-  
   <body onload="init()" ng-app="myApp">
     <!--#include file="header.html" -->
     <div class = "container">
 
-    <section ng-controller="  ">
+    <section ng-controller="MainController">
       <h1>ENTER YOUR TEXT</h1>
 
       <form>
@@ -27,7 +26,7 @@
         <input type="button" value=" " id="forwardTextBtn" class="optionsButton">
         <input type="file" size="40" id="chooseFile" accept=".txt">
         <!-- We cannot style the submit button, so we hide it and style the label instead -->
-        <label for="chooseFile" class="optionsButton">Choose a file...</label>
+        <label for="chooseFile" class="optionsButton" id="test">Choose a file...</label>
         <!-- TODO
         <a href="" id="saveFileLink" download="text.txt">
           <input type="button" value="Download Text..." id="saveFile" class="optionsButton">
@@ -119,13 +118,9 @@
     </aside>
 
   </div>
-
-  <!--#include file="footer.html" -->
-  
-  <!-- JS and JS Libraries --> 
+    <!--#include file="footer.html" -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script type="text/javascript" src="/js/main.js"></script>
-  
-</body>
+  </body>
 </html>

@@ -1,9 +1,19 @@
+* { 
+  --color-one-main: #FFBD65; 
+  --color-one-accent: #B27523; 
+  --color-one-accent-dark: #99651E;
+  --color-two-main: #65C7FF;
+  --color-two--accent: #297DAD;
+  --color-two--misc: #8AD4FF;
+  --color-accent: #820000;
+}
 body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   background-color: #e0e0e0;
   font-size: 100%;
   width: 100%; 
   margin: 0px; 
+  color: #333;
 }
 #wordsToExcludeText {
   text-align: center;
@@ -11,7 +21,7 @@ body {
   top: 20px;
   font-size: 1.3em;
   clear: both;
-  color: #820000;
+  color: var(--color-accent);
   padding-top: 20px; 
 }
 #backTextBtn {
@@ -24,36 +34,32 @@ body {
 }
 article {
   width: 100%;
-  background-color: #ffd1ee;
+  background-color: var(--color-one-main);
   border-radius: 8px;
   height: 100%;
   position: relative;
   float: left;
   padding-bottom: 20px;
 }
-article h1 {
-   color: 820000;
-}
-article p {
-  margin: 10px;
+p {
+  margin: 15px;
+  font-size: 18px; 
+  line-height: 150%; 
 }
 textarea {
   display: block;
   width: 85%;
-  resize: none;
+  resize: vertical; 
+  margin: 15px auto 0px auto;
+  box-sizing: border-box;
+  background-color: #fbfbfb;
 }
 #textArea1 {
-  margin: 15px auto 0px auto;
   height: 350px;
-  box-sizing: border-box;
-  resize: vertical;
 }
 #textArea2 {
-  margin: 15px auto 0px auto;
   height: 120px;
-  box-sizing: border-box;
   top: 20px;
-  resize: vertical;
 }
 #slider1 {
   width: 30%;
@@ -63,7 +69,7 @@ aside {
   overflow: hidden;
   width: 36%;
   float: right;
-  background-color: #ffd1ee;
+  background-color: var(--color-one-main);
   padding-left: 1%;
   padding-right: 1%;
   border-radius: 8px;
@@ -75,13 +81,13 @@ h1 {
   text-align: center;
   font-weight: 300;
   font-size: 2em;
-  color: #820000;
+  color: var(--color-accent);
   margin-bottom: 10px; 
 }
 section {
   width: 61%;
   float: left;
-  background-color: #9ee5c6;
+  background-color: var(--color-two-main);
   text-align: center;
   display:flex;
   flex-direction: column;
@@ -90,23 +96,28 @@ section {
 }
 .replaceTypeBtn {
   color: white;
-  background-color: #820000;
-  border: none;
+  background-color: var(--color-one-accent);
   padding: 3%;
   -webkit-appearance: none;
   cursor: pointer;
   border: 2px solid transparent;
+  margin-bottom: 5px;
 }
 #replaceBtns {
   margin-top: 25px;
   width: 100%;
   text-align: right;
 }
-.replaceTypeBtn:hover, #resetOptionsBtn:hover {
-  background-color: purple;
+.replaceTypeBtn:hover, #resetOptionsBtn:hover, .optionsButton:hover, #forwardTextBtn:hover, #backTextBtn:hover {
+  background-color: var(--color-one-accent-dark);
 }
-.replaceTypeBtn:focus, li > a:focus, #resetOptionsBtn:focus {
+.replaceTypeBtn:focus, li > a:focus, #resetOptionsBtn:focus, .optionsButton:focus, #backTextBtn:focus, #forwardTextBtn:focus {
   border: 2px solid orange;
+  outline: none;
+}
+#test:focus {
+  outline: none; 
+  border: 2px solid orange; 
 }
 #textArea1:focus, #textArea2:focus{
   border: 2px solid blue;
@@ -128,8 +139,8 @@ section {
 .toolTipText {
   visibility: hidden;
   width: 160px;
-  background-color: black;
-  color: #fff;
+  background-color: #333;
+  color: #fdfdfd;
   text-align: center;
   padding: 5px 5px;
   border-radius: 6px;
@@ -138,7 +149,7 @@ section {
   z-index: 1;
 }
 .excludeContainer {
-  float:left;
+  float: left;
   width: 100%;
   margin-top: 15px;
 }
@@ -153,10 +164,9 @@ section {
 #resetOptionsBtn {
   display: block;
   cursor: pointer;
-  color: white;
-  background-color: #820000;
+  color: #fcfcfc;
+  background-color: var(--color-one-accent);
   padding: 12px;
-  border: none;
   -webkit-appearance: none;
   margin-left: auto;
   margin-right: auto; 
@@ -183,35 +193,25 @@ section {
   section { 
     padding-bottom: 15px; 
   }
-  .optionsButton { 
-    margin-bottom: 5px;
-  }
 }
 .optionsButton, #backTextBtn, #forwardTextBtn {
   display: inline-block;
   width: 150px;
   cursor: pointer;
   font-size: 1em;
-  font-weight: 700;
-  color: white;
-  background-color: #00562b;
+  font-weight: 700; 
+  color: #fcfcfc;
+  background-color: var(--color-two--accent);
   padding: .5%;
-  border: none;
+  border: 2px solid transparent;
+  margin-bottom: 5px;
   -webkit-appearance: none; 
-}
-.optionsButton:hover, #backTextBtn:hover, #forwardTextBtn:hover {
-  background-color: purple;
-}
-.optionsButton:active, #backTextBtn:active, #forwardTextBtn:active {
-  color: orange;
 }
 #metaDisplay {
   width: calc(100% - 20px);
   text-align: left;
   padding-left: 20px;
-  font-weight: bold;
-  font-size: 1.03em;
+  font-size: 1.1em;
   padding-top: 20px;
-  line-height: 140%; 
-  color: #333333; 
+  line-height: 150%;   
 }

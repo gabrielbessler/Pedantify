@@ -85,6 +85,7 @@ a, a:visited {
   font-size: 1.1em;
   color: #820000;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  border: 2px solid transparent;
 }
 a:hover {
   color: purple;
