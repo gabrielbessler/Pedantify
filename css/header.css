@@ -16,6 +16,9 @@ li {
     visibility: hidden; 
     display: none; 
   }
+  #headerPlaceHolder{
+    margin-top: 76px;
+  }
 }
 @media (max-width: 800px) and (min-width: 500px) { 
   #hdr > a { 
@@ -76,9 +79,9 @@ li {
 }
 #hdr {
   position: fixed;
-  z-index: 1000;
-  top: 0px;
-  background-color: white;
+    z-index: 1000;
+    top: 0px;
+    background-color: white;
 }
 a, a:visited {
   text-decoration: none;
