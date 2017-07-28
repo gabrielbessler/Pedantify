@@ -16,8 +16,9 @@
       <p>The core idea behind the pedantification is to change the wording of texts without changing their core meaning.
     This can mean making texts more simple or more complicated, but can also mean changing words for random synonyms.
     In order to pedantify texts, the website parses through the input word by word, looks for synonyms in a
-    thesaurus, and picks out one of the synonyms based on the user options.
-    </p>
+    thesaurus, and picks out one of the synonyms based on the user options. Currently, the thesaurus being used contains 2,000 
+    words. 
+      </p>
    </article>
 
     <!--#include file="footer.html" -->
