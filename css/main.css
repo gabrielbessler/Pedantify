@@ -206,6 +206,8 @@ section {
   border: 2px solid transparent;
   margin-bottom: 5px;
   -webkit-appearance: none; 
+  border-radius: 0; 
+  -webkit-border-radius: 0; 
 }
 #metaDisplay {
   width: calc(100% - 20px);
