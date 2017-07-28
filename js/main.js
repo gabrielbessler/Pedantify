@@ -49,9 +49,14 @@ myApp.controller('MainController', function( $scope ) {
     }
   }
 });
-
+console.log(angular.element(document.body).scope());
 //Initializes all variables/objects/eventlisteners when the webpage loads
 function init() { 
+
+  appElement = document.querySelector('[ng-app=myApp]');
+  scope = angular.element(appElement);
+  
+
   currReplacement = "min";
 
   // Assigning variables to all elements used
@@ -81,8 +86,6 @@ function init() {
   randBtn = document.getElementById('randBtn');
   minBtn = document.getElementById('minBtn');
   maxBtn = document.getElementById('maxBtn');
-
-  
 
   getDictionary();
 
@@ -117,11 +120,12 @@ function saveLocalStorage() {
   localStorage['excludeHyphenated'] = chkHyphens.checked;
   localStorage['excludeConjunctions'] = chkConjunctions.checked;
   localStorage['currReplacement'] = currReplacement;
+  localStorage['chkMultiWord'] = chkMultiWord.checked;
+  localStorage['chkNoRepeat'] = chkNoRepeat.checked;
 }
 
 //Load locally stored data for the website
 function loadLocalStorage() {
-  text_area.value = localStorage['mainText'];
   excludeWord.value = localStorage['excText'];
   //Convert strings to boolean
   percentReplSlider.value = ( localStorage['percentReplacement'] == 'true' );
@@ -130,6 +134,15 @@ function loadLocalStorage() {
   chkConjunctions.checked = ( localStorage['excludeConjunctions'] == 'true' );
   percentReplSlider.value = localStorage['percentReplacement'];
   currReplacement = localStorage['currReplacement'];
+  chkNoRepeat.checked = ( localStorage['chkNoRepeat'] == 'true' );
+  chkMultiWord.checked = ( localStorage['chkMultiWord'] == 'true');
+  /*
+  var controllerElement = document.querySelector('section');
+  var controllerScope = angular.element(controllerElement).scope();
+  text_area.value = text_area.value = localStorage['mainText'];;
+  controllerScope.inputText.text = text_area.value;
+  controllerScope.$apply();
+  */
 }
 
 // Loading the dictionary from the server using AJAX (through jQuery)
@@ -226,11 +239,14 @@ function addEventListeners() {
 
   //Add click listeners to all of the buttons below the main textArea
   resetBtn.addEventListener("click", function() {
+    text_area.value = "";
+    /*
     var controllerElement = document.querySelector('section');
     var controllerScope = angular.element(controllerElement).scope();
     text_area.value = "";
     controllerScope.inputText.text = "";
     controllerScope.$apply();
+    */
   });
 
   undoPedantify.addEventListener('click', function() {

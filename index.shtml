@@ -18,7 +18,7 @@
       <h1>ENTER YOUR TEXT</h1>
 
       <form>
-        <textarea id="textArea1" ng-model="Text.text"></textarea>
+        <textarea id="textArea1" ng-model="inputText.text"></textarea>
         <br>
         <input type="submit" value="Submit" id="submitBtn" class="optionsButton">
         <input type="button" value="Reset" id="resetBtn" class="optionsButton">
