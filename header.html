@@ -1,16 +1,17 @@
 <div id="headerPlaceHolder"></div>
 
 <header id="hdr">
-  <!-- LOGO --> 
+  <!-- LOGO -->
   <a href="index.shtml" tabindex="-1">
     <img src="/img/logo_flipped.png" width="250" alt="Pedantify Logo">
   </a>
-  <!-- --> 
+
+  <!-- MOBILE DROPDOWN BUTTON FOR NAVBAR -->
   <span id="navbardown">
-    <img src="/img/navbardown.png" width="55" alt="See Navigation Bar"> 
-  </span> 
-  <!-- NAVIGATION BAR --> 
-  <!-- TODO: update this (can do without lists) --> 
+    <img src="/img/navbardown.png" width="55" alt="See Navigation Bar">
+  </span>
+
+  <!-- NAVIGATION BAR -->
   <nav>
     <ul>
       <li><a href="index.shtml">Home</a></li>
@@ -22,18 +23,20 @@
 
 </header>
 
-<!-- We use this to resize the header when the window size changes --> 
+<!-- We use this to resize the header when the window size changes -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script> 
+<script>
+  // On page load, set header to correct size
   resizeHeader();
 
+  // Every time window resizes, change header size
   $(window).resize(
-    function() { 
-      resizeHeader(); 
+    function() {
+      resizeHeader();
     }
   )
 
-  function resizeHeader() { 
-  $("#hdr").width($('body').width()); 
+  function resizeHeader() {
+  $("#hdr").width($('body').width());
 }
-</script> 
+</script>

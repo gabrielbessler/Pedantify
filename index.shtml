@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <title>Pedantify</title>
     <meta charset="utf-8">
@@ -10,13 +11,17 @@
     <link rel="icon" href="Main.ico">
     <meta name="description" value="Make your texts infinitely more complicated.">
   </head>
+
   <body onload="init()" ng-app="myApp">
+    <!-- HEADER -->
     <!--#include file="header.html" -->
     <div class = "container">
 
+    <!-- MAIN SECTION OF WEBSITE -->
     <section ng-controller="MainController">
       <h1>ENTER YOUR TEXT</h1>
 
+      <!-- TEXTAREA INPUT AND BUTTONS -->
       <form>
         <textarea id="textArea1" ng-model="inputText.text"></textarea>
         <br>
@@ -27,12 +32,9 @@
         <input type="file" size="40" id="chooseFile" accept=".txt" tabindex="-1">
         <!-- We cannot style the submit button, so we hide it and style the label instead -->
         <label for="chooseFile" class="optionsButton" id="test" tabindex="0">Choose a file...</label>
-        <!-- TODO
-        <a href="" id="saveFileLink" download="text.txt">
-          <input type="button" value="Download Text..." id="saveFile" class="optionsButton">
-        </a>
-      -->
       </form>
+
+      <!-- TEXT METADATA -->
       <div id="metaDisplay">
         Number of Words: <span id="numWords">{{numWords(inputText.text)}}</span> <br>
         Number of Character: {{numChars(inputText.text)}}  <br>
@@ -42,25 +44,26 @@
       </div>
     </section>
 
+    <!-- ALL OPTIONS FOR WEBSITE -->
     <aside>
       <h1> OPTIONS </h1>
       <form>
+        <!-- Percent Replacement of Text -->
         <span class="toolTip">
           <span id="percRepText">
           Percentage Replacement
           </span>
           <span class="toolTipText">Choose the percentage of words that will be pedantified</span>
         </span>
-
         <input id="slider1" type="range" min="0" max="100" step="1" value="50">
-
         <span id="percReplValue"></span>
+
+        <!-- Max/Min/Random Replacement Buttons -->
         <div id="replaceBtns">
           <span class="toolTip" id="replacementTypeText" >
             <span id="replacementClickableText">
               Replacement Type
             </span>
-
             <span class="toolTipText">Min - Replace with smallest possible word <br>
                                       Max - Replace with largest possible word <br>
                                       Random - Replace with random word <br>
@@ -71,6 +74,7 @@
           <input class="replaceTypeBtn" type="button" value="Random" id="randBtn">
         </div>
 
+        <!-- Exclude Pronouns Option -->
         <div class="excludeContainer">
           <span class="toolTip" id="excludePronounsText">Exclude Pronouns
              <span class="toolTipText">Prevent pronouns from being pedantified</span>
@@ -78,6 +82,7 @@
           <input type="checkbox" id="chkPronouns" class="chkBox">
         </div>
 
+        <!--Exclude Conjunctions Option -->
         <div class="excludeContainer">
           <span class="toolTip" id="excludeConjuctionsText">Exclude Conjunctions
             <span class="toolTipText">Prevent conjunctions from being pedantified</span>
@@ -85,6 +90,7 @@
           <input type="checkbox" id="chkConjunctions" class="chkBox">
         </div>
 
+        <!-- Exclude Hyphenated Words Option -->
         <div class="excludeContainer">
           <span class="toolTip"  id="ignoreHyphenatedWordsText">Exclude Hyphenated Words
             <span class="toolTipText">Ignore words that include hyphens</span>
@@ -92,6 +98,7 @@
           <input type="checkbox" id="chkHyphens" class="chkBox">
         </div>
 
+        <!-- Only Use One-Word Synonyms Option -->
         <div class="excludeContainer">
           <span class="toolTip" id="oneWordSynonymsText">One-Word Synonyms Only
             <span class="toolTipText">Exclude synomyms that are more than one word</span>
@@ -99,28 +106,32 @@
           <input type="checkbox" id="chkMultiWord" class="chkBox">
         </div>
 
+        <!-- No Synonym Repetition Option -->
         <div class="excludeContainer">
-          <!--TODO: see if using LABEL is actually an easier way to do this -->
           <span class="toolTip" id="noSynRepText">No Synonym Repetition
             <span class="toolTipText">Never use the same word twice in the text</span>
           </span>
           <input type="checkbox" id="chkNoRepeat" class="chkBox">
         </div>
 
+        <!-- List of Words to Exclude from Pedantification -->
         <div id="wordsToExcludeText" class="toolTip">
           WORDS TO EXCLUDE
           <span class="toolTipText">Enter a space separated list of words to be excluded from pedantification</span>
         </div>
         <textarea id="textArea2"></textarea>
         <input type="button" value="Reset Options" id="resetOptionsBtn">
-      </form>
 
+      </form>
     </aside>
 
-  </div>
+    </div>
+
     <!--#include file="footer.html" -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script type="text/javascript" src="/js/main.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+
   </body>
 </html>
