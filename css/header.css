@@ -1,89 +1,76 @@
-li {
-  display: inline;
-  padding-left: 50px; 
-  padding-right: 50px; 
-  padding-top: 0px; 
-}
-@media (max-width: 500px) { 
+/* Smallest possible size (e.g. mobile) */
+@media (max-width: 500px) {
   #navbardown {
-    visibility: visible; 
-    display:inline; 
-  }
-  #navbardown:hover { 
-    background-color: blue; 
+    visibility: visible;
+    display:inline;
   }
   nav > ul {
-    visibility: hidden; 
-    display: none; 
+    visibility: hidden;
+    display: none;
   }
   #headerPlaceHolder{
     margin-top: 76px;
   }
 }
-@media (max-width: 800px) and (min-width: 500px) { 
-  #hdr > a { 
+/* Medium size (e.g. small laptop/tablet) */
+@media (max-width: 800px) and (min-width: 500px) {
+  #hdr > a {
     text-align: left;
-    padding-left: 25px;  
+    padding-left: 25px;
   }
-  nav {   
-    text-align: center; 
-    float: right; 
-    width: calc(100% - 260px); 
-    height: 74px; 
-    font-size: .9em; 
-    display: inline; 
+  nav {
+    float: right;
+    width: calc(100% - 260px);
+    height: 74px;
+    font-size: .9em;
   }
   #headerPlaceHolder{
     margin-top: 70px;
   }
-  li:hover { 
-    background-color: gray; 
+  li {
+    padding: 2px 5px 2px 5px;
   }
-  li { 
-    padding: 5px; 
-    padding-top: 2px; 
-    padding-bottom: 2px; 
-  }
-  ul { 
-    height: 74px; 
-    display: block; 
-    padding: 0px; 
-    margin: 0px; 
+  ul {
+    height: 74px;
+    display: block;
+    padding: 0px;
+    margin: 0px;
     padding-top: 27px;
   }
-  #navbardown > img{ 
-    visibility: hidden; 
-    width: 0px; 
+  #navbardown > img{
+    visibility: hidden;
+    width: 0px;
     height: 0px;
   }
 }
-@media (min-width: 800px) { 
-  #hdr { 
-    text-align: center;
-  }
-  nav { 
-    text-align: center; 
-  }
+/* Largest size (e.g. desktop) */
+@media (min-width: 800px) {
   #headerPlaceHolder{margin-top: 115px;}
-  ul { 
-    margin: 0px;
-    padding: 6px 0px; 
-    margin-bottom: 4px; 
+  ul {
+    margin: 0px 0px 4px 0px;
+    padding: 6px 0px;
   }
-  #navbardown { 
-    visibility: hidden; 
-    width: 0px; 
-    height: 0px; 
+  #navbardown {
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
   }
-
+  li {
+    padding: 0px 50px 0px 50px;
+  }
+}
+li {
+  display: inline;
 }
 #hdr {
   position: fixed;
-    z-index: 1000;
-    top: 0px;
-    background-color: white;
+  z-index: 1000;
+  top: 0px;
+  background-color: white;
+  list-style: none;
+  text-align: center;
 }
-a, a:visited {
+a, a:visited, a:active {
   text-decoration: none;
   font-size: 1.1em;
   color: #820000;
@@ -92,12 +79,4 @@ a, a:visited {
 }
 a:hover {
   color: purple;
-}
-a:active {
-  color: #820000;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-ul {
-  z-index: 1000;
-  list-style: none;
 }
