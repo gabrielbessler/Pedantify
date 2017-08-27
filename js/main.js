@@ -147,7 +147,7 @@ function getDictionary() {
 }
 
 // Fixes the angularJS text display when a text file is loaded
-function updateText() {
+function updateTextFromFile() {
   text_area.value = text;
   var controllerElement = document.querySelector('section');
   var controllerScope = angular.element(controllerElement).scope();
@@ -196,7 +196,7 @@ function addEventListeners() {
     reader = new FileReader();
     reader.onload = function(e) {
       text = reader.result;
-      updateText();
+      updateTextFromFile();
       chooseFile.value = "";
     }
     reader.readAsText(fileToLoad);
@@ -288,7 +288,7 @@ var ignoreConjunctions = false;
 var ignorePronouns = false;
 var ignoreHyphens = false;
 var noMultiWords = false;
-var noRep = false;
+var noSynonymRep = false;
 var excludedWords = [];
 var pronouns = [];
 var old_text = "";
@@ -314,7 +314,7 @@ function getExcludes() {
     ignorePronouns = chkPronouns.checked;
     ignoreHyphens = chkHyphens.checked;
     noMultiWords = chkMultiWord.checked;
-    noRep = chkNoRepeat.checked;
+    noSynonymRep = chkNoRepeat.checked;
 }
 
 //Uses the textArea in 'options' to get a list of words to ignore in pedantification
@@ -391,12 +391,41 @@ function isElementInList(e, list) {
   return false;
 }
 
+//Parses through the given text and splits into wordList and whiteSpaceList
+function getWhitespaceAndWords(text) {
+
+  var whiteSpaceList = [];
+  var wordList = [];
+
+  var currWord = false;
+  for ( var charIndex in text ) {
+    char = text[charIndex];
+    if ( char == " " || char == "\n" || char == "\t" || char == "\r" ){
+      if ( currWord == false ) {
+        whiteSpaceList[whiteSpaceList.length-1] += char;
+      } else {
+        whiteSpaceList.push(char);
+        currWord = false;
+      }
+    } else {
+        if ( currWord == true ) {
+          wordList[wordList.length-1] += char;
+        } else {
+          wordList.push(char);
+          currWord = true;
+        }
+    }
+  }
+
+  return [whiteSpaceList, wordList];
+}
+
 //Handles the actual pedantification of the text
 function pedantify() {
-  text = text.split("");
+  var text = text.split("");
 
-  wordList = [];
-  whiteSpaceList = [];
+  var wordList = [];
+  var whiteSpaceList = [];
 
   //Figures out if the text begins with a whitespace or a word
   beginsWithWhitespace = false;
@@ -405,27 +434,9 @@ function pedantify() {
     beginsWithWhitespace = true;
   }
 
-  //Parses through the given text and splits into wordList and whiteSpaceList
-  currWord = false;
-  for ( var charIndex in text ) {
-    char = text[charIndex];
-    if ( char == " " || char == "\n" || char == "\t" || char == "\r" ){
-      if ( currWord == false ) {
-        whiteSpaceList[whiteSpaceList.length-1] += char;
-      } else {
-        whiteSpaceList.push(char)
-        currWord = false;
-      }
-    } else {
-        if ( currWord == true ) {
-          wordList[wordList.length-1] += char;
-        } else {
-
-          wordList.push(char);
-          currWord = true;
-        }
-    }
-  }
+  result = getWhitespaceAndWords();
+  whiteSpaceList = result[0];
+  wordList = result[1];
 
   newText = "";
   wordReplacedCount = 0;
@@ -447,9 +458,9 @@ function pedantify() {
       newText += word;
     }
     //First, we check if it is one of the words we shouldn't pedantify
-      if( ignoreConjunctions == true && isElementInList(word.toLowerCase(),conjunctions) ) {
+      if( ignoreConjunctions == true && isElementInList(word.toLowerCase(), conjunctions) ) {
       getWord();
-    } else if( ignorePronouns == true && isElementInList(word.toLowerCase(),pronouns) ) {
+    } else if( ignorePronouns == true && isElementInList(word.toLowerCase(), pronouns) ) {
       getWord();
     } else if ( ignoreHyphens == true && isHyphenated(word.toLowerCase()) ) {
       getWord();
@@ -493,7 +504,7 @@ function pedantify() {
         } else if ( method == "random" ) {
           word = words[Math.floor(Math.random()*words.length)];
         }
-        if ( noRep == true ) {
+        if ( noSynonymRep ) {
           usedWords.push(word);
         }
         wordReplacedCount += 1;
@@ -502,7 +513,7 @@ function pedantify() {
         } else if ( capsType == "capitalized" ) {
           word = word[0].toUpperCase() + word.slice(1,word.length);
         }
-        if ( punctuationFound == true ){
+        if ( punctuationFound ){
           word += lastChar;
         }
         getWord();

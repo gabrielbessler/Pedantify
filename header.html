@@ -40,7 +40,7 @@
   function highlightCurrentPage(){
     var currentPage = location.pathname.substr(1);
     selectedStyle = "#FFBD65";
-    if (currentPage == "index.shtml") {
+    if (currentPage == "index.shtml" || currentPage == "") {
       document.getElementById('homelink').style.color = selectedStyle;
     } else if (currentPage == "about.shtml") {
       document.getElementById('aboutlink').style.color = selectedStyle;
