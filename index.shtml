@@ -39,8 +39,8 @@
         Number of Words: <span id="numWords">{{numWords(inputText.text)}}</span> <br>
         Number of Character: {{numChars(inputText.text)}}  <br>
         Number of Words Replaced: {{wordsReplaced}}<br>
-        Mean Word Length (Before Replacement): <span id="meanWordLen1">{{meanWordLenBefore(inputText.text)}}</span> <br>
-        Mean Word Length (After Replacement): <span id="meanWordLen2">{{meanWordLenAfter(inputText.text)}}</span>
+        Mean Word Length (Before Replacement): <span id="meanWordLenOld">{{meanWordLenBefore(inputText.text)}}</span> <br>
+        Mean Word Length (After Replacement): <span id="meanWordLenNew">{{meanWordLenAfter(inputText.text)}}</span>
       </div>
     </section>
 
