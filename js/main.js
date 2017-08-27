@@ -301,15 +301,15 @@ function pedantifyInit() {
   text = text_area.value;
   percent = percentReplSlider.value;
   method = currReplacement;
-  excludeWords();
-  getExcludes();
+  getExcludedOptions();
+  getExcludedWords();
   // We use old_text to store the text before pedantification
   old_text = text;
   pedantify();
 }
 
 //Uses the checkboxes in 'options' to see if pronouns, conjunctions, and hyphenated words will excluded
-function getExcludes() {
+function getExcludedOptions() {
     ignoreConjunctions = chkConjunctions.checked;
     ignorePronouns = chkPronouns.checked;
     ignoreHyphens = chkHyphens.checked;
@@ -318,27 +318,12 @@ function getExcludes() {
 }
 
 //Uses the textArea in 'options' to get a list of words to ignore in pedantification
-function excludeWords() {
-  excludedWords = [];
-  currWord = false;
-  //Parses through text and ignores whitespace
-  for ( var charIndex in excludeWord.value ){
-    char = excludeWord.value[charIndex];
-    if (char == " " || char == "\n" || char == "\t" || char == "\r"){
-      currWord = false;
-    } else {
-        if (currWord == true){
-          excludedWords[excludedWords.length-1] += char;
-        } else {
-          excludedWords.push(char);
-          currWord = true;
-        }
-    }
-  }
+function getExcludedWords() {
+  excludedWords = getWhitespaceAndWords(excludeWord.value)[1];
 }
 
 //Gets the shortest or longest word in an array
-function getLongShorttWord(inputList, type="long") {
+function getLongShortWord(inputList, type="long") {
   // We initialize the current replacement word wordlength to be the first word in the synonym list
   wordlength = inputList[0].length;
   currentWord = "";
@@ -422,10 +407,9 @@ function getWhitespaceAndWords(text) {
 
 //Handles the actual pedantification of the text
 function pedantify() {
-  text = text.split("");
 
-  wordList = [];
-  whiteSpaceList = [];
+  text = text.split("");
+  newText = "";
 
   //Parses through the given text and splits into wordList and whiteSpaceList
   r = getWhitespaceAndWords(text);
@@ -433,28 +417,18 @@ function pedantify() {
   whiteSpaceList = r[0];
 
   //Figures out if the text begins with a whitespace or a word
-  beginsWithWhitespace = false;
   if (text[0] == " ") {
-    whiteSpaceList[0] = " ";
-    beginsWithWhitespace = true;
+    newText += " ";
   }
 
-  newText = "";
   wordReplacedCount = 0;
-  if ( beginsWithWhitespace == true ) {
-    newText += whiteSpaceList[0];
-  }
   for ( wordIndex in wordList ) {
     word = wordList[wordIndex];
     //Adds the correct whitespace to the word
     function getWord() {
       //We only care about whitespace if the word is not at the end of the text
       if (parseInt(wordIndex) + 1 < wordList.length){
-        if (beginsWithWhitespace == true){
-          word += whiteSpaceList[parseInt(wordIndex)+1];
-        } else {
-          word += whiteSpaceList[wordIndex];
-       }
+        word += whiteSpaceList[wordIndex];
       }
       newText += word;
     }
@@ -499,13 +473,13 @@ function pedantify() {
           capsType = "capitalized";
         }
         if ( method == "min" ) {
-          word = getLongShorttWord(words, 'short');
+          word = getLongShortWord(words, 'short');
         } else if ( method == "max" ) {
-          word = getLongShorttWord(words, 'long');
+          word = getLongShortWord(words, 'long');
         } else if ( method == "random" ) {
           word = words[Math.floor(Math.random()*words.length)];
         }
-        if ( noSynRep == true ) {
+        if ( noSynRep ) {
           usedWords.push(word);
         }
         wordReplacedCount += 1;
@@ -514,7 +488,7 @@ function pedantify() {
         } else if ( capsType == "capitalized" ) {
           word = word[0].toUpperCase() + word.slice(1,word.length);
         }
-        if ( punctuationFound == true ){
+        if ( punctuationFound ) {
           word += lastChar;
         }
         getWord();
