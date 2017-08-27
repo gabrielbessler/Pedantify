@@ -14,10 +14,10 @@
   <!-- NAVIGATION BAR -->
   <nav>
     <ul>
-      <li><a href="index.shtml">Home</a></li>
-      <li><a href="about.shtml">About Pedantify</a></li>
-      <li><a href="contact.shtml">Contact Us</a></li>
-      <li><a href="https://github.com/gabrielbessler">Follow Us</a></li>
+      <li><a href="index.shtml" id="homelink">Home</a></li>
+      <li><a href="about.shtml" id="aboutlink">About Pedantify</a></li>
+      <li><a href="contact.shtml" id="contactuslink">Contact Us</a></li>
+      <li><a href="https://github.com/gabrielbessler" id="followuslink">Follow Us</a></li>
     </ul>
   </nav>
 
@@ -26,8 +26,9 @@
 <!-- We use this to resize the header when the window size changes -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
-  // On page load, set header to correct size
+  // On page load, set header to correct size and style current tab
   resizeHeader();
+  highlightCurrentPage();
 
   // Every time window resizes, change header size
   $(window).resize(
@@ -35,6 +36,20 @@
       resizeHeader();
     }
   )
+
+  function highlightCurrentPage(){
+    var currentPage = location.pathname.substr(1);
+    selectedStyle = "#FFBD65";
+    if (currentPage == "index.shtml") {
+      document.getElementById('homelink').style.color = selectedStyle;
+    } else if (currentPage == "about.shtml") {
+      document.getElementById('aboutlink').style.color = selectedStyle;
+    } else if (currentPage == "contact.shtml") {
+      document.getElementById('contactuslink').style.color = selectedStyle;
+    } else if (currentPage == "index.shtml") {
+      document.getElementById('followuslink').style.color = selectedStyle;
+    }
+  }
 
   function resizeHeader() {
   $("#hdr").width($('body').width());
