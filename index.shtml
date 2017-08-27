@@ -76,41 +76,41 @@
 
         <!-- Exclude Pronouns Option -->
         <div class="excludeContainer">
-          <span class="toolTip" id="excludePronounsText">Exclude Pronouns
+          <label for="chkPronouns"><span class="toolTip" id="excludePronounsText">Exclude Pronouns
              <span class="toolTipText">Prevent pronouns from being pedantified</span>
-          </span>
+          </span></label>
           <input type="checkbox" id="chkPronouns" class="chkBox">
         </div>
 
         <!--Exclude Conjunctions Option -->
         <div class="excludeContainer">
-          <span class="toolTip" id="excludeConjuctionsText">Exclude Conjunctions
+          <label for="chkConjunctions"><span class="toolTip" id="excludeConjuctionsText">Exclude Conjunctions
             <span class="toolTipText">Prevent conjunctions from being pedantified</span>
-          </span>
+          </span></label>
           <input type="checkbox" id="chkConjunctions" class="chkBox">
         </div>
 
         <!-- Exclude Hyphenated Words Option -->
         <div class="excludeContainer">
-          <span class="toolTip"  id="ignoreHyphenatedWordsText">Exclude Hyphenated Words
+          <label for="chkHyphens"><span class="toolTip"  id="ignoreHyphenatedWordsText">Exclude Hyphenated Words
             <span class="toolTipText">Ignore words that include hyphens</span>
-          </span>
+          </span></label>
           <input type="checkbox" id="chkHyphens" class="chkBox">
         </div>
 
         <!-- Only Use One-Word Synonyms Option -->
         <div class="excludeContainer">
-          <span class="toolTip" id="oneWordSynonymsText">One-Word Synonyms Only
+          <label for="chkMultiWord"><span class="toolTip" id="oneWordSynonymsText">One-Word Synonyms Only
             <span class="toolTipText">Exclude synomyms that are more than one word</span>
-          </span>
+          </span></label>
           <input type="checkbox" id="chkMultiWord" class="chkBox">
         </div>
 
         <!-- No Synonym Repetition Option -->
         <div class="excludeContainer">
-          <span class="toolTip" id="noSynRepText">No Synonym Repetition
+          <label for="chkNoRepeat"><span class="toolTip" id="noSynRepText">No Synonym Repetition
             <span class="toolTipText">Never use the same word twice in the text</span>
-          </span>
+          </span></label>
           <input type="checkbox" id="chkNoRepeat" class="chkBox">
         </div>
 

@@ -86,10 +86,13 @@ function init() {
   getDictionary();
 
   // Checking for cached data (in localStorage)
-  // TODO: check for localStorage support before attempting to load the data
-  if (localStorage['mainText'] != undefined){
-    loadLocalStorage();
+  // Try-catch necessary if user has localstorage turned off
+  try {
+    if (localStorage['mainText'] != undefined){
+      loadLocalStorage();
+    }
   }
+  catch(err) {}
 
   // Setting the initial value of the progress bar
   percentReplVal.innerHTML = percentReplSlider.value + "%";
@@ -122,14 +125,13 @@ function saveLocalStorage() {
 
 //Load locally stored data for the website
 function loadLocalStorage() {
+  currReplacement = localStorage['currReplacement'];
   excludeWord.value = localStorage['excText'];
+  percentReplSlider.value = localStorage['percentReplacement'];
   //Convert strings to boolean
-  percentReplSlider.value = ( localStorage['percentReplacement'] == 'true' );
   chkPronouns.checked = ( localStorage['excludePronouns'] == 'true');
   chkHyphens.checked = ( localStorage['excludeHyphenated'] == 'true' );
   chkConjunctions.checked = ( localStorage['excludeConjunctions'] == 'true' );
-  percentReplSlider.value = localStorage['percentReplacement'];
-  currReplacement = localStorage['currReplacement'];
   chkNoRepeat.checked = ( localStorage['chkNoRepeat'] == 'true' );
   chkMultiWord.checked = ( localStorage['chkMultiWord'] == 'true');
 }
@@ -181,27 +183,6 @@ function addEventListeners() {
       percentReplSlider.value = String(parseInt(percentReplSlider.value) + 10);
     }
     percentReplVal.innerHTML = percentReplSlider.value + "%";
-  });
-
-  // Allow users to click on the text by checkboxes in order to change textbox values
-  excludePronounsText.addEventListener( 'click', function() {
-    chkPronouns.checked = !chkPronouns.checked;
-  });
-
-  excludeConjuctionsText.addEventListener( 'click', function() {
-    chkConjunctions.checked = !chkConjunctions.checked;
-  });
-
-  ignoreHyphenatedWordsText.addEventListener( 'click', function() {
-    chkHyphens.checked = !chkHyphens.checked;
-  });
-
-  oneWordSynonymsText.addEventListener( 'click', function() {
-    chkMultiWord.checked = !chkMultiWord.checked;
-  });
-
-  noSynRepText.addEventListener( 'click', function() {
-    chkNoRepeat.checked = !chkNoRepeat.checked;
   });
 
   // If window is closing, store text/options in the cache
@@ -340,7 +321,6 @@ function getExcludes() {
 function excludeWords() {
   excludedWords = [];
   currWord = false;
-  //TODO: make this a function
   //Parses through text and ignores whitespace
   for ( var charIndex in excludeWord.value ){
     char = excludeWord.value[charIndex];
@@ -370,14 +350,12 @@ function getLongShorttWord(inputList, type="long") {
     if( inputList[wordIndex3].length > wordlength && type=="long" ){
       if ( noMultiWords == true ) {
         //TODO
-        console.log("todo");
       }
       wordlength = inputList[wordIndex3].length;
       currentWord = inputList[wordIndex3];
     } else if(inputList[wordIndex3].length < wordlength && type=="short"){
       if ( noMultiWords == true ) {
         //TODO
-        console.log("todo");
       }
       wordlength = inputList[wordIndex3].length;
       currentWord = inputList[wordIndex3];
