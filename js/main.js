@@ -49,13 +49,9 @@ myApp.controller('MainController', function( $scope ) {
     }
   }
 });
-console.log(angular.element(document.body).scope());
-//Initializes all variables/objects/eventlisteners when the webpage loads
-function init() { 
 
-  appElement = document.querySelector('[ng-app=myApp]');
-  scope = angular.element(appElement);
-  
+//Initializes all variables/objects/eventlisteners when the webpage loads
+function init() {
 
   currReplacement = "min";
 
@@ -136,13 +132,6 @@ function loadLocalStorage() {
   currReplacement = localStorage['currReplacement'];
   chkNoRepeat.checked = ( localStorage['chkNoRepeat'] == 'true' );
   chkMultiWord.checked = ( localStorage['chkMultiWord'] == 'true');
-  /*
-  var controllerElement = document.querySelector('section');
-  var controllerScope = angular.element(controllerElement).scope();
-  text_area.value = text_area.value = localStorage['mainText'];;
-  controllerScope.inputText.text = text_area.value;
-  controllerScope.$apply();
-  */
 }
 
 // Loading the dictionary from the server using AJAX (through jQuery)
@@ -240,22 +229,15 @@ function addEventListeners() {
   //Add click listeners to all of the buttons below the main textArea
   resetBtn.addEventListener("click", function() {
     text_area.value = "";
-    /*
-    var controllerElement = document.querySelector('section');
-    var controllerScope = angular.element(controllerElement).scope();
-    text_area.value = "";
-    controllerScope.inputText.text = "";
-    controllerScope.$apply();
-    */
   });
 
   undoPedantify.addEventListener('click', function() {
     // This selects the elements necessary to update metadata text using angularjs
     var controllerElement = document.querySelector('section');
     var controllerScope = angular.element(controllerElement).scope();
-    
+
     text_area.value = old_text;
-    
+
     controllerScope.inputText.text = old_text;
     controllerScope.$apply();
     text = old_text;
@@ -340,7 +322,7 @@ function pedantifyInit() {
   method = currReplacement;
   excludeWords();
   getExcludes();
-  // We use old_text to store the text before pedantification 
+  // We use old_text to store the text before pedantification
   old_text = text;
   pedantify();
 }
@@ -408,19 +390,17 @@ function getLongShorttWord(inputList, type="long") {
 function percentageCheck() {
   if (Math.round(Math.random() * 100) < percent) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 //Checks if a word contains a hyphen
 function isHyphenated(s) {
-  // if s does not contain a '-', idexOf() will return -1 
+  // if s does not contain a '-', idexOf() will return -1
   if (s.toLowerCase().indexOf('-') >= 0) {
-    return false
-  } else {
-    return true
+    return false;
   }
+  return true;
 }
 
 //Returns true if the given element is found in the list
@@ -523,9 +503,9 @@ function pedantify() {
             capsType = "all_upper";
           }
         } else if ( word == (word[0].toUpperCase() + word.slice(1,word.length)) ) {
-          //check if the first letter is capitalized - note that this could have issues with proper nouns
-          //However, the amount of words capitalized because they are @ the beginning of a sentence is greater
-          //Than the number of words that are capitalized b/c proper noun AND have synonyms
+          //Check if the first letter is capitalized - note that this could have issues with proper nouns
+          //However, the amount of words capitalized because they are at the beginning of a sentence is greater
+          //Than the number of words that are capitalized because proper noun AND have synonyms
           capsType = "capitalized";
         }
         if ( method == "min" ) {
@@ -556,7 +536,6 @@ function pedantify() {
   text_area.value = newText;
   text = newText;
 
-  // TODO: Fix this
   var controllerElement = document.querySelector('section');
   var controllerScope = angular.element(controllerElement).scope();
   if ( controllerScope.textPedantified == true ) {
