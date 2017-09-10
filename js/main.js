@@ -85,6 +85,8 @@ function init() {
 
   getDictionary();
 
+  addEventListeners();
+
   // Checking for cached data (in localStorage)
   // Try-catch necessary if user has localstorage turned off
   try {
@@ -92,8 +94,7 @@ function init() {
       loadLocalStorage();
     }
   }
-  catch(err) {}
-
+  catch(err) {console.log(err);}
   // Setting the initial value of the progress bar
   percentReplVal.innerHTML = percentReplSlider.value + "%";
 
@@ -105,8 +106,6 @@ function init() {
   } else if ( currReplacement == "random" ) {
     randBtn.style.color = "#e88b2e";
   }
-
-  addEventListeners();
 
 }
 
@@ -134,6 +133,12 @@ function loadLocalStorage() {
   chkConjunctions.checked = ( localStorage['excludeConjunctions'] == 'true' );
   chkNoRepeat.checked = ( localStorage['chkNoRepeat'] == 'true' );
   chkMultiWord.checked = ( localStorage['chkMultiWord'] == 'true');
+  text_area.value = localStorage['mainText'];
+  text_area.value = '123';
+  var controllerElement = document.querySelector('section');
+  var controllerScope = angular.element(controllerElement).scope();
+  //controllerScope.inputText.text = text_area.value;
+  controllerScope.$apply();
 }
 
 // Loading the dictionary from the server using AJAX (through jQuery)
@@ -290,6 +295,33 @@ var ignoreHyphens = false;
 var noMultiWords = false;
 var noSynRep = false;
 var excludedWords = [];
+//http://www.really-learn-english.com/list-of-pronouns.html
+// personal pronouns: I, you, he, she, it, we, they, me, him, her, us, them
+// subjective pronouns: I, you, he, she, it, they, what, who.
+// objective pronouns: me, him, her, it, us them, whom
+// possessive pronouns: mine, yours, his, hers, ours, theirs.
+// demonstrative pronouns: this, that, these, those.
+// interrogative pronouns: who, whom, which, what, whose, whoever, whatever, whichever, whomever
+// relative pronouns: who, whom, whose, which, that, what whatever, whoever, whomever, whichever
+// reflexive: myself, yourself, himself, herself, itself, ourselves, themselves
+// intensive pronouns: myself, yourself, himself, herself, itself, ourselves, themselves
+// reciprocal pronouns: each other, one another
+// indefinitite pronouns (not a complete list): anything, everybody, another, each, few, many, none, some all,
+// any, anybody, anyone, everyone, everything, no one, nobody, nothing, none,
+// other, others, several, somebody, someone, something, most, enough, little, more, both, either, neither, one,
+// much, such.
+
+// ===============================================================
+// FINAL LIST
+// ================================================================
+// The overall list we will  use is:
+// I, you, he, she, it, we, they, me, him, her, us, them, they, what, who, whom, mine, yours, his, hers, ours, theirs.
+// this, that, these, those, which, whatever, whoever, whomever, whichever, myself, yourself, himself, herself, itself, ourselves, themselves
+// each other, one another, anything, everybody, another, each, few, many, none, some all
+// any, anybody, anyone, everyone, everything, no one, nobody, nothing, none,
+// other, others, several, somebody, someone, something, most, enough, little, more, both, either, neither, one,
+// much, such
+
 var pronouns = [];
 var old_text = "";
 var percent = 0;
@@ -510,4 +542,8 @@ function pedantify() {
   }
   controllerScope.inputText.text = text_area.value;
   controllerScope.wordsReplaced = wordReplacedCount;
+}
+
+window.onload = function () {
+  init();
 }
