@@ -546,4 +546,8 @@ function pedantify() {
 
 window.onload = function () {
   init();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c0bbb198f80d18ab821f2b8e9b35eeaedbd028f8
