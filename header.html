@@ -17,7 +17,7 @@
       <li><a href="index.shtml" id="homelink">Home</a></li>
       <li><a href="about.shtml" id="aboutlink">About Pedantify</a></li>
       <li><a href="contact.shtml" id="contactuslink">Contact Us</a></li>
-      <li><a href="https://github.com/gabrielbessler" id="followuslink">Follow Us</a></li>
+      <li><a href="https://github.com/gabrielbessler" id="followuslink" target="_blank">Follow Us</a></li>
     </ul>
   </nav>
 
@@ -37,6 +37,7 @@
     }
   )
 
+  // Uses the current web address to restyle header accordingly.
   function highlightCurrentPage(){
     var currentPage = location.pathname.substr(1);
     selectedStyle = "#FFBD65";
@@ -51,6 +52,7 @@
     }
   }
 
+  // Resizes header to be consistent with screen size.
   function resizeHeader() {
   $("#hdr").width($('body').width());
 }

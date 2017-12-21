@@ -12,7 +12,7 @@
     <meta name="description" value="Make your texts infinitely more complicated.">
   </head>
 
-  <body onload="init()" ng-app="myApp">
+  <body ng-app="myApp">
     <!-- HEADER -->
     <!--#include file="header.html" -->
     <div class = "container">
