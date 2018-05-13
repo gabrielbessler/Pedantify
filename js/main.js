@@ -295,32 +295,9 @@ var ignoreHyphens = false;
 var noMultiWords = false;
 var noSynRep = false;
 var excludedWords = [];
-//http://www.really-learn-english.com/list-of-pronouns.html
-// personal pronouns: I, you, he, she, it, we, they, me, him, her, us, them
-// subjective pronouns: I, you, he, she, it, they, what, who.
-// objective pronouns: me, him, her, it, us them, whom
-// possessive pronouns: mine, yours, his, hers, ours, theirs.
-// demonstrative pronouns: this, that, these, those.
-// interrogative pronouns: who, whom, which, what, whose, whoever, whatever, whichever, whomever
-// relative pronouns: who, whom, whose, which, that, what whatever, whoever, whomever, whichever
-// reflexive: myself, yourself, himself, herself, itself, ourselves, themselves
-// intensive pronouns: myself, yourself, himself, herself, itself, ourselves, themselves
-// reciprocal pronouns: each other, one another
-// indefinitite pronouns (not a complete list): anything, everybody, another, each, few, many, none, some all,
-// any, anybody, anyone, everyone, everything, no one, nobody, nothing, none,
-// other, others, several, somebody, someone, something, most, enough, little, more, both, either, neither, one,
-// much, such.
 
-// ===============================================================
-// FINAL LIST
-// ================================================================
-// The overall list we will  use is:
-// I, you, he, she, it, we, they, me, him, her, us, them, they, what, who, whom, mine, yours, his, hers, ours, theirs.
-// this, that, these, those, which, whatever, whoever, whomever, whichever, myself, yourself, himself, herself, itself, ourselves, themselves
-// each other, one another, anything, everybody, another, each, few, many, none, some all
-// any, anybody, anyone, everyone, everything, no one, nobody, nothing, none,
-// other, others, several, somebody, someone, something, most, enough, little, more, both, either, neither, one,
-// much, such
+// TODO: use this 
+var pronounts_list = ["I", "you", "he", "she", "it", "we", "they", "me", "him", "her", "us", "them", "they", "what", "who", "whom", "mine", "yours", "his", "hers", "ours", "theirs", "this", "that", "these", "those", "which", "whatever", "whoever", "whomever", "whichever", "myself", "yourself", "himself", "herself", "itself", "ourselves", "themselves", "each other", "one another", "anything", "everybody", "another", "each", "few", "many", "none", "some all", "any", "anybody", "anyone", "everyone", "everything", "no one", "nobody", "nothing", "none", "other", "others", "several", "somebody", "someone", "something", "most", "enough", "little", "more", "both", "either", "neither", "one", "much", "such"];
 
 var pronouns = [];
 var old_text = "";
@@ -383,10 +360,7 @@ function getLongShortWord(inputList, type="long") {
 
 //Generates a random number and checks if it's bigger than the threshold for pedantifying a word
 function percentageCheck() {
-  if (Math.round(Math.random() * 100) < percent) {
-    return true;
-  }
-  return false;
+    return (Math.round(Math.random() * 100) < percent);
 }
 
 //Checks if a word contains a hyphen
@@ -546,8 +520,4 @@ function pedantify() {
 
 window.onload = function () {
   init();
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c0bbb198f80d18ab821f2b8e9b35eeaedbd028f8
