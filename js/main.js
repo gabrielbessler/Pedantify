@@ -135,8 +135,8 @@ function loadLocalStorage() {
   chkMultiWord.checked = ( localStorage['chkMultiWord'] == 'true');
   text_area.value = localStorage['mainText'];
   text_area.value = '123';
-  var controllerElement = document.querySelector('section');
-  var controllerScope = angular.element(controllerElement).scope();
+  let controllerElement = document.querySelector('section');
+  let controllerScope = angular.element(controllerElement).scope();
   //controllerScope.inputText.text = text_area.value;
   controllerScope.$apply();
 }
@@ -154,8 +154,8 @@ function getDictionary() {
 // Fixes the angularJS text display when a text file is loaded
 function updateTextFromFile() {
   text_area.value = text;
-  var controllerElement = document.querySelector('section');
-  var controllerScope = angular.element(controllerElement).scope();
+  let controllerElement = document.querySelector('section');
+  let controllerScope = angular.element(controllerElement).scope();
   controllerScope.inputText.text = text;
   controllerScope.$apply();
 }
