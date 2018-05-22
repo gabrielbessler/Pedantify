@@ -1,5 +1,7 @@
+"use strict"; 
+
 //AngularJS for updating the metadata text at the bottom of the textArea
-myApp = angular.module('myApp', []);
+var myApp = angular.module('myApp', []);
 
 myApp.controller('MainController', function( $scope ) {
 
@@ -25,7 +27,7 @@ myApp.controller('MainController', function( $scope ) {
   $scope.meanWordLenBefore = function(text) {
     if ($scope.textPedantified == false) {
       var s = text ? text.split(/\s+/) : 0;
-      numChars = 0;
+      let numChars = 0;
       for ( var wordIndex1 in s) {
         numChars += s[wordIndex1].length;
       }
@@ -41,7 +43,7 @@ myApp.controller('MainController', function( $scope ) {
       return '0';
     } else {
       var s = text ? text.split(/\s+/) : 0;
-      numChars = 0;
+      let numChars = 0;
       for ( var wordIndex2 in s) {
         numChars += s[wordIndex2].length;
       }
@@ -50,6 +52,38 @@ myApp.controller('MainController', function( $scope ) {
   }
 });
 
+var starterDict; 
+
+var method; 
+
+var currReplacement = "min"; 
+var ignoreHyphenatedWordsText;
+var replacementClickableText; 
+var excludeConjuctionsText;
+var excludePronounsText;
+var oneWordSynonymsText;
+var resetOptionsBtn; 
+var chkConjunctions;
+var redoPedantify; 
+var percentReplVal; 
+var noSynRepText; 
+var percentReplSlider; 
+var undoPedantify; 
+var chkMultiWord;
+var chkPronouns; 
+var chkNoRepeat; 
+var percRepText; 
+var excludeWord; 
+var chkHyphens; 
+var chooseFile; 
+var saveBtn; 
+var submitBtn;
+var text_area; 
+var resetBtn; 
+var randBtn; 
+var minBtn; 
+var maxBtn;
+ 
 //Initializes all variables/objects/eventlisteners when the webpage loads
 function init() {
 
@@ -135,8 +169,8 @@ function loadLocalStorage() {
   chkMultiWord.checked = ( localStorage['chkMultiWord'] == 'true');
   text_area.value = localStorage['mainText'];
   text_area.value = '123';
-  let controllerElement = document.querySelector('section');
-  let controllerScope = angular.element(controllerElement).scope();
+  var controllerElement = document.querySelector('section');
+  var controllerScope = angular.element(controllerElement).scope();
   //controllerScope.inputText.text = text_area.value;
   controllerScope.$apply();
 }
@@ -154,8 +188,8 @@ function getDictionary() {
 // Fixes the angularJS text display when a text file is loaded
 function updateTextFromFile() {
   text_area.value = text;
-  let controllerElement = document.querySelector('section');
-  let controllerScope = angular.element(controllerElement).scope();
+  var controllerElement = document.querySelector('section');
+  var controllerScope = angular.element(controllerElement).scope();
   controllerScope.inputText.text = text;
   controllerScope.$apply();
 }
@@ -197,8 +231,8 @@ function addEventListeners() {
 
   // If the user selects a file, load its context into the main textArea
   chooseFile.onchange = function() {
-    fileToLoad = chooseFile.files[chooseFile.files.length - 1];
-    reader = new FileReader();
+    let fileToLoad = chooseFile.files[chooseFile.files.length - 1];
+    let reader = new FileReader();
     reader.onload = function(e) {
       text = reader.result;
       updateTextFromFile();
@@ -295,9 +329,32 @@ var ignoreHyphens = false;
 var noMultiWords = false;
 var noSynRep = false;
 var excludedWords = [];
+//http://www.really-learn-english.com/list-of-pronouns.html
+// personal pronouns: I, you, he, she, it, we, they, me, him, her, us, them
+// subjective pronouns: I, you, he, she, it, they, what, who.
+// objective pronouns: me, him, her, it, us them, whom
+// possessive pronouns: mine, yours, his, hers, ours, theirs.
+// demonstrative pronouns: this, that, these, those.
+// interrogative pronouns: who, whom, which, what, whose, whoever, whatever, whichever, whomever
+// relative pronouns: who, whom, whose, which, that, what whatever, whoever, whomever, whichever
+// reflexive: myself, yourself, himself, herself, itself, ourselves, themselves
+// intensive pronouns: myself, yourself, himself, herself, itself, ourselves, themselves
+// reciprocal pronouns: each other, one another
+// indefinitite pronouns (not a complete list): anything, everybody, another, each, few, many, none, some all,
+// any, anybody, anyone, everyone, everything, no one, nobody, nothing, none,
+// other, others, several, somebody, someone, something, most, enough, little, more, both, either, neither, one,
+// much, such.
 
-// TODO: use this 
-var pronounts_list = ["I", "you", "he", "she", "it", "we", "they", "me", "him", "her", "us", "them", "they", "what", "who", "whom", "mine", "yours", "his", "hers", "ours", "theirs", "this", "that", "these", "those", "which", "whatever", "whoever", "whomever", "whichever", "myself", "yourself", "himself", "herself", "itself", "ourselves", "themselves", "each other", "one another", "anything", "everybody", "another", "each", "few", "many", "none", "some all", "any", "anybody", "anyone", "everyone", "everything", "no one", "nobody", "nothing", "none", "other", "others", "several", "somebody", "someone", "something", "most", "enough", "little", "more", "both", "either", "neither", "one", "much", "such"];
+// ===============================================================
+// FINAL LIST
+// ================================================================
+// The overall list we will  use is:
+// I, you, he, she, it, we, they, me, him, her, us, them, they, what, who, whom, mine, yours, his, hers, ours, theirs.
+// this, that, these, those, which, whatever, whoever, whomever, whichever, myself, yourself, himself, herself, itself, ourselves, themselves
+// each other, one another, anything, everybody, another, each, few, many, none, some all
+// any, anybody, anyone, everyone, everything, no one, nobody, nothing, none,
+// other, others, several, somebody, someone, something, most, enough, little, more, both, either, neither, one,
+// much, such
 
 var pronouns = [];
 var old_text = "";
@@ -331,14 +388,22 @@ function getExcludedWords() {
   excludedWords = getWhitespaceAndWords(excludeWord.value)[1];
 }
 
+// Gets the longest word in an array 
+function getLongestWord(inputList) { 
+    getLongShortWord(inputList, "long"); 
+} 
+
+// Gets the shortest word in an array 
+function getShortestWord(inputList) { 
+    getLongShortWord(inputList, "short"); 
+} 
+
 //Gets the shortest or longest word in an array
 function getLongShortWord(inputList, type="long") {
-  // We initialize the current replacement word wordlength to be the first word in the synonym list
-  wordlength = inputList[0].length;
-  currentWord = "";
-  if (type == "short"){
-    currentWord = inputList[0];
-  }
+  // We initialize the replacement word to be the first word in the synonym list
+  let wordlength = inputList[0].length;
+  let currentWord = inputList[0];
+
   //First, we iterate through all of the words in the given synonym list
   for ( var wordIndex3 in inputList ) {
     if( inputList[wordIndex3].length > wordlength && type=="long" ){
@@ -360,7 +425,10 @@ function getLongShortWord(inputList, type="long") {
 
 //Generates a random number and checks if it's bigger than the threshold for pedantifying a word
 function percentageCheck() {
-    return (Math.round(Math.random() * 100) < percent);
+  if (Math.round(Math.random() * 100) < percent) {
+    return true;
+  }
+  return false;
 }
 
 //Checks if a word contains a hyphen
@@ -390,19 +458,19 @@ function getWhitespaceAndWords(text) {
 
     var currWord = false;
     for ( var charIndex in text ) {
-        char = text[charIndex];
-        if ( char == " " || char == "\n" || char == "\t" || char == "\r" ){
+        let character = text[charIndex];
+        if ( character == " " || character == "\n" || character == "\t" || character == "\r" ){
             if ( currWord == false ) {
-            whiteSpaceList[whiteSpaceList.length-1] += char;
+            whiteSpaceList[whiteSpaceList.length-1] += character;
             } else {
-            whiteSpaceList.push(char);
+            whiteSpaceList.push(character);
             currWord = false;
             }
         } else {
             if ( currWord == true ) {
-                wordList[wordList.length-1] += char;
+                wordList[wordList.length-1] += character;
             } else {
-                wordList.push(char);
+                wordList.push(character);
                 currWord = true;
             }
         }
@@ -415,21 +483,21 @@ function getWhitespaceAndWords(text) {
 function pedantify() {
 
   text = text.split("");
-  newText = "";
+  let newText = "";
 
   //Parses through the given text and splits into wordList and whiteSpaceList
-  r = getWhitespaceAndWords(text);
-  wordList = r[1];
-  whiteSpaceList = r[0];
+  let temp = getWhitespaceAndWords(text);
+  let wordList = temp[1];
+  let whiteSpaceList = temp[0];
 
   //Figures out if the text begins with a whitespace or a word
   if (text[0] == " ") {
     newText += " ";
   }
 
-  wordReplacedCount = 0;
-  for ( wordIndex in wordList ) {
-    word = wordList[wordIndex];
+  let wordReplacedCount = 0;
+  for ( let wordIndex in wordList ) {
+    let word = wordList[wordIndex];
     //Adds the correct whitespace to the word
     function getWord() {
       //We only care about whitespace if the word is not at the end of the text
@@ -457,7 +525,7 @@ function pedantify() {
         punctuationFound = true;
       }
       //We make the word lower-case so we can check for synonyms
-      words = starterDict[word.toLowerCase()];
+      let words = starterDict[word.toLowerCase()];
       if ( words == undefined ) {
         //If the word is not in dictionary, treat it like non-ped. word
         getWord();

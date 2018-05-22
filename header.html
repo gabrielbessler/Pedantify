@@ -29,14 +29,12 @@
   // On page load, set header to correct size and style current tab
   resizeHeader();
   highlightCurrentPage();
-
   // Every time window resizes, change header size
   $(window).resize(
     function() {
       resizeHeader();
     }
   )
-
   // Uses the current web address to restyle header accordingly.
   function highlightCurrentPage(){
     var currentPage = location.pathname.substr(1);
@@ -51,7 +49,6 @@
       document.getElementById('followuslink').style.color = selectedStyle;
     }
   }
-
   // Resizes header to be consistent with screen size.
   function resizeHeader() {
   $("#hdr").width($('body').width());
