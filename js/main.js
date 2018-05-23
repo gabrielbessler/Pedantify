@@ -169,8 +169,8 @@ function loadLocalStorage() {
   chkMultiWord.checked = ( localStorage['chkMultiWord'] == 'true');
   text_area.value = localStorage['mainText'];
   text_area.value = '123';
-  var controllerElement = document.querySelector('section');
-  var controllerScope = angular.element(controllerElement).scope();
+  let controllerElement = document.querySelector('section');
+  let controllerScope = angular.element(controllerElement).scope();
   //controllerScope.inputText.text = text_area.value;
   controllerScope.$apply();
 }
@@ -188,8 +188,8 @@ function getDictionary() {
 // Fixes the angularJS text display when a text file is loaded
 function updateTextFromFile() {
   text_area.value = text;
-  var controllerElement = document.querySelector('section');
-  var controllerScope = angular.element(controllerElement).scope();
+  let controllerElement = document.querySelector('section');
+  let controllerScope = angular.element(controllerElement).scope();
   controllerScope.inputText.text = text;
   controllerScope.$apply();
 }
@@ -330,6 +330,8 @@ var noMultiWords = false;
 var noSynRep = false;
 var excludedWords = [];
 
+// TODO: use this 
+var pronounts_list = ["I", "you", "he", "she", "it", "we", "they", "me", "him", "her", "us", "them", "they", "what", "who", "whom", "mine", "yours", "his", "hers", "ours", "theirs", "this", "that", "these", "those", "which", "whatever", "whoever", "whomever", "whichever", "myself", "yourself", "himself", "herself", "itself", "ourselves", "themselves", "each other", "one another", "anything", "everybody", "another", "each", "few", "many", "none", "some all", "any", "anybody", "anyone", "everyone", "everything", "no one", "nobody", "nothing", "none", "other", "others", "several", "somebody", "someone", "something", "most", "enough", "little", "more", "both", "either", "neither", "one", "much", "such"];
 //http://www.really-learn-english.com/list-of-pronouns.html
 // personal pronouns: I, you, he, she, it, we, they, me, him, her, us, them
 // subjective pronouns: I, you, he, she, it, they, what, who.
