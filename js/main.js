@@ -1,7 +1,7 @@
 "use strict"; 
 
 //AngularJS for updating the metadata text at the bottom of the textArea
-var myApp = angular.module('myApp', []);
+let myApp = angular.module('myApp', []);
 
 myApp.controller('MainController', function( $scope ) {
 
@@ -52,44 +52,79 @@ myApp.controller('MainController', function( $scope ) {
   }
 });
 
-var starterDict; 
+let currReplacement = "min"; 
+let ignoreHyphenatedWordsText;
+let replacementClickableText; 
+let excludeConjuctionsText;
+let excludePronounsText;
+let oneWordSynonymsText;
+let resetOptionsBtn; 
+let chkConjunctions;
+let redoPedantify; 
+let percentReplVal; 
+let noSynRepText; 
+let percentReplSlider; 
+let undoPedantify; 
+let chkMultiWord;
+let chkPronouns; 
+let chkNoRepeat; 
+let percRepText; 
+let excludeWord; 
+let chkHyphens; 
+let chooseFile; 
+let saveBtn; 
+let submitBtn;
+let text_area; 
+let resetBtn; 
+let randBtn; 
+let minBtn; 
+let maxBtn;
 
-var method; 
-
-var currReplacement = "min"; 
-var ignoreHyphenatedWordsText;
-var replacementClickableText; 
-var excludeConjuctionsText;
-var excludePronounsText;
-var oneWordSynonymsText;
-var resetOptionsBtn; 
-var chkConjunctions;
-var redoPedantify; 
-var percentReplVal; 
-var noSynRepText; 
-var percentReplSlider; 
-var undoPedantify; 
-var chkMultiWord;
-var chkPronouns; 
-var chkNoRepeat; 
-var percRepText; 
-var excludeWord; 
-var chkHyphens; 
-var chooseFile; 
-var saveBtn; 
-var submitBtn;
-var text_area; 
-var resetBtn; 
-var randBtn; 
-var minBtn; 
-var maxBtn;
+let method; 
  
 //Initializes all variables/objects/eventlisteners when the webpage loads
 function init() {
+  // Assing variables to all elements used
+  getElements(); 
 
-  currReplacement = "min";
+  // Then, give them the necessary event listeners 
+  addEventListeners();
 
-  // Assigning variables to all elements used
+  // Checking for cached data (in localStorage)
+  // Try-catch necessary if user has localstorage turned off
+  try {
+    if (localStorage['mainText'] != undefined){
+      loadLocalStorage();
+    }
+  }
+  catch(err) {console.log(err);}
+
+  // Does CSS style changes after loading new settings (possibly different
+  // than default). 
+  updateUIFromSettings(); 
+}
+
+/* ===================================
+   == Helper functions for INIT     ==
+   =================================== */
+
+// Makes changes to UI based on current settings
+function updateUIFromSettings() { 
+  // Setting the initial value of the progress bar
+  percentReplVal.innerHTML = percentReplSlider.value + "%";
+
+  // Sets the style for the currently selected replacement type (min, max, or random)
+  if ( currReplacement == "min" ) {
+    minBtn.style.color = "#e88b2e";
+  } else if ( currReplacement == "max" ) {
+    maxBtn.style.color = "#e88b2e";
+  } else if ( currReplacement == "random" ) {
+    randBtn.style.color = "#e88b2e";
+  }
+}
+
+// Assigning variables to all elements used
+function getElements() { 
   ignoreHyphenatedWordsText = document.getElementById('ignoreHyphenatedWordsText');
   replacementClickableText = document.getElementById('replacementClickableText');
   excludeConjuctionsText = document.getElementById('excludeConjuctionsText');
@@ -116,82 +151,6 @@ function init() {
   randBtn = document.getElementById('randBtn');
   minBtn = document.getElementById('minBtn');
   maxBtn = document.getElementById('maxBtn');
-
-  getDictionary();
-
-  addEventListeners();
-
-  // Checking for cached data (in localStorage)
-  // Try-catch necessary if user has localstorage turned off
-  try {
-    if (localStorage['mainText'] != undefined){
-      loadLocalStorage();
-    }
-  }
-  catch(err) {console.log(err);}
-  // Setting the initial value of the progress bar
-  percentReplVal.innerHTML = percentReplSlider.value + "%";
-
-  // Sets the style for the currently selected replacement type (min, max, or random)
-  if ( currReplacement == "min" ) {
-    minBtn.style.color = "#e88b2e";
-  } else if ( currReplacement == "max" ) {
-    maxBtn.style.color = "#e88b2e";
-  } else if ( currReplacement == "random" ) {
-    randBtn.style.color = "#e88b2e";
-  }
-
-}
-
-// Save current website data to localStorage
-function saveLocalStorage() {
-  localStorage['mainText'] = text_area.value;
-  localStorage['excText'] = excludeWord.value;
-  localStorage['percentReplacement'] = percentReplSlider.value;
-  localStorage['excludePronouns'] = chkPronouns.checked;
-  localStorage['excludeHyphenated'] = chkHyphens.checked;
-  localStorage['excludeConjunctions'] = chkConjunctions.checked;
-  localStorage['currReplacement'] = currReplacement;
-  localStorage['chkMultiWord'] = chkMultiWord.checked;
-  localStorage['chkNoRepeat'] = chkNoRepeat.checked;
-}
-
-//Load locally stored data for the website
-function loadLocalStorage() {
-  currReplacement = localStorage['currReplacement'];
-  excludeWord.value = localStorage['excText'];
-  percentReplSlider.value = localStorage['percentReplacement'];
-  //Convert strings to boolean
-  chkPronouns.checked = ( localStorage['excludePronouns'] == 'true');
-  chkHyphens.checked = ( localStorage['excludeHyphenated'] == 'true' );
-  chkConjunctions.checked = ( localStorage['excludeConjunctions'] == 'true' );
-  chkNoRepeat.checked = ( localStorage['chkNoRepeat'] == 'true' );
-  chkMultiWord.checked = ( localStorage['chkMultiWord'] == 'true');
-  text_area.value = localStorage['mainText'];
-  text_area.value = '123';
-  let controllerElement = document.querySelector('section');
-  let controllerScope = angular.element(controllerElement).scope();
-  //controllerScope.inputText.text = text_area.value;
-  controllerScope.$apply();
-}
-
-// Loading the dictionary from the server using AJAX (through jQuery)
-function getDictionary() {
-  $.ajax({
-    url:'http://www.pedantify.com/js/dict.js',
-    success: function (data){
-      starterDict = eval(data);
-    }
-  });
-}
-
-// Fixes the angularJS text display when a text file is loaded
-function updateTextFromFile() {
-  text_area.value = text;
-  let controllerElement = document.querySelector('section');
-  let controllerScope = angular.element(controllerElement).scope();
-  controllerScope.inputText.text = text;
-  controllerScope.$apply();
 }
 
 // Adds all of the event listeners to the webpage
@@ -302,6 +261,52 @@ function addEventListeners() {
   });
 }
 
+//Load locally stored data for the website
+function loadLocalStorage() {
+  currReplacement = localStorage['currReplacement'];
+  excludeWord.value = localStorage['excText'];
+  percentReplSlider.value = localStorage['percentReplacement'];
+  //Convert strings to boolean
+  chkPronouns.checked = ( localStorage['excludePronouns'] == 'true');
+  chkHyphens.checked = ( localStorage['excludeHyphenated'] == 'true' );
+  chkConjunctions.checked = ( localStorage['excludeConjunctions'] == 'true' );
+  chkNoRepeat.checked = ( localStorage['chkNoRepeat'] == 'true' );
+  chkMultiWord.checked = ( localStorage['chkMultiWord'] == 'true');
+  text_area.value = localStorage['mainText'];
+  text_area.value = '123';
+  let controllerElement = document.querySelector('section');
+  let controllerScope = angular.element(controllerElement).scope();
+  //controllerScope.inputText.text = text_area.value;
+  controllerScope.$apply();
+}
+
+// TODO: organize 
+/* ===================================
+   == Misc Functions                ==
+   =================================== */
+
+// Save current website data to localStorage
+function saveLocalStorage() {
+  localStorage['mainText'] = text_area.value;
+  localStorage['excText'] = excludeWord.value;
+  localStorage['percentReplacement'] = percentReplSlider.value;
+  localStorage['excludePronouns'] = chkPronouns.checked;
+  localStorage['excludeHyphenated'] = chkHyphens.checked;
+  localStorage['excludeConjunctions'] = chkConjunctions.checked;
+  localStorage['currReplacement'] = currReplacement;
+  localStorage['chkMultiWord'] = chkMultiWord.checked;
+  localStorage['chkNoRepeat'] = chkNoRepeat.checked;
+}
+
+// Fixes the angularJS text display when a text file is loaded
+function updateTextFromFile() {
+  text_area.value = text;
+  let controllerElement = document.querySelector('section');
+  let controllerScope = angular.element(controllerElement).scope();
+  controllerScope.inputText.text = text;
+  controllerScope.$apply();
+}
+
 // Change the type of replacement for pedantification (min, max, random)
 function changeReplacementType(newReplacement) {
   currReplacement = newReplacement;
@@ -321,44 +326,12 @@ function changeReplacementType(newReplacement) {
 }
 
 //Variables necessary for pedantification
-var conjunctions = ["a", "and", "this", "that", "like", "no", "yes", "the", "okay", "is", "in", "at", "why", "not", "be", "for"];
-var punctuationList = [".","!",",","?",":",";"];
 var ignoreConjunctions = false;
 var ignorePronouns = false;
 var ignoreHyphens = false;
 var noMultiWords = false;
 var noSynRep = false;
 var excludedWords = [];
-
-// TODO: use this 
-var pronounts_list = ["I", "you", "he", "she", "it", "we", "they", "me", "him", "her", "us", "them", "they", "what", "who", "whom", "mine", "yours", "his", "hers", "ours", "theirs", "this", "that", "these", "those", "which", "whatever", "whoever", "whomever", "whichever", "myself", "yourself", "himself", "herself", "itself", "ourselves", "themselves", "each other", "one another", "anything", "everybody", "another", "each", "few", "many", "none", "some all", "any", "anybody", "anyone", "everyone", "everything", "no one", "nobody", "nothing", "none", "other", "others", "several", "somebody", "someone", "something", "most", "enough", "little", "more", "both", "either", "neither", "one", "much", "such"];
-//http://www.really-learn-english.com/list-of-pronouns.html
-// personal pronouns: I, you, he, she, it, we, they, me, him, her, us, them
-// subjective pronouns: I, you, he, she, it, they, what, who.
-// objective pronouns: me, him, her, it, us them, whom
-// possessive pronouns: mine, yours, his, hers, ours, theirs.
-// demonstrative pronouns: this, that, these, those.
-// interrogative pronouns: who, whom, which, what, whose, whoever, whatever, whichever, whomever
-// relative pronouns: who, whom, whose, which, that, what whatever, whoever, whomever, whichever
-// reflexive: myself, yourself, himself, herself, itself, ourselves, themselves
-// intensive pronouns: myself, yourself, himself, herself, itself, ourselves, themselves
-// reciprocal pronouns: each other, one another
-// indefinitite pronouns (not a complete list): anything, everybody, another, each, few, many, none, some all,
-// any, anybody, anyone, everyone, everything, no one, nobody, nothing, none,
-// other, others, several, somebody, someone, something, most, enough, little, more, both, either, neither, one,
-// much, such.
-
-// ===============================================================
-// FINAL LIST
-// ================================================================
-// The overall list we will  use is:
-// I, you, he, she, it, we, they, me, him, her, us, them, they, what, who, whom, mine, yours, his, hers, ours, theirs.
-// this, that, these, those, which, whatever, whoever, whomever, whichever, myself, yourself, himself, herself, itself, ourselves, themselves
-// each other, one another, anything, everybody, another, each, few, many, none, some all
-// any, anybody, anyone, everyone, everything, no one, nobody, nothing, none,
-// other, others, several, somebody, someone, something, most, enough, little, more, both, either, neither, one,
-// much, such
-
 var pronouns = [];
 var old_text = "";
 var percent = 0;
@@ -367,17 +340,25 @@ var usedWords = [];
 
 //Handles calling the function necessary for pedantification
 function pedantifyInit() {
-  text = text_area.value;
-  percent = percentReplSlider.value;
-  method = currReplacement;
+
+  // Updates all of the settings from the UI so we are ready to pedantify
+  getMiscSettings(); 
   getExcludedOptions();
   getExcludedWords();
-  // We use old_text to store the text before pedantification
+
+  // Use old_text to store the text before pedantification
   old_text = text;
   pedantify();
 }
 
-//Uses the checkboxes in 'options' to see if pronouns, conjunctions, and hyphenated words will excluded
+// Updates the settings variables according to the UI 
+function getMiscSettings() { 
+  text = text_area.value;
+  percent = percentReplSlider.value;
+  method = currReplacement;
+} 
+
+// Uses the checkboxes in 'options' to see if pronouns, conjunctions, and hyphenated words will excluded
 function getExcludedOptions() {
     ignoreConjunctions = chkConjunctions.checked;
     ignorePronouns = chkPronouns.checked;
@@ -386,74 +367,12 @@ function getExcludedOptions() {
     noSynRep = chkNoRepeat.checked;
 }
 
-//Uses the textArea in 'options' to get a list of words to ignore in pedantification
+// Uses the textArea in 'options' to get a list of words to ignore in pedantification
 function getExcludedWords() {
   excludedWords = getWhitespaceAndWords(excludeWord.value)[1];
 }
 
-// Gets the longest word in an array 
-function getLongestWord(inputList) { 
-    getLongShortWord(inputList, "long"); 
-} 
-
-// Gets the shortest word in an array 
-function getShortestWord(inputList) { 
-    getLongShortWord(inputList, "short"); 
-} 
-
-//Gets the shortest or longest word in an array
-function getLongShortWord(inputList, type="long") {
-  // We initialize the replacement word to be the first word in the synonym list
-  let wordlength = inputList[0].length;
-  let currentWord = inputList[0];
-
-  //First, we iterate through all of the words in the given synonym list
-  for ( var wordIndex3 in inputList ) {
-    if( inputList[wordIndex3].length > wordlength && type=="long" ){
-      if ( noMultiWords == true ) {
-        //TODO
-      }
-      wordlength = inputList[wordIndex3].length;
-      currentWord = inputList[wordIndex3];
-    } else if(inputList[wordIndex3].length < wordlength && type=="short"){
-      if ( noMultiWords == true ) {
-        //TODO
-      }
-      wordlength = inputList[wordIndex3].length;
-      currentWord = inputList[wordIndex3];
-    }
-  }
-  return currentWord
-}
-
-//Generates a random number and checks if it's bigger than the threshold for pedantifying a word
-function percentageCheck() {
-  if (Math.round(Math.random() * 100) < percent) {
-    return true;
-  }
-  return false;
-}
-
-//Checks if a word contains a hyphen
-function isHyphenated(s) {
-  // if s does not contain a '-', idexOf() will return -1
-  if (s.toLowerCase().indexOf('-') >= 0) {
-    return false;
-  }
-  return true;
-}
-
-//Returns true if the given element is found in the list
-function isElementInList(e, list) {
-  for ( var index in list ){
-    if ( list[index] == e ) {
-      return true;
-    }
-  }
-  return false;
-}
-
-//Parses through the given text and splits into wordList and whiteSpaceList
+// Parses through the given text and splits into wordList and whiteSpaceList
 function getWhitespaceAndWords(text) {
 
     var whiteSpaceList = [];
@@ -482,9 +401,10 @@ function getWhitespaceAndWords(text) {
     return [whiteSpaceList, wordList];
 }
 
-//Handles the actual pedantification of the text
+// Handles the actual pedantification of the text
 function pedantify() {
 
+  // Make an array of characters from the text
   text = text.split("");
   let newText = "";
 
@@ -550,11 +470,12 @@ function pedantify() {
           capsType = "capitalized";
         }
         if ( method == "min" ) {
-          word = getLongShortWord(words, 'short');
+          word = getShortestWord(words);
         } else if ( method == "max" ) {
-          word = getLongShortWord(words, 'long');
+          word = getLongestWord(words);
         } else if ( method == "random" ) {
-          word = words[Math.floor(Math.random()*words.length)];
+          let randomIndex = Math.floor(Math.random()*words.length);
+          word = words[randomIndex];
         }
         if ( noSynRep ) {
           usedWords.push(word);
