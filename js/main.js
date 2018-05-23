@@ -329,6 +329,7 @@ var ignoreHyphens = false;
 var noMultiWords = false;
 var noSynRep = false;
 var excludedWords = [];
+
 //http://www.really-learn-english.com/list-of-pronouns.html
 // personal pronouns: I, you, he, she, it, we, they, me, him, her, us, them
 // subjective pronouns: I, you, he, she, it, they, what, who.
