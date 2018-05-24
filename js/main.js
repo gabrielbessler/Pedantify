@@ -403,98 +403,23 @@ function getWhitespaceAndWords(text) {
 
 // Handles the actual pedantification of the text
 function pedantify() {
-
   // Make an array of characters from the text
   text = text.split("");
-  let newText = "";
 
-  //Parses through the given text and splits into wordList and whiteSpaceList
+  // Parse through the given text and splits into wordList and whiteSpaceList
   let temp = getWhitespaceAndWords(text);
   let wordList = temp[1];
   let whiteSpaceList = temp[0];
 
-  //Figures out if the text begins with a whitespace or a word
+  // Figure out if the text begins with a whitespace or a word
   if (text[0] == " ") {
     newText += " ";
   }
 
-  let wordReplacedCount = 0;
-  for ( let wordIndex in wordList ) {
-    let word = wordList[wordIndex];
-    //Adds the correct whitespace to the word
-    function getWord() {
-      //We only care about whitespace if the word is not at the end of the text
-      if (parseInt(wordIndex) + 1 < wordList.length){
-        word += whiteSpaceList[wordIndex];
-      }
-      newText += word;
-    }
-    //First, we check if it is one of the words we shouldn't pedantify
-      if( ignoreConjunctions == true && isElementInList(word.toLowerCase(),conjunctions) ) {
-      getWord();
-    } else if( ignorePronouns == true && isElementInList(word.toLowerCase(),pronouns) ) {
-      getWord();
-    } else if ( ignoreHyphens == true && isHyphenated(word.toLowerCase()) ) {
-      getWord();
-    } else if ( isElementInList(word.toLowerCase(),excludedWords) ) {
-      getWord();
-    } else if ( percentageCheck() == true ) {
-      //First, we check for punctuation (assuming if there is punctuation it will be the last character)
-      var punctuationFound = false;
-      var lastChar = word.slice(-1);
-      if ( isElementInList(lastChar, punctuationList) == true ) {
-        //if there punctuation, we remove it
-        word = word.substr(0,word.length-1);
-        punctuationFound = true;
-      }
-      //We make the word lower-case so we can check for synonyms
-      let words = starterDict[word.toLowerCase()];
-      if ( words == undefined ) {
-        //If the word is not in dictionary, treat it like non-ped. word
-        getWord();
-      } else if ( words.length == 0 ) {
-        //If the word is not in dictionary, but there are no synonyms, treat it like non-ped. word
-        getWord();
-      } else {
-        //We want to set capitalization based on previous capitalization.
-        var capsType = "null";
-        if ( word == word.toUpperCase() ) {
-          //Check for all caps
-          if ( word != "I" ) {
-            capsType = "all_upper";
-          }
-        } else if ( word == (word[0].toUpperCase() + word.slice(1,word.length)) ) {
-          //Check if the first letter is capitalized - note that this could have issues with proper nouns
-          //However, the amount of words capitalized because they are at the beginning of a sentence is greater
-          //Than the number of words that are capitalized because proper noun AND have synonyms
-          capsType = "capitalized";
-        }
-        if ( method == "min" ) {
-          word = getShortestWord(words);
-        } else if ( method == "max" ) {
-          word = getLongestWord(words);
-        } else if ( method == "random" ) {
-          let randomIndex = Math.floor(Math.random()*words.length);
-          word = words[randomIndex];
-        }
-        if ( noSynRep ) {
-          usedWords.push(word);
-        }
-        wordReplacedCount += 1;
-        if ( capsType == "all_upper" ) {
-          word = word.toUpperCase();
-        } else if ( capsType == "capitalized" ) {
-          word = word[0].toUpperCase() + word.slice(1,word.length);
-        }
-        if ( punctuationFound ) {
-          word += lastChar;
-        }
-        getWord();
-      }
-    } else {
-      getWord();
-    }
-  }
+  // make AJAX call to server with callback function
+  // TODO 
+
+  // Update the UI based on the pedantified text
   text_area.value = newText;
   text = newText;
 
