@@ -10,20 +10,60 @@ const punctuationList = [".","!",",","?",":",";"];
 // TODO: use this 
 const pronouns_list = ["I", "you", "he", "she", "it", "we", "they", "me", "him", "her", "us", "them", "they", "what", "who", "whom", "mine", "yours", "his", "hers", "ours", "theirs", "this", "that", "these", "those", "which", "whatever", "whoever", "whomever", "whichever", "myself", "yourself", "himself", "herself", "itself", "ourselves", "themselves", "each other", "one another", "anything", "everybody", "another", "each", "few", "many", "none", "some all", "any", "anybody", "anyone", "everyone", "everything", "no one", "nobody", "nothing", "none", "other", "others", "several", "somebody", "someone", "something", "most", "enough", "little", "more", "both", "either", "neither", "one", "much", "such"];
 
+const fs = require("fs");
+const http = require("http"); 
+let server; 
+
 function init() { 
+    // using command lie argument to turn on debug mode 
     debug_mode = process.argv[2]; 
+    
+    // check if the user passed in an argument  
     if (!debug_mode) { 
         // nothing to do...
     } else { 
         DEBUG_MODE = debug_mode;
     }
     getDictionary(); 
+
+    makeServer(); 
+}
+
+function debugInfo(info) { 
+  if (DEBUG_MODE) { 
+    console.log(info); 
+  }
 }
 
 /**
- * Loading the dictionary from the server using AJAX (through jQuery)
+ * Listen for POST requests containing data on the correct port
+ */
+function makeServer() { 
+  debugInfo("Setting up server...");
+  server = http.createServer( function(request, reponse) {
+    // TODO: if something other than POST, don't send a 200
+    request.writeHead(200, {"Content-Type": "text/plain"});
+    if (request.method === "GET") {
+      // Not a valid request  
+      request.end(""); 
+    } else if (request.method === "POST") { 
+      // TODO 
+      request.end("This is some sample return data"); 
+    } else { 
+      // Not a valid request  
+      request.end(""); 
+    }
+  });
+
+  server.listen(8000, function() { 
+    debugInfo("Listening for requests on port 8000..."); 
+  })
+}
+
+/**
+ * Loading the dictionary from the server using AJAX (through jQuery) - used for debugging
  */ 
-function getDictionary() {
+function getDictionaryAJAX() {
     if (DEBUG_MODE) { 
         console.log("Sending dictionary AJAX request...");
     }
@@ -35,6 +75,25 @@ function getDictionary() {
         console.log("Dictionary ready.");
       }
     });
+}
+
+/**
+ * Load the dictionary by opening the file directly 
+ */
+function getDictionary() { 
+  if (DEBUG_MODE) { 
+    console.log("Beginning file read..."); 
+  }
+
+  // TODO: make synchronous (need to block program while the dictionary loads)
+  fs.readFile('/data/dict.js', function(err, data) { 
+    if (err) { 
+      throw err; 
+    } else { 
+      // data is stored as a buffer 
+      starterDict = eval(data.toString()); 
+    }
+  });
 }
 
 /** 

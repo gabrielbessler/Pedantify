@@ -279,8 +279,7 @@ function loadLocalStorage() {
   //controllerScope.inputText.text = text_area.value;
   controllerScope.$apply();
 }
-
-// TODO: organize 
+ 
 /* ===================================
    == Misc Functions                ==
    =================================== */
@@ -325,6 +324,7 @@ function changeReplacementType(newReplacement) {
   }
 }
 
+// TODO: make object to keep track of this 
 //Variables necessary for pedantification
 var ignoreConjunctions = false;
 var ignorePronouns = false;
@@ -417,7 +417,10 @@ function pedantify() {
   }
 
   // make AJAX call to server with callback function
-  // TODO 
+  $.ajax({
+    type: "POST", 
+    
+  });
 
   // Update the UI based on the pedantified text
   text_area.value = newText;
