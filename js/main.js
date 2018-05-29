@@ -56,7 +56,7 @@ let currReplacement = "min";
 let ignoreHyphenatedWordsText;
 let replacementClickableText; 
 let excludeConjuctionsText;
-let excludePronounsText;
+let excludePronounsText; 
 let oneWordSynonymsText;
 let resetOptionsBtn; 
 let chkConjunctions;
@@ -79,10 +79,11 @@ let resetBtn;
 let randBtn; 
 let minBtn; 
 let maxBtn;
-
 let method; 
  
-//Initializes all variables/objects/eventlisteners when the webpage loads
+/**
+ * Initializes all variables/objects/eventlisteners when the webpage loads
+ */ 
 function init() {
   // Assing variables to all elements used
   getElements(); 
@@ -108,7 +109,9 @@ function init() {
    == Helper functions for INIT     ==
    =================================== */
 
-// Makes changes to UI based on current settings
+/**
+ * Makes changes to UI based on current settings
+ */
 function updateUIFromSettings() { 
   // Setting the initial value of the progress bar
   percentReplVal.innerHTML = percentReplSlider.value + "%";
@@ -123,7 +126,9 @@ function updateUIFromSettings() {
   }
 }
 
-// Assigning variables to all elements used
+/**
+ * Assigning variables to all elements used
+ */
 function getElements() { 
   ignoreHyphenatedWordsText = document.getElementById('ignoreHyphenatedWordsText');
   replacementClickableText = document.getElementById('replacementClickableText');
@@ -153,7 +158,9 @@ function getElements() {
   maxBtn = document.getElementById('maxBtn');
 }
 
-// Adds all of the event listeners to the webpage
+/**
+ * Adds all of the event listeners to the webpage
+ */
 function addEventListeners() {
 
   // Clicking on the text by check boxes will check the boxes
@@ -261,7 +268,9 @@ function addEventListeners() {
   });
 }
 
-//Load locally stored data for the website
+/**
+ * Load locally stored data for the website
+ */
 function loadLocalStorage() {
   currReplacement = localStorage['currReplacement'];
   excludeWord.value = localStorage['excText'];
@@ -284,7 +293,9 @@ function loadLocalStorage() {
    == Misc Functions                ==
    =================================== */
 
-// Save current website data to localStorage
+/**
+ * Save current website data to localStorage
+ */
 function saveLocalStorage() {
   localStorage['mainText'] = text_area.value;
   localStorage['excText'] = excludeWord.value;
@@ -297,7 +308,9 @@ function saveLocalStorage() {
   localStorage['chkNoRepeat'] = chkNoRepeat.checked;
 }
 
-// Fixes the angularJS text display when a text file is loaded
+/**
+ * Fixes the angularJS text display when a text file is loaded
+ */
 function updateTextFromFile() {
   text_area.value = text;
   let controllerElement = document.querySelector('section');
@@ -306,7 +319,9 @@ function updateTextFromFile() {
   controllerScope.$apply();
 }
 
-// Change the type of replacement for pedantification (min, max, random)
+/**
+ * Change the type of replacement for pedantification (min, max, random)
+ */
 function changeReplacementType(newReplacement) {
   currReplacement = newReplacement;
   if ( currReplacement == "max" ) {
@@ -326,19 +341,21 @@ function changeReplacementType(newReplacement) {
 
 // TODO: make object to keep track of this 
 //Variables necessary for pedantification
-var ignoreConjunctions = false;
-var ignorePronouns = false;
-var ignoreHyphens = false;
-var noMultiWords = false;
-var noSynRep = false;
-var excludedWords = [];
-var pronouns = [];
-var old_text = "";
-var percent = 0;
-var text = "";
-var usedWords = [];
+let ignoreConjunctions = false;
+let ignorePronouns = false;
+let ignoreHyphens = false;
+let noMultiWords = false;
+let noSynRep = false;
+let excludedWords = [];
+let pronouns = [];
+let old_text = "";
+let percent = 0;
+let text = "";
+let usedWords = [];
 
-//Handles calling the function necessary for pedantification
+/**
+ * Handles calling the function necessary for pedantification
+ */
 function pedantifyInit() {
 
   // Updates all of the settings from the UI so we are ready to pedantify
@@ -351,14 +368,18 @@ function pedantifyInit() {
   pedantify();
 }
 
-// Updates the settings variables according to the UI 
+/**
+ * Updates the settings variables according to the UI 
+ */
 function getMiscSettings() { 
   text = text_area.value;
   percent = percentReplSlider.value;
   method = currReplacement;
 } 
 
-// Uses the checkboxes in 'options' to see if pronouns, conjunctions, and hyphenated words will excluded
+/**
+ * Uses the checkboxes in 'options' to see if pronouns, conjunctions, and hyphenated words will excluded
+ */
 function getExcludedOptions() {
     ignoreConjunctions = chkConjunctions.checked;
     ignorePronouns = chkPronouns.checked;
@@ -367,12 +388,16 @@ function getExcludedOptions() {
     noSynRep = chkNoRepeat.checked;
 }
 
-// Uses the textArea in 'options' to get a list of words to ignore in pedantification
+/**
+ * Uses the textArea in 'options' to get a list of words to ignore in pedantification
+ */
 function getExcludedWords() {
   excludedWords = getWhitespaceAndWords(excludeWord.value)[1];
 }
 
-// Parses through the given text and splits into wordList and whiteSpaceList
+/**
+ * Parses through the given text and splits into wordList and whiteSpaceList
+ */
 function getWhitespaceAndWords(text) {
 
     var whiteSpaceList = [];
@@ -401,26 +426,12 @@ function getWhitespaceAndWords(text) {
     return [whiteSpaceList, wordList];
 }
 
-// Handles the actual pedantification of the text
-function pedantify() {
-  // Make an array of characters from the text
-  text = text.split("");
+function pedantifySuccess(data) { 
 
-  // Parse through the given text and splits into wordList and whiteSpaceList
-  let temp = getWhitespaceAndWords(text);
-  let wordList = temp[1];
-  let whiteSpaceList = temp[0];
-
-  // Figure out if the text begins with a whitespace or a word
-  if (text[0] == " ") {
-    newText += " ";
-  }
-
-  // make AJAX call to server with callback function
-  $.ajax({
-    type: "POST", 
-    
-  });
+  console.log(data);
+ 
+  // TODO 
+  newText = ""; 
 
   // Update the UI based on the pedantified text
   text_area.value = newText;
@@ -436,6 +447,45 @@ function pedantify() {
   }
   controllerScope.inputText.text = text_area.value;
   controllerScope.wordsReplaced = wordReplacedCount;
+}
+
+/**
+ * Handles the actual pedantification of the text
+ */
+function pedantify() {
+  // Make an array of characters from the text
+  text = text.split("");
+
+  // Parse through the given text and splits into wordList and whiteSpaceList
+  let temp = getWhitespaceAndWords(text);
+  let wordList = temp[1];
+  let whiteSpaceList = temp[0];
+
+  // Figure out if the text begins with a whitespace or a word
+  if (text[0] == " ") {
+    newText += " ";
+  }
+
+  let dataToSend = JSON.stringify({
+    wordList: wordList, 
+    whiteSpaceList: whiteSpaceList, 
+    ignoreConjunctions: ignoreConjunctions,
+    ignorePronouns: ignorePronouns,
+    ignoreHyphens: ignoreHyphens,
+    excludedWords: excludedWords,
+    method: method,
+    noSynRepetition: noSynRep
+  });
+
+  // make AJAX call to server with callback function
+  $.ajax({
+    type: "POST",
+    url: "/pedantify_request",
+    data: dataToSend,
+    contentType: "application/json",
+    success: pedantifySuccess,
+    dataType: "application/json"
+  });
 }
 
 window.onload = function () {

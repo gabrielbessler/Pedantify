@@ -14,6 +14,10 @@ const fs = require("fs");
 const http = require("http"); 
 let server; 
 
+/**
+ * Initialization procedures so the server is ready to receive 
+ *  pedantification requests 
+ */
 function init() { 
     // using command lie argument to turn on debug mode 
     debug_mode = process.argv[2]; 
@@ -24,11 +28,15 @@ function init() {
     } else { 
         DEBUG_MODE = debug_mode;
     }
+    
     getDictionary(); 
 
     makeServer(); 
 }
 
+/**
+ * 
+ */
 function debugInfo(info) { 
   if (DEBUG_MODE) { 
     console.log(info); 
@@ -41,21 +49,11 @@ function debugInfo(info) {
 function makeServer() { 
   debugInfo("Setting up server...");
   server = http.createServer( function(request, reponse) {
-    // TODO: if something other than POST, don't send a 200
-    request.writeHead(200, {"Content-Type": "text/plain"});
-    if (request.method === "GET") {
-      // Not a valid request  
-      request.end(""); 
-    } else if (request.method === "POST") { 
-      // TODO 
-      request.end("This is some sample return data"); 
-    } else { 
-      // Not a valid request  
-      request.end(""); 
-    }
+    console.log("Request: " + request); 
+    console.log("Reponse: " + response); 
   });
 
-  server.listen(8000, function() { 
+  server.listen(80, function() { 
     debugInfo("Listening for requests on port 8000..."); 
   })
 }
@@ -69,7 +67,7 @@ function getDictionaryAJAX() {
     }
 
     $.ajax({
-      url:'http://www.pedantify.com/js/dict.js',
+      url:'/js/dict.js',
       success: function (data){
         starterDict = eval(data);
         console.log("Dictionary ready.");
@@ -211,7 +209,6 @@ function pedantify(wordList, whiteSpaceList, ignoreConjunctions, ignorePronouns,
 
   // Variables to keep track of metadata 
   let wordReplacedCount = 0;
-
 
   // Iterate through the list of words by index 
   for ( let wordIndex in wordList ) {
