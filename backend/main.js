@@ -20,7 +20,7 @@ let server;
  */
 function init() { 
     // using command lie argument to turn on debug mode 
-    debug_mode = process.argv[2]; 
+    const debug_mode = process.argv[2]; 
     
     // check if the user passed in an argument  
     if (!debug_mode) { 
@@ -49,13 +49,36 @@ function debugInfo(info) {
 function makeServer() { 
   debugInfo("Setting up server...");
   server = http.createServer( function(request, reponse) {
-    console.log("Request: " + request); 
-    console.log("Reponse: " + response); 
+    console.log("Request: " + request);  
+    let buffer = ""; 
+    // First, check if we got a post request
+    if (request.method === "POST") { 
+      // Then, get the JSON data from the request 
+      // TODO: use EXPRESS instead of doing manually 
+      request.on('data', function(chunk) { 
+        buffer += chunk; 
+	console.log(chunk); 
+      });
+      request.on('end', function() {
+	console.log('body: ' + buffer); 
+	// put in a try-catch in case of malformed JSON
+	const body = JSON.parse(buffer); 
+	// get all properties from body 
+	let result = pedantifyCaller(body); 	
+      	let newText = result[0];
+	let wordReplaceCount = result[1];
+      });
+    }
   });
 
-  server.listen(80, function() { 
-    debugInfo("Listening for requests on port 8000..."); 
+  server.listen(8080, function() { 
+    debugInfo("Listening for requests on localhost port 8080..."); 
   })
+}
+
+function pedantifyCaller(body) { 
+	// TODO: check for undefined properties here 
+	return pedantify(body.wordList, body.whiteSpaceList, body.ignoreConjunctions, body.ignorePronouns, body.ignoreHyphens, body.excludedWords, body.method, body.noSynRepetition);
 }
 
 /**
@@ -69,8 +92,9 @@ function getDictionaryAJAX() {
     $.ajax({
       url:'/js/dict.js',
       success: function (data){
-        starterDict = eval(data);
-        console.log("Dictionary ready.");
+        console.log(data);
+	// starterDict = JSON.parse(data.toString()); 
+	console.log("Dictionary ready.");
       }
     });
 }
@@ -84,12 +108,11 @@ function getDictionary() {
   }
 
   // TODO: make synchronous (need to block program while the dictionary loads)
-  fs.readFile('/data/dict.js', function(err, data) { 
+  fs.readFile('../js/dict.js', function(err, data) { 
     if (err) { 
       throw err; 
     } else { 
-      // data is stored as a buffer 
-      starterDict = eval(data.toString()); 
+        starterDict = eval(data.toString()); 
     }
   });
 }
@@ -144,7 +167,7 @@ function getShortestWord(inputList) {
 /**
  * Gets the shortest or longest word in an array
  */ 
-function getLongShortWord(inputList, type="long") {
+function getLongShortWord(inputList, type) {
   // We initialize the replacement word to be the first word in the synonym list
   let wordlength = inputList[0].length;
   let currentWord = inputList[0];
