@@ -35,7 +35,7 @@ function init() {
 }
 
 /**
- * 
+ * Sends text to STDOUT if debug mode is on
  */
 function debugInfo(info) { 
   if (DEBUG_MODE) { 
@@ -49,24 +49,40 @@ function debugInfo(info) {
 function makeServer() { 
   debugInfo("Setting up server...");
   server = http.createServer( function(request, reponse) {
-    console.log("Request: " + request);  
+    // store data we receive until the request is complete
     let buffer = ""; 
+    
     // First, check if we got a post request
     if (request.method === "POST") { 
       // Then, get the JSON data from the request 
-      // TODO: use EXPRESS instead of doing manually 
+      // TODO: use EXPRESS instead of doing manually,
+      //    and send errors if pedantification fails
+
+      // append to the buffer every time we receive 
+      // more data
       request.on('data', function(chunk) { 
         buffer += chunk; 
-	console.log(chunk); 
+	      console.log(chunk); 
       });
+
+      // once we have received all data, do the pedantification
       request.on('end', function() {
-	console.log('body: ' + buffer); 
-	// put in a try-catch in case of malformed JSON
-	const body = JSON.parse(buffer); 
-	// get all properties from body 
-	let result = pedantifyCaller(body); 	
-      	let newText = result[0];
-	let wordReplaceCount = result[1];
+        console.log('body: ' + buffer); 
+        // put in a try-catch in case of malformed JSON
+        const body = JSON.parse(buffer); 
+        // get all properties from body 
+        let result = pedantifyCaller(body); 	
+        let newText = result[0];
+        let wordReplaceCount = result[1];
+
+        response.writeHead(200, {"Content-Type": "application/json"}); 
+        // Send output to client as JSON
+        let returnData = JSON.stringify({
+          newText: newText, 
+          wordReplaceCount: wordReplaceCount          
+        });
+        response.write(returnData); 
+        response.end(); 
       });
     }
   });
@@ -76,9 +92,27 @@ function makeServer() {
   })
 }
 
+/**
+ * Takes JSON object from POST req and calls pedantify function  
+ */
 function pedantifyCaller(body) { 
-	// TODO: check for undefined properties here 
-	return pedantify(body.wordList, body.whiteSpaceList, body.ignoreConjunctions, body.ignorePronouns, body.ignoreHyphens, body.excludedWords, body.method, body.noSynRepetition);
+  propertyList = ["wordList", "whiteSpaceList", "ignoreConjunctions", "ignorePronouns", "ignoreHyphens", "excludedWords", "method", "noSynRepetition"]
+
+  for (var property in propertyList) { 
+    // Check body for property
+    if (body[property] === undefined) {
+      // Give property the correct default value
+      if (property === "wordList") { 
+        body[property] = [""];
+      } else if (property === "method") { 
+        body[property] = "max";
+      } else { 
+        body[property] = false; 
+      }
+    }
+  }
+  
+  return pedantify(body.wordList, body.whiteSpaceList, body.ignoreConjunctions, body.ignorePronouns, body.ignoreHyphens, body.excludedWords, body.method, body.noSynRepetition);
 }
 
 /**

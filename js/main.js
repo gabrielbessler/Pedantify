@@ -428,10 +428,10 @@ function getWhitespaceAndWords(text) {
 
 function pedantifySuccess(data) { 
 
-  console.log(data);
- 
-  // TODO 
-  newText = ""; 
+  let result = JSON.parse(data); 
+  
+  newText = result.newText; 
+  wordReplacedCount = result.wordReplacedCount;
 
   // Update the UI based on the pedantified text
   text_area.value = newText;
