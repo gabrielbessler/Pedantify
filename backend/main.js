@@ -12,7 +12,7 @@ const pronouns_list = ["I", "you", "he", "she", "it", "we", "they", "me", "him",
 
 const fs = require("fs");
 const http = require("http"); 
-let server; 
+let server;
 
 /**
  * Initialization procedures so the server is ready to receive 
@@ -92,6 +92,7 @@ function makeServer() {
   })
 }
 
+
 /**
  * Takes JSON object from POST req and calls pedantify function  
  */
@@ -106,6 +107,8 @@ function pedantifyCaller(body) {
         body[property] = [""];
       } else if (property === "method") { 
         body[property] = "max";
+      } else if (property === "percent") { 
+        body[property] = 100;       
       } else { 
         body[property] = false; 
       }
@@ -113,6 +116,7 @@ function pedantifyCaller(body) {
   }
   
   return pedantify(body.wordList, body.whiteSpaceList, body.ignoreConjunctions, body.ignorePronouns, body.ignoreHyphens, body.excludedWords, body.method, body.noSynRepetition);
+
 }
 
 /**
@@ -162,10 +166,12 @@ function isHyphenated(s) {
     return true;
 }
 
+// TODO - make sure this info is actually passead from 
+//   the user 
 /** 
  * Generates a random number and checks if it's bigger than the threshold for pedantifying a word
  */
-function percentageCheck() {
+function percentageCheck(percent) {
     if (Math.round(Math.random() * 100) < percent) {
       return true;
     }
@@ -260,7 +266,7 @@ function getWhitespaceAndWords(text) {
 /**
  * Main pedantify function in the website 
  */
-function pedantify(wordList, whiteSpaceList, ignoreConjunctions, ignorePronouns, ignoreHyphens, excludedWords, method, noSynRepetition) {
+function pedantify(wordList, whiteSpaceList, ignoreConjunctions, ignorePronouns, ignoreHyphens, excludedWords, method, noSynRepetition, percent) {
 
   let newText = "";
 
@@ -285,7 +291,7 @@ function pedantify(wordList, whiteSpaceList, ignoreConjunctions, ignorePronouns,
     else if ( ignorePronouns && isElementInList(word.toLowerCase(), pronouns_list) ) {}
     else if ( ignoreHyphens && isHyphenated(word.toLowerCase()) ) {}
     else if ( isElementInList(word.toLowerCase(), excludedWords) ) {}
-    else if ( percentageCheck() == false ) {}
+    else if ( percentageCheck(percent) == false ) {}
     else {
       //First, we check for punctuation (assuming if there is punctuation it will be the last character)
       let punctuationFound = false;

@@ -382,7 +382,7 @@ function getMiscSettings() {
  */
 function getExcludedOptions() {
     ignoreConjunctions = chkConjunctions.checked;
-    ignorePronouns = chkPronouns.checked;
+    ignorePronouns = chkPronouns.checked;     
     ignoreHyphens = chkHyphens.checked;
     noMultiWords = chkMultiWord.checked;
     noSynRep = chkNoRepeat.checked;
@@ -401,7 +401,7 @@ function getExcludedWords() {
 function getWhitespaceAndWords(text) {
 
     var whiteSpaceList = [];
-    var wordList = [];
+    var wordList = [];  
 
     var currWord = false;
     for ( var charIndex in text ) {
@@ -474,7 +474,8 @@ function pedantify() {
     ignoreHyphens: ignoreHyphens,
     excludedWords: excludedWords,
     method: method,
-    noSynRepetition: noSynRep
+    noSynRepetition: noSynRep,
+    percent: percent
   });
 
   // make AJAX call to server with callback function
