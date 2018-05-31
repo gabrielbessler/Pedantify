@@ -1,4 +1,4 @@
-a = {'a': [],
+const a = {'a': [],
  'ability': ['strength', 'capacity', 'intelligence', 'understanding', 'capability', 'qualification', 'talent', 'skill', 'competence', 'competency', 'aptitude', 'facility', 'dexterity', 'might', 'resourcefulness', 'comprehension', 'potentiality', 'faculty', 'endowment'],
  'able': ['good', 'adept', 'capable', 'apt', 'competent', 'easy', 'ready', 'adequate', 'strong', 'intelligent', 'smart', 'adroit', 'agile', 'alert', 'bright', 'cunning', 'deft', 'dexterous', 'effortless', 'equipped', 'facile', 'fitted', 'knowing', 'powerful', 'worthy', 'endowed'],
  'about': ['around', 'back', 'backward', 'round', 'in reverse'],
