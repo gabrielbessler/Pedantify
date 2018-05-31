@@ -9,23 +9,77 @@ const http = require("http");
 // a suite is a group of test cases for a specific behavior 
 describe("Pedantify-Caller", function() {
     it ("correct JSON", function() {
-
+        const dataToSend = JSON.stringify({
+            wordList: ["dog", "cat", "potato-salad", "orange-39!", "132134"], 
+            whiteSpaceList: [" ", "  ", " ", " "], 
+            ignoreConjunctions: false,
+            ignorePronouns: false,
+            ignoreHyphens: false,
+            excludedWords: [],
+            method: "random",
+            noSynRepetition: false,
+            percent: 100,
+        });
     });
     it ("missing wordList", function() {
-
+        const dataToSend = JSON.stringify({ 
+            whiteSpaceList: [" ", "  ", " ", " "], 
+            ignoreConjunctions: false,
+            ignorePronouns: false,
+            ignoreHyphens: false,
+            excludedWords: [],
+            method: "random",
+            noSynRepetition: false,
+            percent: 100,
+          });
     });
     it ("missing method", function() {
-
+        const dataToSend = JSON.stringify({
+            wordList: ["dog", "cat", "potato-salad", "orange-39!", "132134"], 
+            whiteSpaceList: [" ", "  ", " ", " "], 
+            ignoreConjunctions: false,
+            ignorePronouns: false,
+            ignoreHyphens: false,
+            excludedWords: [],
+            noSynRepetition: false,
+            percent: 100,
+        });
     }); 
     it ("missing boolean properties", function() {
-
+        const dataToSend = JSON.stringify({
+            wordList: ["dog", "cat", "potato-salad", "orange-39!", "132134"], 
+            whiteSpaceList: [" ", "  ", " ", " "], 
+            excludedWords: [],
+            method: "random",
+            percent: 100,
+        });
     }); 
     it ("not missing properties but wrong value", function() {
-
+        const dataToSend = JSON.stringify({
+            wordList: {"dog": 13, "cat": 13, "potato-salad": 13, "orange-39!": 13, "132134"}, 
+            whiteSpaceList: [" ", "  ", " ", " "], 
+            ignoreConjunctions: 7,
+            ignorePronouns: "a",
+            ignoreHyphens: false,
+            excludedWords: 987,
+            method: "27",
+            noSynRepetition: false,
+            percent: "all of it",
+        });
     }); 
     it ("missing properties & wrong values", function() {
-
-    });
+        let dataToSend = JSON.stringify({
+            wordList: , 
+            whiteSpaceList: , 
+            ignoreConjunctions: ,
+            ignorePronouns: ,
+            ignoreHyphens: ,
+            excludedWords: ,
+            method: ,
+            noSynRepetition: ,
+            percent: 
+        });
+    }); 
 });
 
 describe("Get-Dictionary-AJAX", function() {
