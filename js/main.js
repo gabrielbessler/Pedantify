@@ -427,11 +427,11 @@ function getWhitespaceAndWords(text) {
 }
 
 function pedantifySuccess(data) { 
-
-  let result = JSON.parse(data); 
-  
-  newText = result.newText; 
-  wordReplacedCount = result.wordReplacedCount;
+	
+  const result = data; 
+ 
+  let newText = result.newText; 
+  let wordReplacedCount = result.wordReplacedCount;
 
   // Update the UI based on the pedantified text
   text_area.value = newText;
@@ -477,15 +477,20 @@ function pedantify() {
     noSynRepetition: noSynRep,
     percent: percent
   });
+  
+  console.log(dataToSend); 
 
   // make AJAX call to server with callback function
   $.ajax({
     type: "POST",
     url: "/pedantify_request",
     data: dataToSend,
-    contentType: "application/json",
+    contentType: "application/json; charset=utf-8",
     success: pedantifySuccess,
-    dataType: "application/json"
+    error: function(data, err) {
+      console.log("data " + data); 
+      console.log("error " + err); 
+    }
   });
 }
 

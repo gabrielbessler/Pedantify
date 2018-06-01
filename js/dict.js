@@ -1,4 +1,6 @@
-const a = {'a': [],
+var fs = require('fs');
+
+const dictionaryData = JSON.stringify({'a': [],
  'ability': ['strength', 'capacity', 'intelligence', 'understanding', 'capability', 'qualification', 'talent', 'skill', 'competence', 'competency', 'aptitude', 'facility', 'dexterity', 'might', 'resourcefulness', 'comprehension', 'potentiality', 'faculty', 'endowment'],
  'able': ['good', 'adept', 'capable', 'apt', 'competent', 'easy', 'ready', 'adequate', 'strong', 'intelligent', 'smart', 'adroit', 'agile', 'alert', 'bright', 'cunning', 'deft', 'dexterous', 'effortless', 'equipped', 'facile', 'fitted', 'knowing', 'powerful', 'worthy', 'endowed'],
  'about': ['around', 'back', 'backward', 'round', 'in reverse'],
@@ -1998,4 +2000,6 @@ const a = {'a': [],
  'z': [],
  'zealand': [],
  'zip': ['vigor', 'sparkle', 'pep', 'oomph', 'verve', 'pizzazz', 'life', 'gusto', 'get-up-and-go', 'zest', 'drive', 'vitality', 'punch', 'liveliness', 'zing', 'brio', 'go', 'vim', 'spirit'],
- 'zone': ['sector', 'area', 'region', 'belt', 'territory', 'section', 'ground', 'realm', 'band', 'sphere', 'circuit', 'tract', 'segment']}
+ 'zone': ['sector', 'area', 'region', 'belt', 'territory', 'section', 'ground', 'realm', 'band', 'sphere', 'circuit', 'tract', 'segment']});
+
+fs.writeFile("./data", dictionaryData); 

@@ -48,7 +48,7 @@ function debugInfo(info) {
  */
 function makeServer() { 
   debugInfo("Setting up server...");
-  server = http.createServer( function(request, reponse) {
+  server = http.createServer( function(request, response) {
     // store data we receive until the request is complete
     let buffer = ""; 
     
@@ -61,16 +61,16 @@ function makeServer() {
       // append to the buffer every time we receive 
       // more data
       request.on('data', function(chunk) { 
-        buffer += chunk; 
-	      console.log(chunk); 
+	buffer += chunk; 
       });
 
       // once we have received all data, do the pedantification
       request.on('end', function() {
-        console.log('body: ' + buffer); 
+	console.log('body: ' + buffer);
+	console.log(typeof(buffer));  
         // put in a try-catch in case of malformed JSON
-        const body = JSON.parse(buffer); 
-        // get all properties from body 
+        const body = JSON.parse(buffer);
+	// get all properties from body 
         let result = pedantifyCaller(body); 	
         let newText = result[0];
         let wordReplaceCount = result[1];
@@ -81,6 +81,7 @@ function makeServer() {
           newText: newText, 
           wordReplaceCount: wordReplaceCount          
         });
+	console.log("Sending: " + returnData); 
         response.write(returnData); 
         response.end(); 
       });
@@ -97,9 +98,11 @@ function makeServer() {
  * Takes JSON object from POST req and calls pedantify function  
  */
 function pedantifyCaller(body) { 
-  propertyList = ["wordList", "whiteSpaceList", "ignoreConjunctions", "ignorePronouns", "ignoreHyphens", "excludedWords", "method", "noSynRepetition"]
+  let propertyList = ["wordList", "whiteSpaceList", "ignoreConjunctions", "ignorePronouns", "ignoreHyphens", "excludedWords", "method", "noSynRepetition", "percent"]
 
-  for (var property in propertyList) { 
+  console.log(body); 
+  for (var propertyIndex in propertyList) { 
+    const property = propertyList[propertyIndex];
     // Check body for property
     if (body[property] === undefined) {
       // Give property the correct default value
@@ -114,9 +117,12 @@ function pedantifyCaller(body) {
       }
     }
   }
-  
-  return pedantify(body.wordList, body.whiteSpaceList, body.ignoreConjunctions, body.ignorePronouns, body.ignoreHyphens, body.excludedWords, body.method, body.noSynRepetition);
 
+  console.log(body);   
+  console.log("1: " + body.wordList); 
+  const result =  pedantify(body.wordList, body.whiteSpaceList, body.ignoreConjunctions, body.ignorePronouns, body.ignoreHyphens, body.excludedWords, body.method, body.noSynRepetition, body.percent);
+
+  return result; 
 }
 
 /**
@@ -146,11 +152,14 @@ function getDictionary() {
   }
 
   // TODO: make synchronous (need to block program while the dictionary loads)
-  fs.readFile('../js/dict.js', function(err, data) { 
+  fs.readFile('../js/data.json', function(err, data) { 
     if (err) { 
       throw err; 
     } else { 
-        starterDict = eval(data.toString()); 
+        if (DEBUG_MODE) { 
+		console.log("load successful"); 
+	} 
+	starterDict = JSON.parse(data.toString());
     }
   });
 }
@@ -193,21 +202,21 @@ function isElementInList(e, list) {
 /**
  * Gets the longest word in an array 
  */
-function getLongestWord(inputList) { 
-    getLongShortWord(inputList, "long"); 
+function getLongestWord(inputList, multiWord) { 
+    return getLongShortWord(inputList, "long", multiWord); 
 } 
 
 /**
  * Gets the shortest word in an array 
  */ 
-function getShortestWord(inputList) { 
-    getLongShortWord(inputList, "short"); 
+function getShortestWord(inputList, multiWord) { 
+    return getLongShortWord(inputList, "short", multiWord); 
 } 
 
 /**
  * Gets the shortest or longest word in an array
  */ 
-function getLongShortWord(inputList, type) {
+function getLongShortWord(inputList, type, noMultiWords) {
   // We initialize the replacement word to be the first word in the synonym list
   let wordlength = inputList[0].length;
   let currentWord = inputList[0];
@@ -228,6 +237,7 @@ function getLongShortWord(inputList, type) {
       currentWord = inputList[wordIndex];
     }
   }
+  console.log("the input list is " + inputList + " and we picked " + currentWord); 
   return currentWord
 }
 
@@ -268,6 +278,7 @@ function getWhitespaceAndWords(text) {
  */
 function pedantify(wordList, whiteSpaceList, ignoreConjunctions, ignorePronouns, ignoreHyphens, excludedWords, method, noSynRepetition, percent) {
 
+  console.log("2: " + wordList); 
   let newText = "";
 
   // Variables to keep track of metadata 
@@ -276,13 +287,14 @@ function pedantify(wordList, whiteSpaceList, ignoreConjunctions, ignorePronouns,
   // Iterate through the list of words by index 
   for ( let wordIndex in wordList ) {
     let word = wordList[wordIndex];
-
+    console.log(word); 
     //Adds the correct whitespace to the word
     function getWord() {
       //We only care about whitespace if the word is not at the end of the text
       if (parseInt(wordIndex) + 1 < wordList.length){
         word += whiteSpaceList[wordIndex];
-      }
+      }  
+      console.log("adding " + word + " to " + newText); 
       newText += word;
     }
 
@@ -293,6 +305,7 @@ function pedantify(wordList, whiteSpaceList, ignoreConjunctions, ignorePronouns,
     else if ( isElementInList(word.toLowerCase(), excludedWords) ) {}
     else if ( percentageCheck(percent) == false ) {}
     else {
+      console.log('replacing ' + word); 
       //First, we check for punctuation (assuming if there is punctuation it will be the last character)
       let punctuationFound = false;
       let lastChar = word.slice(-1);
@@ -302,13 +315,17 @@ function pedantify(wordList, whiteSpaceList, ignoreConjunctions, ignorePronouns,
         word = word.substr(0,word.length-1);
         punctuationFound = true;
       }
+      console.log('3: ' + word); 
+      console.log(word.toLowerCase()); 
 
       //We make the word lower-case so we can check for synonyms
       let words = starterDict[word.toLowerCase()];
+      console.log(words); 
 
       //If the word is not in dictionary or there are no synonyms, treat it like non-ped. word
       if ( words == undefined || words.length == 0 ) {} 
       else {
+	console.log('word list is not undefined'); 
         //We want to set capitalization based on previous capitalization.
         let capsType = "null";
 
@@ -323,14 +340,16 @@ function pedantify(wordList, whiteSpaceList, ignoreConjunctions, ignorePronouns,
           //Than the number of words that are capitalized because proper noun AND have synonyms
           capsType = "capitalized";
         }
-        if ( method == "min" ) {
-          word = getShortestWord(words);
+        console.log("the old word is " + word); 
+	if ( method == "min" ) {
+          word = getShortestWord(words, noSynRepetition);
         } else if ( method == "max" ) {
-          word = getLongestWord(words);
+          word = getLongestWord(words, noSynRepetition);
         } else if ( method == "random" ) {
           let randomIndex = Math.floor(Math.random()*words.length);
           word = words[randomIndex];
         }
+	console.log('the new word is ' + word); 
         if ( noSynRepetition ) {
           usedWords.push(word);
         }
