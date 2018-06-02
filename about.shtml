@@ -9,7 +9,7 @@
     <link rel="icon" href="Main.ico">
   <head>
   <body>
-    <!--#include file="header.html" -->
+    <!--#include file="/HTML/header.html" -->
 
     <article>
       <h1>Main Idea</h1>
@@ -21,6 +21,6 @@
       </p>
    </article>
 
-    <!--#include file="footer.html" -->
+    <!--#include file="/HTML/footer.html" -->
   </body>
 </html>

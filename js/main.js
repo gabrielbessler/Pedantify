@@ -80,7 +80,7 @@ let randBtn;
 let minBtn; 
 let maxBtn;
 let method; 
- 
+
 /**
  * Initializes all variables/objects/eventlisteners when the webpage loads
  */ 
@@ -490,6 +490,36 @@ function pedantify() {
     error: function(data, err) {
       console.log("data " + data); 
       console.log("error " + err); 
+    }
+  });
+}
+
+function getPartsOfSpeed() { 
+  $.ajax({
+    type: "POST", 
+    url: "/pedantify_request/part_of_speech",
+    data: text,
+    contentType: "application/json; charset=utf-8",
+    success: function(data) {
+      // data will be a js object 
+      const result_list = data.result;
+      let container = text_area.innerHTML;
+
+      for (var result_index in result_list) { 
+        let partOfSpeech = result_list[resultIndex];
+        // ignore punctuation 
+        let ignore = false; 
+        if (partOfSpeech === ".") {
+          ignore = true; 
+        } else if (partOfSpeech.indexOf("$") != -1) { 
+          partOfSpeech.replace("$", "_");
+        } 
+        // now apply the class style to each word accordingly 
+
+      }
+    },
+    error: function(data, err) { 
+      console.log("error: " + err); 
     }
   });
 }

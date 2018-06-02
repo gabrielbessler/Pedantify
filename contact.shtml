@@ -9,13 +9,13 @@
     <link rel="icon" href="Main.ico">
   </head>
   <body>
-    <!--#include file="header.html" -->
+    <!--#include file="/HTML/header.html" -->
     <article>
       <h1>
         For questions, concerns, or complaints, send us a message at <br>
         pedantify@pedantify.com
       </h1>
     </article>
-    <!--#include file="footer.html" -->
+    <!--#include file="/HTML/footer.html" -->
   </body>
 </html>
