@@ -5,16 +5,18 @@
     <title>Pedantify</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/header.css">
     <link rel="icon" href="Main.ico">
     <meta name="description" value="Make your texts infinitely more complicated.">
   </head>
 
   <body ng-app="myApp">
+    
     <!-- HEADER -->
-    <!--#include file="/HTML/header.html" -->
+    <!--#include file="HTML/header.html" -->
+
     <div class = "container">
 
     <!-- MAIN SECTION OF WEBSITE -->
@@ -127,11 +129,11 @@
 
     </div>
 
-    <!--#include file="/HTML/footer.html" -->
+    <!--#include file="HTML/footer.html" -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 
   </body>
 </html>
