@@ -4,7 +4,6 @@
   --color-one-accent-dark: #99651E;
   --color-two-main: #65C7FF;
   --color-two--accent: #297DAD;
-  --color-two--misc: #8AD4FF;
   --color-accent: #820000;
 }
 body {
@@ -15,9 +14,6 @@ body {
   margin: 0px; 
   color: #333;
 }
-
-
-
 #wordsToExcludeText {
   text-align: center;
   width: 100%;
@@ -118,7 +114,7 @@ section {
   border: 2px solid orange;
   outline: none;
 }
-#test:focus {
+#chooseFileId:focus {
   outline: none; 
   border: 2px solid orange; 
 }

@@ -33,7 +33,7 @@
         <input type="button" value=" " id="forwardTextBtn" class="optionsButton">
         <input type="file" size="40" id="chooseFile" accept=".txt" tabindex="-1">
         <!-- We cannot style the submit button, so we hide it and style the label instead -->
-        <label for="chooseFile" class="optionsButton" id="test" tabindex="0">Choose a file...</label>
+        <label for="chooseFile" class="optionsButton" id="chooseFileId" tabindex="0">Choose a file...</label>
       </form>
 
       <!-- TEXT METADATA -->

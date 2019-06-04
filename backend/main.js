@@ -1,8 +1,7 @@
 "use strict"; 
 
 let starterDict;
-let DEBUG_MODE = false; 
-let DEBUG_LEVEL = 1; 
+let DEBUG_MODE = false;  
 
 //Variables necessary for pedantification
 const conjunctions = ["a", "and", "this", "that", "like", "no", "yes", "the", "okay", "is", "in", "at", "why", "not", "be", "for"];

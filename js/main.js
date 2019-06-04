@@ -1,7 +1,7 @@
 "use strict"; 
 
 //AngularJS for updating the metadata text at the bottom of the textArea
-let myApp = angular.module('myApp', []);
+var myApp = angular.module('myApp', []);
 
 myApp.controller('MainController', function( $scope ) {
 
@@ -52,34 +52,34 @@ myApp.controller('MainController', function( $scope ) {
   }
 });
 
-let currReplacement = "min"; 
-let ignoreHyphenatedWordsText;
-let replacementClickableText; 
-let excludeConjuctionsText;
-let excludePronounsText; 
-let oneWordSynonymsText;
-let resetOptionsBtn; 
-let chkConjunctions;
-let redoPedantify; 
-let percentReplVal; 
-let noSynRepText; 
-let percentReplSlider; 
-let undoPedantify; 
-let chkMultiWord;
-let chkPronouns; 
-let chkNoRepeat; 
-let percRepText; 
-let excludeWord; 
-let chkHyphens; 
-let chooseFile; 
-let saveBtn; 
-let submitBtn;
-let text_area; 
-let resetBtn; 
-let randBtn; 
-let minBtn; 
-let maxBtn;
-let method; 
+var currReplacement = "min"; 
+var ignoreHyphenatedWordsText;
+var replacementClickableText; 
+var excludeConjuctionsText;
+var excludePronounsText; 
+var oneWordSynonymsText;
+var resetOptionsBtn; 
+var chkConjunctions;
+var redoPedantify; 
+var percentReplVal; 
+var noSynRepText; 
+var percentReplSlider; 
+var undoPedantify; 
+var chkMultiWord;
+var chkPronouns; 
+var chkNoRepeat; 
+var percRepText; 
+var excludeWord; 
+var chkHyphens; 
+var chooseFile; 
+var saveBtn; 
+var submitBtn;
+var text_area; 
+var resetBtn; 
+var randBtn; 
+var minBtn; 
+var maxBtn;
+var method; 
 
 /**
  * Initializes all variables/objects/eventlisteners when the webpage loads
@@ -341,17 +341,17 @@ function changeReplacementType(newReplacement) {
 
 // TODO: make object to keep track of this 
 //Variables necessary for pedantification
-let ignoreConjunctions = false;
-let ignorePronouns = false;
-let ignoreHyphens = false;
-let noMultiWords = false;
-let noSynRep = false;
-let excludedWords = [];
-let pronouns = [];
-let old_text = "";
-let percent = 0;
-let text = "";
-let usedWords = [];
+var ignoreConjunctions = false;
+var ignorePronouns = false;
+var ignoreHyphens = false;
+var noMultiWords = false;
+var noSynRep = false;
+var excludedWords = [];
+var pronouns = [];
+var old_text = "";
+var percent = 0;
+var text = "";
+var usedWords = [];
 
 /**
  * Handles calling the function necessary for pedantification
@@ -494,7 +494,7 @@ function pedantify() {
   });
 }
 
-function getPartsOfSpeed() { 
+function getPartsOfSpeech() { 
   $.ajax({
     type: "POST", 
     url: "/pedantify_request/part_of_speech",

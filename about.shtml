@@ -3,13 +3,14 @@
   <head>
     <title>Pedantify</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/main.css">
     <link rel="icon" href="Main.ico">
   <head>
   <body>
-    <!--#include file="/HTML/header.html" -->
+
+    <!--#include file="HTML/header.html" -->
 
     <article>
       <h1>Main Idea</h1>
@@ -21,6 +22,6 @@
       </p>
    </article>
 
-    <!--#include file="/HTML/footer.html" -->
+    <!--#include file="HTML/footer.html" -->
   </body>
 </html>
